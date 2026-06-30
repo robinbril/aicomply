@@ -1,57 +1,78 @@
 # AIComply
 
-A paste-and-run audit kit for EU/ISO AI compliance. Point it at a repo or product, an agent fans out one checker per framework, a skeptic re-checks every verdict, and a deterministic scorer produces a 0-100 score per framework plus an overall. The number comes from a script, not from model vibes.
+Score any AI or LLM system against the EU AI Act, GDPR, and the ISO AI standards, and get a number you can defend. You point it at a codebase or a product, an agent checks one framework at a time, a second agent tries to refute every verdict, and a deterministic script turns the verdicts into a 0-100 score. The number comes from code, not from a model's mood.
 
-## What it covers
+**You get:** 5 frameworks (~90 controls), a paste-and-run audit prompt, two guard hooks that catch leaks before they ship, and a scorer that returns the same number for the same findings every time.
 
-Five frameworks, ~90 controls total, each with an id, a `check`, the `evidence` to look for, and one line of `advice`:
+## Quick start
 
-| framework | file | shortcode | what it checks |
-|-----------|------|-----------|----------------|
-| EU AI Act 2024/1689 | `frameworks/eu-ai-act.yaml` | `AIA-` | risk tiers, prohibited practices, high-risk obligations, GPAI, transparency |
-| GDPR / AVG | `frameworks/gdpr-avg.yaml` | `GDPR-` | personal data in training/prompts/outputs, external-LLM egress, DSR, DPIA |
-| ISO/IEC 42001 | `frameworks/iso-42001.yaml` | `AI-` / `AIMS-` | AI management system: policy, roles, risk, impact, lifecycle, monitoring |
-| ISO/IEC 23894 | `frameworks/iso-23894.yaml` | `RID-` / `TRT-` / `MON-` | AI risk management process: identify, analyse, treat, monitor |
-| ISO/IEC 27001 + 27701 | `frameworks/iso-27001-27701.yaml` | `A.` / `P.` | infosec + privacy for AI software: secrets, encryption, supplier, prompt-input, PIMS |
+1. **Audit.** Open `prompts/audit-prompt.md`, paste it into your agent, and fill the four-line brief: what you are auditing, a one-paragraph system summary, your role, and where the evidence lives.
+2. **Score.** The agent writes `findings.json` (one `pass` / `fail` / `na` per control) and runs the scorer:
+   ```
+   python scripts/score.py --findings findings.json --report audit-report.md
+   ```
+3. **Read** `audit-report.md`: a score per framework, the overall, the band, and every failed critical. `examples/sample-audit-report.md` shows what the end state looks like.
 
-## How the pieces fit
+The audit needs no install: it is a prompt plus one standard-library Python script (3.9+). The guard hooks are optional, see below.
 
-```
-frameworks/*.yaml   the controls (id, severity, weight, check, evidence, advice)
-prompts/audit-prompt.md   the workflow you paste: gather -> adversarial verify -> synthesis
-hooks/              optional guard hooks (pre-commit / pre-prompt) that catch obvious leaks early
-scripts/score.py    deterministic scorer: findings.json -> per-framework + overall score
-frameworks/scoring.md   the scoring model, one page, matches score.py exactly
-examples/           a worked, anonymised audit report
-```
+## What it checks
 
-Flow: paste `prompts/audit-prompt.md`, fill the run brief, the agent writes `findings.json` (one verdict per control), then `score.py` turns those verdicts into the report. The hooks are a cheap front line (block a hardcoded key or raw PII in a prompt before it ships); the audit is the full sweep.
+Five frameworks, ~90 controls. Every control carries an `id`, a `check` (what to verify), the `evidence` to look for, a `severity`, and one line of `advice`.
 
-## Install
+| Framework | File | Focus |
+|---|---|---|
+| EU AI Act (2024/1689) | `frameworks/eu-ai-act.yaml` | risk tiers, prohibited practices, high-risk duties, GPAI, transparency |
+| GDPR / AVG | `frameworks/gdpr-avg.yaml` | personal data in prompts/training/output, external-LLM egress, DSR, DPIA |
+| ISO/IEC 42001 | `frameworks/iso-42001.yaml` | AI management system: policy, roles, risk, lifecycle, monitoring |
+| ISO/IEC 23894 | `frameworks/iso-23894.yaml` | AI risk process: identify, analyse, treat, monitor |
+| ISO/IEC 27001 + 27701 | `frameworks/iso-27001-27701.yaml` | infosec + privacy: secrets, encryption, suppliers, prompt-injection, PIMS |
 
-See `hooks/install.md` for the guard hooks. The audit itself needs no install: it is a prompt plus a Python scorer.
+## How it works
 
 ```
-python --version        # 3.9+
-python scripts/score.py --help
+prompts/audit-prompt.md  ->  agent fans out, one checker per framework
+                         ->  a skeptic re-checks every pass and every fail
+                         ->  writes findings.json (one verdict per control)
+scripts/score.py         ->  reads findings.json + frameworks/*.yaml
+                         ->  audit-report.md (per-framework score + overall)
 ```
 
-## Scoring model (100 points)
+The prompt drives three stages: gather evidence, verify it adversarially, then synthesise. Only the scorer produces the number, so the same findings always yield the same score. No model is asked to "rate compliance."
 
-Full detail in `frameworks/scoring.md`. In short:
+## The score (100 points)
 
-- Each control is `pass`, `fail`, or `na`. `na` (out of scope per `applies_when`) is dropped from the math.
-- Weight by severity: critical 5, high 3, medium 2, low 1.
-- Per-framework score = `100 * earned / possible` over in-scope controls.
-- **Critical cap:** any failed in-scope critical caps that framework at 39. You cannot average away a leak.
-- Overall = unweighted mean of the frameworks that are in scope.
+Full model in `frameworks/scoring.md`. In short:
 
-Bands: 90-100 compliant, 70-89 substantial, 40-69 partial, 0-39 critical fail.
+- Each control is `pass`, `fail`, or `na`. `na` (out of scope per its `applies_when`) drops out of the math entirely.
+- Severity sets the weight: critical 5, high 3, medium 2, low 1.
+- Framework score = `100 * earned / possible` across the in-scope controls.
+- **Critical cap:** a single failed in-scope critical caps that framework at 39. You cannot average a leak away.
+- Overall = the mean of the in-scope frameworks.
 
-## Run it
+| Band | Score | Meaning |
+|---|---|---|
+| Compliant | 90-100 | audit-ready, minor gaps |
+| Substantial | 70-89 | broadly there, fix the highs |
+| Partial | 40-69 | material gaps, not defensible yet |
+| Critical fail | 0-39 | a critical control failed, stop and fix |
 
-1. Open `prompts/audit-prompt.md`, copy it into your agent, fill the run brief (target, system summary, role, evidence roots).
-2. Let it run the three stages. It writes `findings.json` and calls the scorer.
-3. Read `audit-report.md`. See `examples/sample-audit-report.md` for the end state.
+## Guard hooks (optional)
 
-The kit is generic and offline by default: nothing leaves your machine, no findings are uploaded. Bring your own evidence, get a defensible score.
+Two PreToolUse hooks for Claude Code, regex-only, no LLM, no tokens, so they can run on every tool call:
+
+- `hooks/pii-redact.js` redacts PII and blocks secrets before a payload leaves the machine (outbound web, mail, file writes to synced folders).
+- `hooks/compliance-guard.js` prints a one-line advisory tied to a real control id when it sees a risky move (PII heading to an external LLM, logging switched off, a secret going into a repo).
+
+Wire them with the snippet in `hooks/install.md` (Node 18+). They are a cheap front line; the audit is the full sweep.
+
+## Layout
+
+```
+frameworks/   the controls (yaml) + scoring.md (the model)
+prompts/      the paste-and-run audit prompt
+hooks/        the optional guard hooks + install.md
+scripts/      score.py (the deterministic scorer, stdlib only)
+examples/     a worked, anonymised audit report
+```
+
+Generic and offline by default: nothing leaves your machine and no findings are uploaded. Bring your own evidence, get a defensible score.
