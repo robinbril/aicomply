@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# secrets / local env
+.env
+.env.*
+!.env.example
+
+# local audit output (keep examples/, ignore real runs)
+findings.json
+findings*.json
+audit-report.md
+/audit-report*.md
+
+# os / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+test_findings.json

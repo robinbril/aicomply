@@ -1,0 +1,223 @@
+framework: "EU AI Act"
+reference: "Regulation (EU) 2024/1689, OJ L 12.7.2024"
+scope: "AI systems and general-purpose AI models placed on the EU market or whose output is used in the EU, across providers, deployers, importers and distributors."
+controls:
+  - id: "AIA-CLASS"
+    title: "Risk-tier classification"
+    requirement: "Classify each AI system into a risk tier (prohibited, high-risk per Art 6 + Annex III, limited-risk transparency, or minimal) before deployment, and record the role held (provider/deployer/importer/distributor)."
+    applies_when: "any AI system placed on the market, put into service, or used in the EU"
+    severity: critical
+    weight: 5
+    check: "A documented classification exists per system stating tier, the basis (Annex III area or Art 5/52 trigger), and the organisation's role."
+    evidence: "AI system inventory with per-system risk-tier rationale and role assignment."
+    advice: "Build an inventory; map each use against Annex III and Art 5; assign tier and role. Unclassified systems default to manual review, do not deploy."
+
+  - id: "AIA-PROHIB"
+    title: "No prohibited practices (Art 5)"
+    requirement: "Do not place, put into service, or use AI for subliminal/manipulative or exploitative techniques causing harm, social scoring, untargeted facial-image scraping, emotion inference at work/school, biometric categorisation by sensitive traits, or non-exempt real-time remote biometric identification in public for law enforcement."
+    applies_when: "any AI system, all actors"
+    severity: critical
+    weight: 5
+    check: "No system in the inventory implements an Art 5 practice; manipulation/biometric/social-scoring use cases are screened and excluded."
+    evidence: "Prohibited-use screening record showing each system assessed against the Art 5 list with a negative finding."
+    advice: "Halt any Art 5 use immediately. These carry the highest fines (up to 7% global turnover). No legitimate-interest override exists."
+
+  - id: "AIA-RISKMGMT"
+    title: "Risk management system (Art 9)"
+    requirement: "Establish, document and maintain a continuous risk management system across the high-risk system lifecycle: identify and estimate risks, evaluate residual risk, and adopt mitigation measures."
+    applies_when: "provider of a high-risk AI system"
+    severity: high
+    weight: 3
+    check: "A documented risk management process exists, is iterative, and shows identified risks with mitigations and residual-risk acceptance."
+    evidence: "Risk management file with risk register, mitigation measures and review cadence."
+    advice: "Stand up a lifecycle risk process; tie it to testing results. One-off assessments do not satisfy the continuous requirement."
+
+  - id: "AIA-DATAGOV"
+    title: "Data and data governance (Art 10)"
+    requirement: "Training, validation and test datasets must meet quality criteria: relevant, representative, error-checked, complete, with examined biases and documented provenance and governance."
+    applies_when: "provider of a high-risk AI system using model training"
+    severity: high
+    weight: 3
+    check: "Dataset documentation shows provenance, representativeness, bias examination and data-quality controls for each dataset used."
+    evidence: "Data governance record / datasheets covering collection, preparation, bias analysis and gaps."
+    advice: "Document dataset lineage and run bias analysis; record gaps and how they are handled. Undocumented training data fails this control."
+
+  - id: "AIA-TECHDOC"
+    title: "Technical documentation (Art 11, Annex IV)"
+    requirement: "Draw up and keep up to date technical documentation per Annex IV demonstrating the high-risk system meets the requirements, before placing on the market."
+    applies_when: "provider of a high-risk AI system"
+    severity: high
+    weight: 3
+    check: "Annex IV technical documentation exists, is current, and covers system description, design, monitoring and performance."
+    evidence: "Annex IV technical documentation pack, version-controlled."
+    advice: "Build the Annex IV pack as a living document updated with each material change. Keep it ready for authority request."
+
+  - id: "AIA-LOGGING"
+    title: "Automatic record-keeping / logging (Art 12)"
+    requirement: "High-risk systems must technically allow automatic recording of events (logs) over their lifetime to ensure traceability appropriate to the intended purpose."
+    applies_when: "provider of a high-risk AI system"
+    severity: high
+    weight: 3
+    check: "The system generates and retains logs sufficient to trace operation and identify risk situations; retention is defined."
+    evidence: "Logging design spec plus sample retained logs with defined retention period."
+    advice: "Enable lifecycle event logging with a retention policy. Logs must support post-incident traceability, not just debugging."
+
+  - id: "AIA-TRANSP-HR"
+    title: "Transparency and instructions for use (Art 13)"
+    requirement: "High-risk systems must be sufficiently transparent for deployers to interpret output, and accompanied by clear instructions for use covering capabilities, limitations and oversight measures."
+    applies_when: "provider of a high-risk AI system"
+    severity: high
+    weight: 3
+    check: "Instructions for use exist stating intended purpose, performance, limitations, and required human-oversight measures."
+    evidence: "Instructions-for-use document shipped with the system."
+    advice: "Write deployer-facing instructions including known limitations and oversight steps. Generic marketing copy does not qualify."
+
+  - id: "AIA-OVERSIGHT"
+    title: "Human oversight (Art 14)"
+    requirement: "High-risk systems must be designed so natural persons can effectively oversee them, including the ability to intervene, override, or stop the system."
+    applies_when: "provider of a high-risk AI system; deployer assigns competent overseers"
+    severity: high
+    weight: 3
+    check: "Oversight controls (stop, override, monitor) are designed in, and the deployer has assigned trained persons to exercise them."
+    evidence: "Oversight design description plus deployer assignment and training records."
+    advice: "Provide intervention and stop controls; deployer must name and train overseers. Automation-bias mitigation must be addressed."
+
+  - id: "AIA-ACCURACY"
+    title: "Accuracy, robustness, cybersecurity (Art 15)"
+    requirement: "High-risk systems must achieve an appropriate level of accuracy, robustness and cybersecurity, consistent across the lifecycle, and resilient to errors and adversarial manipulation (incl. data poisoning, model evasion)."
+    applies_when: "provider of a high-risk AI system"
+    severity: high
+    weight: 3
+    check: "Accuracy metrics are declared, robustness and adversarial-resilience testing performed, and cybersecurity controls documented."
+    evidence: "Test reports for accuracy/robustness, declared metrics in instructions, security assessment."
+    advice: "Declare accuracy metrics and test against adversarial and failure conditions. Undeclared performance fails Art 15."
+
+  - id: "AIA-QMS"
+    title: "Quality management system (Art 17)"
+    requirement: "Providers of high-risk systems must put a documented quality management system in place covering compliance strategy, design control, testing, and post-market activities."
+    applies_when: "provider of a high-risk AI system"
+    severity: medium
+    weight: 2
+    check: "A documented QMS exists covering the Art 17 elements and is operational."
+    evidence: "QMS documentation and procedures."
+    advice: "Document a QMS proportionate to the organisation; it can build on ISO 9001 / ISO 42001 where present."
+
+  - id: "AIA-CONFORMITY"
+    title: "Conformity assessment and CE marking (Art 43, 47, 48)"
+    requirement: "Before market placement, high-risk systems must undergo the applicable conformity assessment, carry CE marking, and have an EU declaration of conformity drawn up."
+    applies_when: "provider of a high-risk AI system before placing on the market"
+    severity: high
+    weight: 3
+    check: "Conformity assessment completed (self-assessment or notified body as applicable), CE mark affixed, EU declaration of conformity signed."
+    evidence: "Signed EU declaration of conformity and conformity-assessment record."
+    advice: "Determine the assessment route per Annex VI/VII; complete it before launch. CE marking without an assessment is non-compliant."
+
+  - id: "AIA-REGISTER"
+    title: "EU database registration (Art 49, 71)"
+    requirement: "Providers (and certain deployers) of high-risk systems in Annex III must register the system in the EU database before placing on the market or putting into service."
+    applies_when: "provider/deployer of an Annex III high-risk AI system"
+    severity: medium
+    weight: 2
+    check: "A registration entry exists in the EU database for each in-scope high-risk system."
+    evidence: "EU database registration confirmation."
+    advice: "Register Annex III systems before go-live. Track registration as a launch gate."
+
+  - id: "AIA-DEPLOYER"
+    title: "Deployer obligations (Art 26)"
+    requirement: "Deployers of high-risk systems must use them per instructions, ensure input data relevance, maintain human oversight, monitor operation, keep logs, and inform affected persons where required."
+    applies_when: "deployer of a high-risk AI system"
+    severity: high
+    weight: 3
+    check: "Deployer follows instructions for use, monitors the system, retains logs under its control, and has an oversight and incident-escalation process."
+    evidence: "Deployer operating procedure, monitoring records, retained logs."
+    advice: "Operate strictly within the provider's instructions; do not repurpose. Off-label use can make the deployer a provider."
+
+  - id: "AIA-FRIA"
+    title: "Fundamental rights impact assessment (Art 27)"
+    requirement: "Certain deployers (public bodies and specified private actors) of high-risk systems must perform a fundamental rights impact assessment before first use."
+    applies_when: "deployer that is a public body or in-scope private actor using a high-risk AI system"
+    severity: medium
+    weight: 2
+    check: "A FRIA is completed and documented before deployment for in-scope deployers."
+    evidence: "Completed FRIA document."
+    advice: "Run the FRIA before first use; it complements but does not replace a GDPR DPIA."
+
+  - id: "AIA-POSTMARKET"
+    title: "Post-market monitoring and incident reporting (Art 72, 73)"
+    requirement: "Providers must maintain a post-market monitoring system and report serious incidents and malfunctions to the competent authority within the prescribed deadlines."
+    applies_when: "provider of a high-risk AI system"
+    severity: high
+    weight: 3
+    check: "A post-market monitoring plan exists and a serious-incident reporting procedure with defined timelines is in place."
+    evidence: "Post-market monitoring plan and incident-reporting procedure / log."
+    advice: "Set up monitoring and an incident triage path now. Serious incidents have short statutory reporting windows."
+
+  - id: "AIA-GPAI"
+    title: "General-purpose AI model obligations (Art 53)"
+    requirement: "Providers of GPAI models must keep up-to-date technical documentation, provide information to downstream providers, put a copyright policy in place, and publish a sufficiently detailed summary of training content."
+    applies_when: "provider of a general-purpose AI model"
+    severity: high
+    weight: 3
+    check: "GPAI technical docs, downstream information package, copyright policy, and public training-content summary all exist and are current."
+    evidence: "GPAI documentation set, copyright policy, published training-data summary."
+    advice: "Prepare the GPAI documentation set and the public training-content summary using the AI Office template. Open-source models have narrowed but not zero duties."
+
+  - id: "AIA-GPAI-SYSTEMIC"
+    title: "GPAI with systemic risk (Art 55)"
+    requirement: "Providers of GPAI models with systemic risk must perform model evaluations including adversarial testing, assess and mitigate systemic risks, report serious incidents, and ensure adequate cybersecurity protection."
+    applies_when: "provider of a GPAI model classified as systemic-risk (e.g. above the compute threshold or designated)"
+    severity: critical
+    weight: 5
+    check: "State-of-the-art evaluations and adversarial testing are performed, systemic-risk mitigation is documented, incident reporting and model-level cybersecurity are in place."
+    evidence: "Model evaluation and red-team reports, systemic-risk mitigation plan, cybersecurity assessment, incident records."
+    advice: "Treat as critical: red-team the model, document systemic-risk mitigations, and notify the AI Office of designation triggers. Map to the GPAI Code of Practice."
+
+  - id: "AIA-TRANSP-AI"
+    title: "Disclose AI interaction (Art 50)"
+    requirement: "Providers must ensure systems intended to interact directly with natural persons inform them that they are interacting with an AI system, unless obvious from context."
+    applies_when: "provider of an AI system that interacts directly with natural persons (e.g. chatbot)"
+    severity: medium
+    weight: 2
+    check: "A clear AI-disclosure notice is presented to users at the point of interaction."
+    evidence: "Screenshot / UX copy of the AI-interaction disclosure."
+    advice: "Add a visible 'you are talking to an AI' notice at the start of the interaction. Burying it in terms of service is insufficient."
+
+  - id: "AIA-SYNTH-LABEL"
+    title: "Mark synthetic content (Art 50)"
+    requirement: "Providers of generative AI must ensure synthetic audio, image, video or text output is marked in a machine-readable format as artificially generated or manipulated."
+    applies_when: "provider of a generative AI system producing synthetic content"
+    severity: medium
+    weight: 2
+    check: "Generated outputs carry a machine-readable marker (e.g. watermark / provenance metadata) identifying them as AI-generated."
+    evidence: "Technical description of the marking/watermarking mechanism and verification sample."
+    advice: "Embed machine-readable provenance (e.g. C2PA) in generated outputs. Interoperability and robustness of the marker are expected."
+
+  - id: "AIA-DEEPFAKE"
+    title: "Disclose deepfakes and AI-generated public-interest text (Art 50)"
+    requirement: "Deployers must disclose that image, audio or video content is a deepfake, and that AI-generated text published to inform the public on matters of public interest is artificially generated, subject to limited exceptions."
+    applies_when: "deployer publishing deepfake or public-interest AI-generated content"
+    severity: medium
+    weight: 2
+    check: "Deepfake and in-scope AI-generated public text are accompanied by a clear disclosure to recipients."
+    evidence: "Published disclosure label on the deepfake / generated content."
+    advice: "Label deepfakes and public-interest AI text at publication. Artistic/creative exceptions are narrow, disclose by default."
+
+  - id: "AIA-LITERACY"
+    title: "AI literacy (Art 4)"
+    requirement: "Providers and deployers must take measures to ensure a sufficient level of AI literacy among staff and others operating AI systems on their behalf."
+    applies_when: "any provider or deployer of an AI system"
+    severity: low
+    weight: 1
+    check: "An AI literacy / training measure is in place for staff operating or overseeing AI systems."
+    evidence: "Training records or AI literacy programme description."
+    advice: "Roll out role-appropriate AI literacy training and keep attendance records. This obligation applies regardless of risk tier."
+
+  - id: "AIA-TIMELINE"
+    title: "Phased application dates"
+    requirement: "Track the staggered entry into application: Art 5 prohibitions and Art 4 literacy from 2 Feb 2025; GPAI (Art 53/55) and governance from 2 Aug 2025; most high-risk and remaining rules from 2 Aug 2026; Annex I-embedded high-risk systems from 2 Aug 2027."
+    applies_when: "any in-scope actor planning compliance milestones"
+    severity: medium
+    weight: 2
+    check: "A compliance roadmap maps each obligation to its applicable date and the organisation's readiness against it."
+    evidence: "Dated compliance roadmap aligned to the AI Act application phases."
+    advice: "Sequence work by application date: prohibitions and literacy first, then GPAI, then high-risk. Do not defer everything to 2026."

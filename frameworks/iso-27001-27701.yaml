@@ -1,0 +1,183 @@
+framework: "ISO/IEC 27001 + 27701 for AI/LLM software"
+reference: "ISO/IEC 27001:2022 (Annex A) + ISO/IEC 27701:2019 (PIMS extension)"
+scope: "Information security and privacy management for software that builds, integrates or operates LLM/AI systems (API keys, model vendors, prompt/response data, PII)"
+controls:
+  - id: "A.5.15-ACCESS"
+    title: "Access control"
+    requirement: "Restrict access to information, AI systems and admin interfaces on a need-to-know, least-privilege basis (Annex A 5.15)."
+    applies_when: "any system with more than one user or privilege level"
+    severity: high
+    weight: 3
+    check: "Access policy exists; roles map to least privilege; no shared admin accounts; access reviewed periodically."
+    evidence: "Access control policy, RBAC/role matrix, periodic access review log."
+    advice: "Define roles, remove standing admin, enforce least privilege, schedule quarterly access reviews."
+
+  - id: "A.5.16-IDENTITY"
+    title: "Identity and authentication"
+    requirement: "Manage the full identity lifecycle and enforce strong authentication (MFA) for users and services (Annex A 5.16, 5.17, 8.5)."
+    applies_when: "any system with authenticated users or service accounts"
+    severity: high
+    weight: 3
+    check: "Unique identities per user/service; MFA on privileged and remote access; joiner/mover/leaver process deprovisions promptly."
+    evidence: "IdP config, MFA enforcement policy, offboarding checklist with timestamps."
+    advice: "Enforce MFA on all admin and remote access; automate deprovisioning on offboarding."
+
+  - id: "A.8.24-SECRETS"
+    title: "Secrets and key management"
+    requirement: "Protect cryptographic keys and credentials (LLM API keys, tokens) across their lifecycle (Annex A 8.24); never store secrets in source or logs (8.9)."
+    applies_when: "system uses API keys, tokens or other credentials"
+    severity: critical
+    weight: 5
+    check: "Secrets held in a vault/secret manager, not in code, env files in VCS, or logs; rotation policy exists; scoped least-privilege keys."
+    evidence: "Secret manager config, secret-scanning CI output (clean), rotation schedule."
+    advice: "Move keys to a secret manager, add secret-scanning to CI, rotate exposed keys, scope keys per service."
+
+  - id: "A.8.15-LOGGING"
+    title: "Logging"
+    requirement: "Produce, protect and retain logs of user activity, exceptions and security events (Annex A 8.15)."
+    applies_when: "any production system handling data or auth"
+    severity: high
+    weight: 3
+    check: "Auth, admin and security events logged with timestamp and actor; logs tamper-protected; retention defined; no secrets/PII leaked into logs."
+    evidence: "Logging config, sample sanitized log, retention policy."
+    advice: "Log auth and admin events centrally, protect against tampering, scrub secrets and PII from log output."
+
+  - id: "A.8.16-MONITORING"
+    title: "Monitoring"
+    requirement: "Monitor systems for anomalous behaviour and potential security incidents (Annex A 8.16)."
+    applies_when: "production system with external exposure or sensitive data"
+    severity: medium
+    weight: 2
+    check: "Alerting on anomalies (auth failures, rate spikes, error bursts); someone owns alert response."
+    evidence: "Monitoring dashboards, alert rules, on-call/owner assignment."
+    advice: "Add alerting on auth failures and traffic anomalies; assign an owner for alert triage."
+
+  - id: "A.8.25-SECURE-DEV"
+    title: "Secure development lifecycle"
+    requirement: "Establish and apply secure development rules across the lifecycle (Annex A 8.25, 8.28 secure coding)."
+    applies_when: "team develops or modifies software"
+    severity: high
+    weight: 3
+    check: "Secure coding standard exists; code review required; dependency and SAST scanning in CI; input validation at boundaries."
+    evidence: "SDLC policy, PR review records, CI scan results."
+    advice: "Mandate code review, add SAST/dependency scanning to CI, document a secure coding standard."
+
+  - id: "A.8.28-LLM-INPUT"
+    title: "Prompt and output handling"
+    requirement: "Validate and sanitize untrusted input and treat LLM output as untrusted to mitigate prompt injection and unsafe execution (Annex A 8.28, 8.26)."
+    applies_when: "system passes user or external data into an LLM, or executes/renders LLM output"
+    severity: high
+    weight: 3
+    check: "Untrusted input is bounded/sanitized; LLM output is not blindly executed, rendered as HTML, or used in privileged actions without checks."
+    evidence: "Input handling code, output guardrails, injection test cases."
+    advice: "Treat model output as untrusted: validate, escape on render, gate privileged tool calls behind explicit checks."
+
+  - id: "A.5.19-SUPPLIER"
+    title: "Supplier and LLM vendor security"
+    requirement: "Manage information security risks in supplier relationships, including LLM/model providers (Annex A 5.19, 5.21, 5.22)."
+    applies_when: "system depends on external LLM APIs, model hosts or subprocessors"
+    severity: high
+    weight: 3
+    check: "Vendor inventory exists; data-use and retention terms reviewed; vendor certifications (SOC 2 / ISO 27001) verified; service monitored."
+    evidence: "Supplier register, signed terms/DPA, vendor security attestations."
+    advice: "Inventory LLM vendors, confirm data is not used for training without consent, verify their certifications and retention terms."
+
+  - id: "A.5.12-CLASSIFY"
+    title: "Data classification"
+    requirement: "Classify information by sensitivity and label it so handling rules apply consistently (Annex A 5.12, 5.13)."
+    applies_when: "system handles data of mixed sensitivity (PII, secrets, public)"
+    severity: medium
+    weight: 2
+    check: "Classification scheme exists; data flows (incl. data sent to LLM APIs) mapped to classification; handling rules per level."
+    evidence: "Classification policy, data flow/inventory mapping."
+    advice: "Define classes (public/internal/confidential/PII), map what is sent to external models, block sensitive classes from leaving."
+
+  - id: "A.8.24-ENCRYPT-DATA"
+    title: "Encryption in transit and at rest"
+    requirement: "Use cryptography to protect data in transit and at rest per a defined policy (Annex A 8.24). This control covers data-protection use of cryptography; key and secret lifecycle is A.8.24-SECRETS."
+    applies_when: "system stores or transmits sensitive data or PII"
+    severity: critical
+    weight: 5
+    check: "TLS enforced on all external/internal traffic; data and backups encrypted at rest; strong algorithms; no plaintext sensitive storage."
+    evidence: "TLS config, storage/backup encryption settings, crypto policy."
+    advice: "Enforce TLS everywhere, enable at-rest encryption on databases and backups, retire weak ciphers."
+
+  - id: "A.8.13-BACKUP"
+    title: "Backup and recovery"
+    requirement: "Maintain and test backups to support recovery from loss or ransomware (Annex A 8.13)."
+    applies_when: "system holds data whose loss would be material"
+    severity: medium
+    weight: 2
+    check: "Backups run on schedule, are encrypted, stored separately, and restore is tested."
+    evidence: "Backup schedule, encryption config, restore-test record."
+    advice: "Automate encrypted backups to separate storage and test a restore at least annually."
+
+  - id: "A.5.24-INCIDENT"
+    title: "Incident management"
+    requirement: "Plan, respond to and learn from information security incidents (Annex A 5.24 to 5.28)."
+    applies_when: "any production system"
+    severity: high
+    weight: 3
+    check: "Incident response plan with roles and contacts; breach notification path defined; incidents logged and reviewed post-mortem."
+    evidence: "IR plan, incident log, post-incident review records."
+    advice: "Write an IR plan with named roles and a breach-notification timeline, run a tabletop exercise, log every incident."
+
+  - id: "A.8.8-VULN"
+    title: "Vulnerability and patch management"
+    requirement: "Identify and remediate technical vulnerabilities in a timely, risk-based way (Annex A 8.8)."
+    applies_when: "system runs code, dependencies or infrastructure"
+    severity: high
+    weight: 3
+    check: "Dependency and infra vulnerabilities scanned; SLAs for patching by severity; critical fixes applied promptly."
+    evidence: "Vulnerability scan reports, patch SLA policy, remediation tickets."
+    advice: "Scan dependencies and hosts continuously, set patch SLAs by severity, prioritise critical CVEs."
+
+  - id: "P.7.2.1-LAWFUL"
+    title: "PII processing: lawful basis and purpose"
+    requirement: "Determine and document the purpose and lawful basis for processing PII, and limit processing to that purpose (27701 7.2.1, 7.2.2, 7.4.1)."
+    applies_when: "processing personal data (as controller)"
+    severity: critical
+    weight: 5
+    check: "Each processing purpose has a documented lawful basis; PII is not used beyond the stated purpose; data minimization applied."
+    evidence: "Record of processing activities (RoPA), lawful-basis register."
+    advice: "Maintain a RoPA, document a lawful basis per purpose, drop PII fields not needed for the purpose."
+
+  - id: "P.7.3-DSR"
+    title: "PII principal rights"
+    requirement: "Enable data subjects to exercise access, correction, erasure and objection rights (27701 7.3.x)."
+    applies_when: "processing personal data of identifiable individuals (as controller)"
+    severity: high
+    weight: 3
+    check: "Documented process to handle access/erasure/correction requests within statutory deadlines; ability to locate and delete a subject's PII."
+    evidence: "DSR procedure, request log, deletion confirmation records."
+    advice: "Build a request intake and a reliable way to find and delete a subject's data across stores and model logs."
+
+  - id: "P.7.4.5-RETENTION"
+    title: "PII retention and disposal"
+    requirement: "Retain PII only as long as necessary and dispose of it securely (27701 7.4.5, 7.4.8)."
+    applies_when: "storing personal data, including prompts/responses containing PII"
+    severity: high
+    weight: 3
+    check: "Retention periods defined per data type; automated or scheduled deletion; LLM prompt/response logs containing PII covered by retention rules."
+    evidence: "Retention schedule, deletion job logs."
+    advice: "Set retention periods, automate deletion, ensure PII in model logs is not retained indefinitely."
+
+  - id: "P.8.5-PROCESSOR"
+    title: "Processor obligations and subprocessors"
+    requirement: "As processor, process PII only on documented controller instructions and disclose subprocessors, including LLM vendors (27701 8.2.2, 8.5.6, 8.5.7)."
+    applies_when: "acting as a processor on behalf of a customer/controller"
+    severity: high
+    weight: 3
+    check: "DPA in place; processing limited to instructions; subprocessor list (incl. model providers) disclosed and authorized; cross-border transfers safeguarded."
+    evidence: "Signed DPA, subprocessor register, transfer mechanism (SCCs/adequacy)."
+    advice: "Sign a DPA, publish a subprocessor list including LLM vendors, secure a transfer mechanism for non-adequate regions."
+
+  - id: "P.7.4.2-DPIA"
+    title: "Privacy risk assessment"
+    requirement: "Assess privacy risks (DPIA) for high-risk processing before deployment (27701 7.2.5)."
+    applies_when: "high-risk processing, e.g. large-scale PII, profiling, or sensitive categories via AI"
+    severity: medium
+    weight: 2
+    check: "DPIA completed for high-risk processing, identifying risks and mitigations; reviewed before go-live."
+    evidence: "DPIA document with risk register and sign-off."
+    advice: "Run a DPIA before deploying high-risk AI processing, record mitigations, get sign-off."

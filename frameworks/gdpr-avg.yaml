@@ -1,0 +1,157 @@
+framework: "GDPR / AVG"
+reference: "Regulation (EU) 2016/679 (2016)"
+scope: "Processing of personal data in AI/LLM systems: training data, prompts, outputs, and use of third-party LLM APIs"
+controls:
+  - id: "GDPR-LAWFUL-BASIS"
+    title: "Lawful basis"
+    requirement: "Each processing purpose has a documented Art 6 lawful basis (consent, contract, legal obligation, vital/public interest, or legitimate interest)."
+    applies_when: "processing personal data"
+    severity: critical
+    weight: 5
+    check: "Every AI use of personal data (training, inference, prompts) maps to one named Art 6 basis in the record of processing."
+    evidence: "Record of Processing Activities (Art 30) listing purpose and lawful basis per activity."
+    advice: "Pick one basis per purpose; for legitimate interest run and record a balancing test (LIA)."
+  - id: "GDPR-SPECIAL-CATEGORY"
+    title: "Special category data"
+    requirement: "Art 9 data (health, ethnicity, biometrics, political/religious, sexual orientation) needs an Art 9(2) exception on top of the Art 6 basis."
+    applies_when: "special category personal data present in training data, prompts, or outputs"
+    severity: critical
+    weight: 5
+    check: "No Art 9 data enters the model or prompts unless an Art 9(2) condition (e.g. explicit consent) is documented."
+    evidence: "Art 9 condition record, or data-flow proof that special categories are excluded/filtered."
+    advice: "Filter special categories at ingestion; if needed, obtain explicit consent and log it."
+  - id: "GDPR-PURPOSE-LIMITATION"
+    title: "Purpose limitation"
+    requirement: "Art 5(1)(b): personal data collected for one purpose is not reused for an incompatible AI purpose without a new basis."
+    applies_when: "reusing existing personal data for AI training or inference"
+    severity: high
+    weight: 3
+    check: "Training/inference purpose matches the original collection purpose, or a compatibility assessment exists."
+    evidence: "Compatibility assessment or fresh consent for the AI purpose."
+    advice: "Run a compatibility test before repurposing CRM/HR data for model training."
+  - id: "GDPR-DATA-MINIMISATION"
+    title: "Data minimisation"
+    requirement: "Art 5(1)(c): only personal data necessary for the purpose is processed; prompts and training sets are not over-collected."
+    applies_when: "building training data or sending prompts containing personal data"
+    severity: high
+    weight: 3
+    check: "Prompts and datasets are scoped to the minimum fields needed; no bulk dumping of full records."
+    evidence: "Field-level data inventory showing necessity per field; prompt redaction policy."
+    advice: "Strip identifiers and irrelevant fields before training or prompting; pseudonymise where possible."
+  - id: "GDPR-PII-TO-EXTERNAL-LLM"
+    title: "PII sent to external LLM API"
+    requirement: "Sending personal data to a third-party LLM endpoint is a disclosure requiring a lawful basis, a processor agreement, and transfer safeguards."
+    applies_when: "prompts or context containing personal data leave the organisation to a hosted LLM provider"
+    severity: critical
+    weight: 5
+    check: "Personal data only reaches an external LLM where a DPA is signed, the basis is recorded, and transfers are covered; otherwise data is redacted/pseudonymised first."
+    evidence: "DPA with the provider, prompt-redaction or DLP config, data-flow diagram of prompt egress."
+    advice: "Redact or tokenise PII pre-send, or use an EU-region/self-hosted model with a signed DPA."
+  - id: "GDPR-PROCESSOR-DPA"
+    title: "Processor agreement"
+    requirement: "Art 28: any third party processing personal data on your behalf (LLM API, vector DB, annotation vendor) is bound by a written DPA."
+    applies_when: "a third party processes personal data for you"
+    severity: critical
+    weight: 5
+    check: "A signed Art 28 DPA exists for each processor and forbids training on your data without instruction."
+    evidence: "Executed DPAs covering each LLM/vector/annotation vendor."
+    advice: "Sign the provider DPA and confirm in writing your prompts are not used for their model training."
+  - id: "GDPR-INTL-TRANSFER"
+    title: "International transfers"
+    requirement: "Chapter V (Art 44-46): transfers outside the EEA need an adequacy decision, SCCs, or BCRs plus a transfer impact assessment."
+    applies_when: "personal data leaves the EEA, e.g. prompts hit a US-hosted LLM"
+    severity: high
+    weight: 3
+    check: "Each non-EEA transfer is backed by adequacy or SCCs and a TIA covering government-access risk."
+    evidence: "SCCs/adequacy reference plus TIA per transfer destination."
+    advice: "Prefer an EU-region endpoint; otherwise put SCCs and a TIA in place before sending data."
+  - id: "GDPR-DPIA"
+    title: "DPIA"
+    requirement: "Art 35: a DPIA is required for high-risk processing, including large-scale profiling and systematic AI evaluation of individuals."
+    applies_when: "high-risk AI processing: large-scale, profiling, or automated evaluation of people"
+    severity: high
+    weight: 3
+    check: "A DPIA is completed and signed off before deployment of high-risk AI processing."
+    evidence: "Completed DPIA with risk assessment, mitigations, and sign-off."
+    advice: "Run the DPIA in design phase; consult the DPA if residual risk stays high (Art 36)."
+  - id: "GDPR-ADM-PROFILING"
+    title: "Automated decision-making"
+    requirement: "Art 22: no solely automated decision with legal/significant effect unless contract, law, or explicit consent applies, plus human-review and contest rights."
+    applies_when: "AI makes or materially drives a decision about a person without human review"
+    severity: critical
+    weight: 5
+    check: "Decisions with significant effect have meaningful human involvement, or an Art 22 exception plus safeguards are documented."
+    evidence: "Decision-flow showing human review; safeguard and contest procedure."
+    advice: "Insert a real human reviewer with authority to override, and give the data subject a route to contest."
+  - id: "GDPR-TRANSPARENCY"
+    title: "Transparency"
+    requirement: "Art 13-14: inform individuals that AI processes their data, the purposes, the logic of automated decisions, and their rights."
+    applies_when: "personal data is processed by AI"
+    severity: high
+    weight: 3
+    check: "Privacy notice discloses AI use, automated decision logic, and data subject rights."
+    evidence: "Published privacy notice covering AI processing and Art 22 logic."
+    advice: "Add an AI/automated-decision section to the privacy notice in plain language."
+  - id: "GDPR-DSR-ACCESS"
+    title: "Right of access and portability"
+    requirement: "Art 15/20: individuals can obtain their personal data held in prompts, logs, and datasets, in portable form where applicable."
+    applies_when: "personal data stored in prompt logs, training sets, or AI outputs"
+    severity: high
+    weight: 3
+    check: "An access request can locate and return personal data across prompt logs and training stores within one month."
+    evidence: "DSAR procedure plus a search/export capability over AI data stores."
+    advice: "Index prompt logs and datasets by data subject so retrieval is feasible, not manual guesswork."
+  - id: "GDPR-DSR-ERASURE"
+    title: "Right to erasure"
+    requirement: "Art 17: individuals can have personal data erased from prompt logs, datasets, and downstream stores, with limits where retraining is disproportionate."
+    applies_when: "personal data retained in AI logs, datasets, or a trained model"
+    severity: high
+    weight: 3
+    check: "Erasure requests remove data from logs and datasets; model retraining/exclusion impact is assessed and documented."
+    evidence: "Erasure workflow covering logs, vector stores, and dataset records."
+    advice: "Delete from logs and stores promptly; record the technical limits of removing data already baked into weights."
+  - id: "GDPR-DSR-OBJECTION"
+    title: "Right to object"
+    requirement: "Art 21: individuals can object to processing based on legitimate interest, including profiling, and to direct-marketing profiling absolutely."
+    applies_when: "AI profiling or legitimate-interest based processing"
+    severity: medium
+    weight: 2
+    check: "An objection stops the relevant AI processing for that individual unless overriding grounds are documented."
+    evidence: "Objection-handling procedure and suppression list."
+    advice: "Wire objections to a suppression flag the inference pipeline honours."
+  - id: "GDPR-RETENTION"
+    title: "Storage limitation"
+    requirement: "Art 5(1)(e): personal data in prompt logs and datasets is kept only as long as needed, then deleted or anonymised."
+    applies_when: "retaining prompts, outputs, or training data containing personal data"
+    severity: medium
+    weight: 2
+    check: "Defined retention periods exist for prompt logs and datasets, enforced by automated deletion."
+    evidence: "Retention schedule plus deletion job logs for AI data stores."
+    advice: "Set TTLs on prompt/output logs and anonymise datasets past their retention window."
+  - id: "GDPR-SECURITY"
+    title: "Security of processing"
+    requirement: "Art 32: appropriate technical and organisational measures protect personal data in AI pipelines (encryption, access control, pseudonymisation)."
+    applies_when: "processing personal data in any AI pipeline"
+    severity: critical
+    weight: 5
+    check: "Personal data in transit and at rest is encrypted, access is role-restricted, and prompt logs are protected like other sensitive stores."
+    evidence: "Encryption config, access-control matrix, and security review of the AI stack."
+    advice: "Encrypt prompt/log storage, restrict access by role, and pseudonymise where the use case allows."
+  - id: "GDPR-BREACH"
+    title: "Breach notification"
+    requirement: "Art 33-34: a personal data breach (e.g. prompt-log leak, model data exfiltration) is notified to the DPA within 72 hours, and to individuals if high risk."
+    applies_when: "a personal data breach affecting AI systems occurs"
+    severity: high
+    weight: 3
+    check: "A breach procedure covers AI-specific vectors and meets the 72-hour DPA notification window."
+    evidence: "Incident response plan and breach register covering AI data stores."
+    advice: "Add prompt-log and model-leak scenarios to the breach playbook with the 72-hour clock."
+  - id: "GDPR-CONTROLLER-PROCESSOR-ROLE"
+    title: "Role determination"
+    requirement: "Roles (controller, joint controller, processor) are determined for each AI processing activity, including the relationship with the LLM provider."
+    applies_when: "any AI processing involving more than one party"
+    severity: medium
+    weight: 2
+    check: "Each activity records who is controller vs processor and on what basis the LLM provider acts."
+    evidence: "Role mapping per processing activity referenced in the DPA."
+    advice: "Confirm the LLM provider acts as processor under your instruction, not as an independent controller."

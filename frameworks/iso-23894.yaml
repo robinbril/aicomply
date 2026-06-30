@@ -1,0 +1,166 @@
+framework: "ISO/IEC 23894 AI Risk Management"
+reference: "ISO/IEC 23894:2023"
+scope: "Risk management for AI systems across their lifecycle, integrated with ISO 31000; applies to any product developing, deploying or using AI including LLMs."
+controls:
+  - id: "INT-1"
+    title: "Integration with org risk framework"
+    requirement: "AI risk management is embedded in the organization's existing ISO 31000-aligned risk framework, not run as a siloed exercise."
+    applies_when: "organization develops, deploys or operates any AI system"
+    severity: high
+    weight: 3
+    check: "Auditor confirms AI risks appear in the enterprise risk register and use the same likelihood/impact scales and escalation paths as other risks."
+    evidence: "Enterprise risk register entries for AI; risk framework doc referencing AI scope."
+    advice: "Map AI risks onto existing risk taxonomy and governance; reuse the same scales and review cadence."
+  - id: "OBJ-1"
+    title: "Objectives and context established"
+    requirement: "AI objectives, intended use, stakeholders, and the internal/external context that shapes risk are documented before risk assessment."
+    applies_when: "any AI system in design or procurement"
+    severity: medium
+    weight: 2
+    check: "Auditor verifies a documented statement of intended purpose, out-of-scope uses, affected stakeholders, and operating context exists per system."
+    evidence: "System purpose/context document; stakeholder map."
+    advice: "Write a one-page intended-use and context note per AI system; state non-intended uses explicitly."
+  - id: "RID-1"
+    title: "AI-specific risk identification"
+    requirement: "Risk identification covers AI-specific sources: bias/fairness, data quality, robustness, drift, explainability, security of models, misuse, and automation bias."
+    applies_when: "any AI system risk assessment"
+    severity: critical
+    weight: 5
+    check: "Auditor confirms the risk identification record explicitly addresses each AI-specific source category, not only generic IT risk."
+    evidence: "Risk identification log/workshop output tagged by AI risk source."
+    advice: "Use a checklist of AI risk sources (Annex-style) to drive identification; record one or more risks per category or justify n/a."
+  - id: "RID-BIAS"
+    title: "Bias and fairness risk"
+    requirement: "Risks of unfair, biased or discriminatory outputs are identified and assessed against affected groups and the use context."
+    applies_when: "AI output affects people or decisions about people"
+    severity: critical
+    weight: 5
+    check: "Auditor verifies a bias assessment exists with defined fairness criteria and tested subgroups."
+    evidence: "Bias/fairness assessment; subgroup test results."
+    advice: "Define fairness metrics for the use case, test across relevant subgroups, document residual bias and mitigations."
+  - id: "RID-DATA"
+    title: "Data quality and provenance risk"
+    requirement: "Risks from training/input data quality, representativeness, provenance and licensing are identified and assessed."
+    applies_when: "AI system trained on or conditioned by data"
+    severity: high
+    weight: 3
+    check: "Auditor confirms data sources are documented with quality, representativeness and provenance assessed for the intended use."
+    evidence: "Data documentation/datasheet; provenance and licence records."
+    advice: "Maintain a dataset datasheet; assess gaps and representativeness against the deployment population."
+  - id: "RID-ROBUST"
+    title: "Robustness and adversarial risk"
+    requirement: "Risks from out-of-distribution inputs, adversarial manipulation and prompt injection are identified for the deployment environment."
+    applies_when: "AI system accepts external or untrusted inputs"
+    severity: high
+    weight: 3
+    check: "Auditor verifies robustness/adversarial scenarios (incl. prompt injection for LLMs) are assessed and tested."
+    evidence: "Robustness/red-team test results; adversarial scenario log."
+    advice: "Red-team the system against OOD and injection inputs; add input filtering and output guards where risk is material."
+  - id: "RID-DRIFT"
+    title: "Drift and performance degradation risk"
+    requirement: "Risk that model or data distribution drifts post-deployment, degrading performance or safety, is identified."
+    applies_when: "AI system in production with changing inputs or environment"
+    severity: high
+    weight: 3
+    check: "Auditor confirms drift is a tracked risk with defined performance thresholds and a monitoring plan."
+    evidence: "Drift monitoring plan; performance threshold definitions."
+    advice: "Define baseline performance and drift thresholds; schedule periodic re-evaluation against fresh data."
+  - id: "RID-EXPL"
+    title: "Explainability and transparency risk"
+    requirement: "Risk arising from insufficient explainability/transparency for the intended audience and decisions is identified."
+    applies_when: "AI output informs decisions requiring justification or oversight"
+    severity: medium
+    weight: 2
+    check: "Auditor verifies explainability needs are defined per stakeholder and the system meets them or the gap is treated."
+    evidence: "Explainability requirements; model/output documentation provided to users."
+    advice: "State the explanation each audience needs; provide rationale, confidence or sourcing for material decisions."
+  - id: "RID-MISUSE"
+    title: "Misuse and automation bias risk"
+    requirement: "Risks of foreseeable misuse, over-reliance and automation bias (humans deferring to AI) are identified."
+    applies_when: "humans act on or are influenced by AI output"
+    severity: high
+    weight: 3
+    check: "Auditor confirms foreseeable misuse and over-reliance scenarios are documented with mitigations."
+    evidence: "Misuse analysis; user guidance/warnings on appropriate reliance."
+    advice: "List foreseeable misuse cases; add usage constraints, confidence signaling and human-check prompts to counter over-reliance."
+  - id: "RID-SEC"
+    title: "Model and pipeline security risk"
+    requirement: "Security risks to models, weights, prompts and the AI supply chain (incl. third-party/foundation models) are identified."
+    applies_when: "AI system uses or exposes models, weights, prompts or external model providers"
+    severity: high
+    weight: 3
+    check: "Auditor verifies model assets and third-party model dependencies are in scope of security risk assessment."
+    evidence: "AI asset inventory; supply-chain/third-party model risk assessment."
+    advice: "Inventory model assets and external providers; assess data egress, weight exposure and provider terms."
+  - id: "ANL-1"
+    title: "Risk analysis"
+    requirement: "Identified AI risks are analyzed for likelihood and consequence using defined criteria, accounting for AI-specific uncertainty."
+    applies_when: "after risk identification for any AI system"
+    severity: high
+    weight: 3
+    check: "Auditor verifies each material risk has a documented likelihood/consequence rating with rationale."
+    evidence: "Risk analysis records with ratings and rationale."
+    advice: "Rate each risk on the org scales; note uncertainty/confidence where AI behavior is hard to predict."
+  - id: "EVAL-1"
+    title: "Risk evaluation against criteria"
+    requirement: "Analyzed risks are evaluated against acceptance criteria to decide which require treatment and their priority."
+    applies_when: "after risk analysis"
+    severity: high
+    weight: 3
+    check: "Auditor confirms documented risk acceptance criteria exist and each risk is marked accept/treat with priority."
+    evidence: "Risk evaluation record; defined acceptance thresholds."
+    advice: "Set explicit acceptance thresholds; record accept/treat decisions and rank treatment by priority."
+  - id: "TRT-1"
+    title: "Risk treatment"
+    requirement: "Treatment options are selected and implemented for non-acceptable risks, with residual risk assessed and approved."
+    applies_when: "any risk evaluated as requiring treatment"
+    severity: critical
+    weight: 5
+    check: "Auditor verifies a treatment plan with owners, controls implemented, and residual risk formally accepted by an authority."
+    evidence: "Risk treatment plan; implemented control evidence; signed residual-risk acceptance."
+    advice: "For each treated risk assign an owner and control, implement it, then record and sign off residual risk."
+  - id: "TRT-HITL"
+    title: "Human oversight as treatment"
+    requirement: "Where AI risk is material, human oversight or intervention controls are defined and effective for the decision context."
+    applies_when: "AI output drives significant or irreversible actions"
+    severity: high
+    weight: 3
+    check: "Auditor confirms oversight controls (review, override, kill-switch) exist and oversight roles can actually intervene."
+    evidence: "Oversight control design; evidence of human review/override in operation."
+    advice: "Define who reviews/overrides and when; ensure they have the information and authority to intervene in time."
+  - id: "MON-1"
+    title: "Monitoring and review"
+    requirement: "AI risks, controls and system performance are monitored on a defined cadence, and risk assessments are reviewed after change or incident."
+    applies_when: "AI system in operation"
+    severity: high
+    weight: 3
+    check: "Auditor verifies a monitoring cadence, performance/drift metrics, and review triggers (change, incident) are defined and followed."
+    evidence: "Monitoring logs/dashboards; review records tied to changes or incidents."
+    advice: "Set a review cadence and re-assess triggers (model update, data shift, incident); log monitoring outputs."
+  - id: "MON-INC"
+    title: "Incident handling and feedback"
+    requirement: "AI incidents and near-misses are captured, fed back into risk assessment, and used to update controls."
+    applies_when: "AI system in operation"
+    severity: medium
+    weight: 2
+    check: "Auditor confirms an incident log exists and incidents lead to documented risk/control updates."
+    evidence: "AI incident log; corrective actions linked to risk updates."
+    advice: "Log AI incidents and near-misses; route each into the risk register and update controls."
+  - id: "REC-1"
+    title: "Recording and reporting"
+    requirement: "Risk management activities and outcomes are recorded and communicated to relevant stakeholders and decision-makers."
+    applies_when: "throughout the AI risk management process"
+    severity: medium
+    weight: 2
+    check: "Auditor verifies risk records are maintained, version-controlled, and reported to accountable owners."
+    evidence: "Risk register with history; stakeholder risk reports."
+    advice: "Keep a versioned risk register and report status to accountable owners on a regular cadence."
+  - id: "ACC-1"
+    title: "Accountability and roles"
+    requirement: "Roles and accountability for AI risk decisions, including risk acceptance, are assigned to identified persons or functions."
+    applies_when: "any AI system under risk management"
+    severity: high
+    weight: 3
+    check: "Auditor confirms named roles own AI risk activities and risk acceptance, with authority matching responsibility."
+    evidence: "RACI or roles matrix for AI risk; risk acceptance sign-off records."
+    advice: "Name owners for assessment, treatment and acceptance; ensure acceptors hold the authority for that risk level."

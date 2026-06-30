@@ -1,0 +1,193 @@
+framework: "ISO/IEC 42001 AI Management System"
+reference: "ISO/IEC 42001:2023"
+scope: "Establishing, implementing, maintaining and continually improving an AI management system (AIMS) for organizations that develop, provide or use AI systems"
+controls:
+  - id: "AIMS-CONTEXT"
+    title: "Context and AIMS scope"
+    requirement: "Determine internal/external issues, interested parties and their requirements relevant to AI, and define the documented scope of the AIMS (Clause 4)."
+    applies_when: "operating any AI management system"
+    severity: high
+    weight: 3
+    check: "Documented AIMS scope exists, references interested parties and their requirements, and matches the AI systems actually in use."
+    evidence: "AIMS scope document, interested-parties / requirements register."
+    advice: "Write a scope statement listing in-scope AI systems, roles (developer/provider/user) and boundaries; map stakeholders to their requirements."
+
+  - id: "AI-POLICY"
+    title: "AI policy"
+    requirement: "Top management establishes an AI policy appropriate to the organization, aligned with objectives, committing to requirements and continual improvement; communicated and available (Clause 5.2)."
+    applies_when: "operating any AI management system"
+    severity: critical
+    weight: 5
+    check: "Approved AI policy exists, is signed off by top management, references applicable obligations and is accessible to staff."
+    evidence: "AI policy document with approval record and distribution/acknowledgement log."
+    advice: "Draft and have leadership approve an AI policy; publish it and record staff acknowledgement; review on a fixed cycle."
+
+  - id: "AI-ROLES"
+    title: "Roles, responsibilities and authorities"
+    requirement: "Assign and communicate responsibilities and authorities for the AIMS, including oversight of AI systems (Clause 5.3, A.3)."
+    applies_when: "operating any AI management system"
+    severity: high
+    weight: 3
+    check: "A RACI or equivalent assigns named owners for AI policy, risk, impact assessment and operations; staff can identify their AI responsibilities."
+    evidence: "Org chart / RACI, role descriptions referencing AI duties."
+    advice: "Define accountable owners for each AIMS process and document them; ensure no orphaned responsibilities."
+
+  - id: "AI-RISK-ASSESS"
+    title: "AI risk assessment"
+    requirement: "Define and apply a documented process to identify, analyse and evaluate AI risks against defined criteria (Clause 6.1.2)."
+    applies_when: "developing or deploying any AI system"
+    severity: critical
+    weight: 5
+    check: "A repeatable risk-assessment procedure exists with risk criteria, and completed risk assessments cover the AI systems in scope."
+    evidence: "Risk assessment procedure, risk register with scored AI risks."
+    advice: "Adopt a documented method with explicit acceptance criteria; run it per AI system and keep dated results."
+
+  - id: "AI-RISK-TREAT"
+    title: "AI risk treatment"
+    requirement: "Select risk treatment options and produce a Statement of Applicability covering Annex A controls, with justification for inclusion/exclusion (Clause 6.1.3)."
+    applies_when: "AI risks identified above the acceptance threshold"
+    severity: critical
+    weight: 5
+    check: "A Statement of Applicability lists each Annex A control with applicability, justification and implementation status; a treatment plan tracks actions."
+    evidence: "Statement of Applicability, risk treatment plan with owners and dates."
+    advice: "Map identified risks to Annex A controls; document each control's applicability and the residual-risk decision."
+
+  - id: "AI-IMPACT"
+    title: "AI system impact assessment"
+    requirement: "Assess potential impacts of AI systems on individuals, groups and society throughout the lifecycle, and document the results (Clause 6.1.4, A.5)."
+    applies_when: "AI system can affect individuals, groups or society"
+    severity: critical
+    weight: 5
+    check: "An impact assessment process is defined, and completed assessments exist for AI systems affecting people, covering affected parties and consequences."
+    evidence: "AI impact assessment procedure and completed assessment reports."
+    advice: "Run an impact assessment before deployment covering fairness, safety and societal effects; re-run on material change."
+
+  - id: "AI-OBJECTIVES"
+    title: "AI objectives and planning"
+    requirement: "Set measurable AI objectives consistent with the policy and plan how to achieve them (Clause 6.2)."
+    applies_when: "operating any AI management system"
+    severity: medium
+    weight: 2
+    check: "Documented AI objectives are measurable, assigned and have target dates with tracked progress."
+    evidence: "AI objectives register with metrics, owners and status."
+    advice: "Convert policy commitments into measurable objectives with owners and review intervals."
+
+  - id: "AI-COMPETENCE"
+    title: "Competence and awareness"
+    requirement: "Ensure personnel affecting AIMS performance are competent and aware of the policy and their contribution (Clause 7.2, 7.3)."
+    applies_when: "staff influence AI system design, operation or oversight"
+    severity: medium
+    weight: 2
+    check: "Competence requirements are defined per AI role and training/qualification records exist for relevant staff."
+    evidence: "Competence matrix, training records, awareness materials."
+    advice: "Define required skills per AI role and log training; close gaps with a development plan."
+
+  - id: "AI-DATA-MGMT"
+    title: "Data management for AI"
+    requirement: "Manage data used in AI systems: provenance, quality, preparation and governance appropriate to purpose (A.7)."
+    applies_when: "AI system relies on training, tuning or operational data"
+    severity: critical
+    weight: 5
+    check: "Documented controls cover data provenance, quality criteria, preparation steps and access; records trace datasets used per AI system."
+    evidence: "Data governance procedure, dataset documentation / data sheets, lineage records."
+    advice: "Document each dataset's source, quality checks and preparation; restrict and log access; record what feeds each model."
+
+  - id: "AI-LIFECYCLE"
+    title: "AI system lifecycle management"
+    requirement: "Define and apply responsible development processes across requirements, design, verification, validation, deployment and operation (A.6)."
+    applies_when: "developing or providing an AI system"
+    severity: high
+    weight: 3
+    check: "A documented lifecycle defines objectives, design criteria and verification/validation gates; records show each phase was performed for the AI system."
+    evidence: "Lifecycle procedure, design and V&V records, release approvals."
+    advice: "Adopt staged lifecycle gates with documented acceptance criteria; require sign-off before each transition."
+
+  - id: "AI-DEPLOY"
+    title: "Deployment and operational controls"
+    requirement: "Define conditions and controls for putting AI systems into operation, including responsible-use information for deployers/users (A.6, A.9)."
+    applies_when: "an AI system is released into operation"
+    severity: high
+    weight: 3
+    check: "Documented deployment criteria and operating instructions exist; users/deployers receive information on intended use and limitations."
+    evidence: "Deployment runbook, intended-use and limitations documentation provided to users."
+    advice: "Gate deployment on defined criteria and ship usage/limitation guidance to operators and end users."
+
+  - id: "AI-MONITOR"
+    title: "Operational monitoring and event handling"
+    requirement: "Monitor AI systems in operation, log behaviour as needed and respond to incidents, malfunctions and performance drift (A.6, Clause 8)."
+    applies_when: "AI system is in production use"
+    severity: critical
+    weight: 5
+    check: "Monitoring is in place with defined metrics/thresholds, logs are retained, and an incident/event handling process is documented and exercised."
+    evidence: "Monitoring config, retained logs, incident records and post-incident actions."
+    advice: "Define performance and safety thresholds, enable logging and alerting, and run a documented response process for events."
+
+  - id: "AI-SUPPLIER"
+    title: "Third-party and supplier AI management"
+    requirement: "Manage AI-related suppliers and third parties: allocate responsibilities and ensure their AI components meet organizational requirements (A.10)."
+    applies_when: "AI components, models or services are sourced externally"
+    severity: high
+    weight: 3
+    check: "Supplier requirements and responsibility allocation are documented in agreements; due diligence/assessment records exist for AI suppliers."
+    evidence: "Supplier contracts with AI clauses, vendor assessment records, responsibility matrix."
+    advice: "Set AI requirements in contracts, assess suppliers before use and record who owns each obligation across the chain."
+
+  - id: "AI-TRANSPARENCY"
+    title: "Transparency and information to interested parties"
+    requirement: "Provide appropriate information to users and affected parties about the AI system, including its nature, capabilities and limitations (A.8, A.9)."
+    applies_when: "users or affected parties interact with or are subject to the AI system"
+    severity: high
+    weight: 3
+    check: "Documentation discloses system purpose, capabilities, limitations and, where relevant, that an AI is in use; provided to the right audiences."
+    evidence: "User-facing documentation, model/system cards, disclosure notices."
+    advice: "Publish a system/model card and disclosure notices stating purpose, limits and AI involvement appropriate to each audience."
+
+  - id: "AI-DOCUMENTATION"
+    title: "Documented information control"
+    requirement: "Create and control documented information required by the AIMS, including version, access and retention (Clause 7.5)."
+    applies_when: "operating any AI management system"
+    severity: medium
+    weight: 2
+    check: "AIMS documents are version-controlled, access-controlled and retained; the document set is current and complete."
+    evidence: "Document register, version history, access and retention settings."
+    advice: "Maintain a controlled document repository with versioning, ownership and retention rules."
+
+  - id: "AI-PERF-EVAL"
+    title: "Monitoring, measurement and evaluation"
+    requirement: "Determine what to monitor and measure for the AIMS and evaluate AI performance and AIMS effectiveness (Clause 9.1)."
+    applies_when: "operating any AI management system"
+    severity: high
+    weight: 3
+    check: "Defined metrics for AIMS effectiveness are measured at planned intervals and results are recorded and reviewed."
+    evidence: "Measurement plan, metric reports, evaluation records."
+    advice: "Define what, how and when you measure AIMS effectiveness; capture results and act on them."
+
+  - id: "AI-INTERNAL-AUDIT"
+    title: "Internal audit"
+    requirement: "Conduct internal audits at planned intervals to confirm the AIMS conforms to requirements and is effectively implemented (Clause 9.2)."
+    applies_when: "operating any AI management system"
+    severity: high
+    weight: 3
+    check: "An audit programme exists, audits are performed on schedule by impartial auditors, and findings are tracked to closure."
+    evidence: "Audit programme, audit reports, nonconformity and corrective-action records."
+    advice: "Schedule independent internal audits against ISO/IEC 42001, log findings and drive them to closure."
+
+  - id: "AI-MGMT-REVIEW"
+    title: "Management review"
+    requirement: "Top management reviews the AIMS at planned intervals for suitability, adequacy and effectiveness, with documented outputs (Clause 9.3)."
+    applies_when: "operating any AI management system"
+    severity: medium
+    weight: 2
+    check: "Management review meetings are held on schedule, cover the required inputs and produce documented decisions and actions."
+    evidence: "Management review minutes with inputs, decisions and action items."
+    advice: "Hold periodic leadership reviews covering audit results, risks, objectives and incidents; record decisions."
+
+  - id: "AI-IMPROVEMENT"
+    title: "Nonconformity and continual improvement"
+    requirement: "Address nonconformities with corrective action and continually improve the AIMS (Clause 10)."
+    applies_when: "operating any AI management system"
+    severity: high
+    weight: 3
+    check: "Nonconformities are recorded with root-cause analysis and corrective actions verified for effectiveness; improvement actions are tracked."
+    evidence: "Corrective action register, root-cause records, improvement log."
+    advice: "Log every nonconformity, analyse root cause, implement and verify corrective action, and feed lessons into improvement."
