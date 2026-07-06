@@ -61,7 +61,7 @@ Full model in `frameworks/scoring.md`. In short:
 Two PreToolUse hooks for Claude Code, regex-only, no LLM, no tokens, so they can run on every tool call:
 
 - `hooks/pii-redact.js` redacts PII and blocks secrets before a payload leaves the machine (outbound web, mail, file writes to synced folders).
-- `hooks/compliance-guard.js` prints a one-line advisory tied to a real control id when it sees a risky move (PII heading to an external LLM, logging switched off, a secret going into a repo).
+- `hooks/compliance-guard.js` prints a one-line advisory tied to a framework control reference when it sees a risky move (PII heading to an external LLM, logging switched off, a secret going into a repo). A handful of those references are ISO/GDPR context labels, not yet scorable ids in `frameworks/iso-27001-27701.yaml`; the advisory text marks those `not scored`.
 
 Wire them with the snippet in `hooks/install.md` (Node 18+). They are a cheap front line; the audit is the full sweep.
 

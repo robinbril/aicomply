@@ -59,7 +59,10 @@ SEVERITY_WEIGHTS = {
 
 # yaml is stdlib-absent; parse the minimal subset we need with a hand-rolled reader.
 # The YAML files use a strict structure: each control is a block under "controls:"
-# with id, severity, weight fields. We parse only what score.py needs.
+# with id, severity, weight fields, one value per line. We parse only what score.py
+# needs; fields that don't match this format (e.g. multi-line block scalars) are
+# skipped, with a stderr warning for the block-scalar case since that's silent
+# otherwise.
 def _parse_yaml_frameworks(frameworks_dir: str) -> list[dict]:
     """
     Minimal YAML parser for frameworks/*.yaml.
@@ -131,6 +134,17 @@ def _parse_yaml_frameworks(frameworks_dir: str) -> list[dict]:
                     current_control["weight"] = int(stripped.split(":", 1)[1].strip())
                 except ValueError:
                     current_control["weight"] = 1
+            elif stripped.lstrip().endswith((": |", ": >")) and ":" in stripped:
+                # Block scalars (multi-line "requirement: |" / ">") aren't supported by
+                # this minimal parser: the continuation lines don't match any of the
+                # "    <field>:" prefixes above and would otherwise vanish silently.
+                field = stripped.strip().split(":", 1)[0]
+                print(
+                    f"WARNING: {fname} control {current_control.get('id', '?')} uses a "
+                    f"block scalar ('{field}: |' or '>') which this minimal parser cannot "
+                    f"read; convert it to a single-line quoted string.",
+                    file=sys.stderr,
+                )
 
         if current_control is not None:
             if "id" in current_control:

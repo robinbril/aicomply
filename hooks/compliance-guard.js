@@ -12,13 +12,16 @@ const { findSecrets, isStructurallyGuarded, WRITE_TOOLS, PII_KEYWORD_RE } = requ
 // ---------------------------------------------------------------------------
 // Control reference map: id -> short label
 // Draws from ISO 27001:2022 (A.x.x) and GDPR articles.
-// IDs are scorable against frameworks/iso-27001-27701.yaml.
+// Only the ids in SCORABLE_IDS below exist in frameworks/iso-27001-27701.yaml
+// under that exact id; the rest are background references for context and
+// are printed with a "(not scored)" suffix so they aren't mistaken for a
+// lookup-able control id.
 // ---------------------------------------------------------------------------
 const CTRL = {
   'ISO27001-A.8.12':  'Data leakage prevention',
   'ISO27001-A.8.20':  'Network security controls',
-  'ISO27001-A.8.24':  'Use of cryptography',
-  'ISO27001-A.8.25':  'Secure development lifecycle',
+  'A.8.24-SECRETS':   'Secrets and key management',
+  'A.8.25-SECURE-DEV': 'Secure development lifecycle',
   'ISO27001-A.8.3':   'Information access restriction',
   'ISO27001-A.5.10':  'Acceptable use of information assets',
   'GDPR-Art.5.1f':    'Integrity and confidentiality',
@@ -29,8 +32,14 @@ const CTRL = {
   'A.8.15-LOGGING':   'Logging',
 };
 
+// ids that exist verbatim as `id:` in frameworks/iso-27001-27701.yaml and can
+// therefore be scored; everything else in CTRL is advisory-only context.
+const SCORABLE_IDS = new Set(['A.5.15-ACCESS', 'A.8.15-LOGGING', 'A.8.24-SECRETS', 'A.8.25-SECURE-DEV']);
+
 function ctrl(id) {
-  return `[${id}: ${CTRL[id] || id}]`;
+  const label = CTRL[id] || id;
+  const suffix = SCORABLE_IDS.has(id) ? '' : ', not scored';
+  return `[${id}: ${label}${suffix}]`;
 }
 
 // ---------------------------------------------------------------------------
@@ -99,7 +108,7 @@ function checkSecretsToRepo(toolName, toolInput) {
   const types = [...new Set(secrets.map((s) => s.type))].join(', ');
   return {
     block: true,
-    message: `BLOCKED ${ctrl('ISO27001-A.8.24')} ${ctrl('GDPR-Art.32')}: Secret(s) detected (${types}) about to be written to a VCS or public path (${path}). Remove credentials.`,
+    message: `BLOCKED ${ctrl('A.8.24-SECRETS')} ${ctrl('GDPR-Art.32')}: Secret(s) detected (${types}) about to be written to a VCS or public path (${path}). Remove credentials.`,
   };
 }
 
