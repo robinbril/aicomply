@@ -49,6 +49,10 @@ Full model in `frameworks/scoring.md`. In short:
 - **Critical cap:** a single failed in-scope critical caps that framework at 39. You cannot average a leak away.
 - Overall = the mean of the in-scope frameworks.
 
+**Roadmap mode (opt-in).** For a young system that documents what it will build, `--roadmap-credit --repo <root>` gives a verified `planned` control 75% credit and softens the critical cap from 39 to 79. Claims are checked on disk (git-tracked file, verbatim quote, control absent rather than violated) and every result shows an adjusted and a strict score. See `frameworks/scoring.md`.
+
+**Whole-repo scan.** Every audit starts with a ground-truth stage: fetch, then inventory all branches, worktrees, uncommitted changes and stashes. A fix that exists on an unmerged branch is found and credited as `planned` (`fixed-unmerged`), instead of the audit failing the control because only `main` was read.
+
 | Band | Score | Meaning |
 |---|---|---|
 | Compliant | 90-100 | audit-ready, minor gaps |
