@@ -42,9 +42,17 @@ Exit code: 0 if every in-scope framework scores >= 40 with no critical fail, els
 
 import json
 import os
+import subprocess
 import sys
 
 CRITICAL_CAP = 39
+
+# Roadmap credit (opt-in via --roadmap-credit). A control that is not built yet but is
+# committed to in a tracked repo document earns PLANNED_CREDIT of its weight. A critical
+# that is only planned (never violated today) caps the framework at PLANNED_CRITICAL_CAP
+# instead of CRITICAL_CAP, so it can reach "Partial" but never "Substantial".
+PLANNED_CREDIT = 0.75
+PLANNED_CRITICAL_CAP = 79
 
 # Expected weights per severity level.
 # Used to warn when a YAML control's weight deviates from the canonical mapping.
@@ -174,29 +182,84 @@ def _load_findings(path: str) -> dict:
     return out
 
 
-def score_framework(fw: dict, findings: dict) -> dict:
+def _quote_in(text: str, quote) -> bool:
+    return " ".join(str(quote).split()) in " ".join(text.split())
+
+
+def _roadmap_ok(finding: dict, repo_root: str | None) -> tuple[bool, str]:
+    """A `planned` verdict earns credit only if its evidence checks out in the repo.
+
+    gap "absent": nothing exists yet, a tracked file documents the plan.
+    gap "fixed-unmerged": the fix exists on another branch/ref that is not merged yet;
+    roadmap_ref.ref names that branch or sha and the file is read from it.
+    gap "violating": built wrongly or violated today with no fix anywhere; never credited.
     """
-    Returns:
-    {
-        "framework": str,
-        "score": float | None,
-        "raw_score": float | None,
-        "pass_weight": int,
-        "total_weight": int,
-        "critical_fails": [{"id": str, "title": str}],
-        "counts": {"pass": int, "fail": int, "na": int, "unknown": int},
-        "capped": bool,
-    }
+    gap = finding.get("gap")
+    if gap not in ("absent", "fixed-unmerged"):
+        return False, "gap must be 'absent' or 'fixed-unmerged': a control violated today with no fix is not offset by a roadmap"
+    ref = finding.get("roadmap_ref")
+    if not isinstance(ref, dict) or not ref.get("path") or not ref.get("quote"):
+        return False, "roadmap_ref needs path and quote"
+    git_ref = ref.get("ref")
+    if gap == "fixed-unmerged" and not git_ref:
+        return False, "fixed-unmerged needs roadmap_ref.ref (the branch or sha holding the fix)"
+    if repo_root is None:
+        return False, "--repo is required to verify roadmap_ref"
+    rel = ref["path"]
+
+    if git_ref:
+        try:
+            proc = subprocess.run(
+                ["git", "-C", repo_root, "show", f"{git_ref}:{rel}"], capture_output=True
+            )
+        except OSError:
+            return False, "git is not available to read the ref"
+        if proc.returncode != 0:
+            return False, f"{rel} not found in {git_ref}"
+        if not _quote_in(proc.stdout.decode("utf-8", "replace"), ref["quote"]):
+            return False, f"quote not found verbatim in {git_ref}:{rel}"
+        return True, ""
+
+    full = os.path.join(repo_root, rel)
+    if not os.path.isfile(full):
+        return False, f"{rel} not found in repo"
+    with open(full, encoding="utf-8", errors="replace") as f:
+        if not _quote_in(f.read(), ref["quote"]):
+            return False, f"quote not found verbatim in {rel}"
+    try:
+        tracked = subprocess.run(
+            ["git", "-C", repo_root, "ls-files", "--error-unmatch", rel],
+            capture_output=True,
+        ).returncode == 0
+    except OSError:
+        tracked = False
+    if not tracked:
+        return False, f"{rel} is not tracked in git"
+    return True, ""
+
+
+def score_framework(
+    fw: dict, findings: dict, roadmap_credit: bool = False, repo_root: str | None = None
+) -> dict:
+    """
+    Returns framework, score (roadmap-adjusted when roadmap_credit is on), strict_score
+    (every `planned` treated as `fail`), raw_score, pass_weight, planned_weight,
+    total_weight, critical_fails (cap drivers), planned_criticals, rejected_planned,
+    counts and capped.
     """
     pass_weight = 0
+    planned_weight = 0
     total_weight = 0
     critical_fails = []
-    counts = {"pass": 0, "fail": 0, "na": 0, "unknown": 0}
+    planned_criticals = []
+    rejected_planned = []
+    counts = {"pass": 0, "fail": 0, "planned": 0, "na": 0, "unknown": 0}
 
     for ctrl in fw["controls"]:
         cid = ctrl["id"]
         weight = ctrl.get("weight", 1)
         severity = ctrl.get("severity", "medium")
+        entry = {"id": cid, "title": ctrl.get("title", cid)}
 
         # Warn if weight deviates from the canonical SEVERITY_WEIGHTS mapping.
         expected = SEVERITY_WEIGHTS.get(severity)
@@ -223,35 +286,57 @@ def score_framework(fw: dict, findings: dict) -> dict:
 
         total_weight += weight
 
+        if status == "planned":
+            ok, reason = _roadmap_ok(finding, repo_root) if roadmap_credit else (False, "")
+            if ok:
+                counts["planned"] += 1
+                planned_weight += weight
+                if severity == "critical":
+                    planned_criticals.append(entry)
+                continue
+            if roadmap_credit:
+                rejected_planned.append({**entry, "reason": reason})
+            status = "fail"
+
         if status == "pass":
             counts["pass"] += 1
             pass_weight += weight
         elif status == "fail":
             counts["fail"] += 1
             if severity == "critical":
-                critical_fails.append({"id": cid, "title": ctrl.get("title", cid)})
+                critical_fails.append(entry)
         else:
             counts["unknown"] += 1
 
     if total_weight == 0:
         raw_score = None
+        strict_raw = None
     else:
-        raw_score = round(100 * pass_weight / total_weight, 1)
+        raw_score = round(100 * (pass_weight + PLANNED_CREDIT * planned_weight) / total_weight, 1)
+        strict_raw = round(100 * pass_weight / total_weight, 1)
 
-    # Any failed in-scope critical caps the framework at CRITICAL_CAP, regardless
-    # of the weighted mean. A single leak cannot be averaged away by green controls.
-    capped = bool(critical_fails)
-    score = min(raw_score, CRITICAL_CAP) if (capped and raw_score is not None and raw_score > CRITICAL_CAP) else raw_score
+    # An unplanned failed critical caps the framework at CRITICAL_CAP. A critical that is
+    # only planned caps at PLANNED_CRITICAL_CAP. A single leak cannot be averaged away.
+    cap = CRITICAL_CAP if critical_fails else PLANNED_CRITICAL_CAP if planned_criticals else None
+    score = min(raw_score, cap) if (cap is not None and raw_score is not None) else raw_score
+    strict_capped = bool(critical_fails or planned_criticals)
+    strict_score = (
+        min(strict_raw, CRITICAL_CAP) if (strict_capped and strict_raw is not None) else strict_raw
+    )
 
     return {
         "framework": fw["framework"],
         "score": score,
+        "strict_score": strict_score,
         "raw_score": raw_score,
         "pass_weight": pass_weight,
+        "planned_weight": planned_weight,
         "total_weight": total_weight,
         "critical_fails": critical_fails,
+        "planned_criticals": planned_criticals,
+        "rejected_planned": rejected_planned,
         "counts": counts,
-        "capped": capped,
+        "capped": cap is not None,
     }
 
 
@@ -269,49 +354,78 @@ def _band(score) -> str:
 
 def overall_score(fw_results: list[dict]) -> dict:
     # Overall = unweighted mean of the post-cap per-framework scores that are not null.
-    scored = [r["score"] for r in fw_results if r["score"] is not None]
-    if not scored:
-        score = None
-    else:
-        score = round(sum(scored) / len(scored), 1)
-    all_critical_fails = []
-    for r in fw_results:
-        all_critical_fails.extend(r["critical_fails"])
+    def mean(key: str):
+        vals = [r[key] for r in fw_results if r[key] is not None]
+        return round(sum(vals) / len(vals), 1) if vals else None
+
+    score = mean("score")
+    strict = mean("strict_score")
+    critical_fails = [cf for r in fw_results for cf in r["critical_fails"]]
+    planned_criticals = [pc for r in fw_results for pc in r["planned_criticals"]]
     return {
         "score": score,
         "band": _band(score),
-        "critical_fails": all_critical_fails,
+        "strict_score": strict,
+        "strict_band": _band(strict),
+        "critical_fails": critical_fails,
+        "planned_criticals": planned_criticals,
         "capped": any(r["capped"] for r in fw_results),
     }
 
 
-def _render(fw_results: list[dict], overall: dict) -> str:
+def _render(fw_results: list[dict], overall: dict, roadmap_credit: bool = False) -> str:
     lines = []
     col_fw = max((len(r["framework"]) for r in fw_results), default=9) + 2
+    strict_hdr = f"  {'Strict':>6}" if roadmap_credit else ""
+    counts_hdr = "Counts (P/F/R/N/U)" if roadmap_credit else "Counts (P/F/N/U)"
     header = (
-        f"{'Framework':<{col_fw}}  {'Score':>6}  {'Raw':>6}  {'Band':<13}  "
-        f"{'Capped':>6}  Counts (P/F/N/U)"
+        f"{'Framework':<{col_fw}}  {'Score':>6}{strict_hdr}  {'Raw':>6}  {'Band':<13}  "
+        f"{'Capped':>6}  {counts_hdr}"
     )
     lines.append(header)
     lines.append("-" * len(header))
+
+    def fmt(v):
+        return f"{v:.1f}" if v is not None else "N/A"
+
     for r in fw_results:
-        score_str = f"{r['score']:.1f}" if r["score"] is not None else "N/A"
-        raw_str = f"{r['raw_score']:.1f}" if r["raw_score"] is not None else "N/A"
-        capped_str = "YES" if r["capped"] else "no"
         c = r["counts"]
-        counts_str = f"{c['pass']}/{c['fail']}/{c['na']}/{c['unknown']}"
+        counts_str = (
+            f"{c['pass']}/{c['fail']}/{c['planned']}/{c['na']}/{c['unknown']}"
+            if roadmap_credit
+            else f"{c['pass']}/{c['fail']}/{c['na']}/{c['unknown']}"
+        )
+        strict_col = f"  {fmt(r['strict_score']):>6}" if roadmap_credit else ""
         lines.append(
-            f"{r['framework']:<{col_fw}}  {score_str:>6}  {raw_str:>6}  "
-            f"{_band(r['score']):<13}  {capped_str:>6}  {counts_str}"
+            f"{r['framework']:<{col_fw}}  {fmt(r['score']):>6}{strict_col}  {fmt(r['raw_score']):>6}  "
+            f"{_band(r['score']):<13}  {'YES' if r['capped'] else 'no':>6}  {counts_str}"
         )
     lines.append("-" * len(header))
-    ov = f"{overall['score']:.1f}" if overall["score"] is not None else "N/A"
-    lines.append(f"{'OVERALL':<{col_fw}}  {ov:>6}  {'':>6}  {overall['band']:<13}")
+    strict_col = f"  {fmt(overall['strict_score']):>6}" if roadmap_credit else ""
+    lines.append(
+        f"{'OVERALL':<{col_fw}}  {fmt(overall['score']):>6}{strict_col}  {'':>6}  {overall['band']:<13}"
+    )
+    if roadmap_credit:
+        lines.append(
+            f"\nScore = roadmap-adjusted (planned earns {int(PLANNED_CREDIT * 100)}% of its weight). "
+            f"Strict = every planned control counted as fail ({overall['strict_band']})."
+        )
 
     if overall["critical_fails"]:
         lines.append(f"\nCRITICAL FAILS (each caps its framework score to <={CRITICAL_CAP}):")
         for cf in overall["critical_fails"]:
             lines.append(f"  [{cf['id']}] {cf['title']}")
+    if overall["planned_criticals"]:
+        lines.append(
+            f"\nPLANNED CRITICALS (documented, not built; each caps its framework to <={PLANNED_CRITICAL_CAP}):"
+        )
+        for pc in overall["planned_criticals"]:
+            lines.append(f"  [{pc['id']}] {pc['title']}")
+    rejected = [rp for r in fw_results for rp in r["rejected_planned"]]
+    if rejected:
+        lines.append("\nREJECTED ROADMAP CLAIMS (scored as fail):")
+        for rp in rejected:
+            lines.append(f"  [{rp['id']}] {rp['reason']}")
     return "\n".join(lines)
 
 
@@ -326,10 +440,13 @@ def _machine(fw_results: list[dict], overall: dict, frameworks: list[dict]) -> d
                 "reference": fw_meta.get(r["framework"], {}).get("reference", ""),
                 "scope": fw_meta.get(r["framework"], {}).get("scope", ""),
                 "score": r["score"],
+                "strict_score": r["strict_score"],
                 "raw_score": r["raw_score"],
                 "band": _band(r["score"]),
                 "capped": r["capped"],
                 "critical_fails": r["critical_fails"],
+                "planned_criticals": r["planned_criticals"],
+                "rejected_planned": r["rejected_planned"],
                 "counts": r["counts"],
             }
             for r in fw_results
@@ -337,7 +454,13 @@ def _machine(fw_results: list[dict], overall: dict, frameworks: list[dict]) -> d
     }
 
 
-def main(findings_path: str, frameworks_dir: str | None = None, report_path: str | None = None) -> int:
+def main(
+    findings_path: str,
+    frameworks_dir: str | None = None,
+    report_path: str | None = None,
+    roadmap_credit: bool = False,
+    repo_root: str | None = None,
+) -> int:
     script_dir = os.path.dirname(os.path.abspath(__file__))
     if frameworks_dir is None:
         frameworks_dir = os.path.join(script_dir, "..", "frameworks")
@@ -345,10 +468,10 @@ def main(findings_path: str, frameworks_dir: str | None = None, report_path: str
     frameworks = _parse_yaml_frameworks(frameworks_dir)
     findings = _load_findings(findings_path)
 
-    fw_results = [score_framework(fw, findings) for fw in frameworks]
+    fw_results = [score_framework(fw, findings, roadmap_credit, repo_root) for fw in frameworks]
     overall = overall_score(fw_results)
 
-    table = _render(fw_results, overall)
+    table = _render(fw_results, overall, roadmap_credit)
     machine = _machine(fw_results, overall, frameworks)
     machine_json = json.dumps(machine, indent=2)
 
@@ -365,7 +488,7 @@ def main(findings_path: str, frameworks_dir: str | None = None, report_path: str
             f.write("\n```\n")
         print(f"\nReport written to {report_path}", file=sys.stderr)
 
-    # exit 1 if any in-scope framework has a critical fail or scores below 40
+    # exit 1 if any in-scope framework has an unplanned critical fail or scores below 40
     failed = any(
         r["critical_fails"] or (r["score"] is not None and r["score"] < 40)
         for r in fw_results
@@ -377,20 +500,25 @@ USAGE = (
     "Usage:\n"
     "  python score.py <findings.json>\n"
     "  python score.py --findings <findings.json> [--frameworks <dir>] [--report <out.md>]\n"
+    "                  [--roadmap-credit --repo <repo root>]\n"
     "  python score.py --test\n"
     "  python score.py --help\n\n"
     "findings.json: a JSON array of {id,status,...} verdicts, or an object keyed by\n"
-    "control id. status is one of pass | fail | na (legacy key 'result' also works).\n"
+    "control id. status is one of pass | fail | na | planned (legacy key 'result' also works).\n"
+    "planned only earns credit with --roadmap-credit --repo, see frameworks/scoring.md.\n"
 )
 
 
 def _parse_args(argv: list[str]) -> dict:
-    """Tiny flag parser: supports positional findings path and --findings/--frameworks/--report."""
-    opts = {"findings": None, "frameworks": None, "report": None}
+    """Tiny flag parser: positional findings path, value flags, and the --roadmap-credit switch."""
+    opts = {"findings": None, "frameworks": None, "report": None, "repo": None, "roadmap_credit": False}
     i = 0
     while i < len(argv):
         a = argv[i]
-        if a in ("--findings", "--frameworks", "--report"):
+        if a == "--roadmap-credit":
+            opts["roadmap_credit"] = True
+            i += 1
+        elif a in ("--findings", "--frameworks", "--report", "--repo"):
             if i + 1 >= len(argv):
                 raise ValueError(f"{a} requires a value")
             opts[a[2:]] = argv[i + 1]
@@ -402,6 +530,8 @@ def _parse_args(argv: list[str]) -> dict:
                 raise ValueError(f"unexpected extra argument: {a}")
             opts["findings"] = a
             i += 1
+    if opts["roadmap_credit"] and not opts["repo"]:
+        raise ValueError("--roadmap-credit requires --repo <repo root> to verify the roadmap evidence")
     return opts
 
 
@@ -507,6 +637,88 @@ controls:
         assert m["frameworks"][0]["reference"] == "Test Reference", "reference missing from machine output"
         assert m["frameworks"][0]["scope"] == "Test Scope", "scope missing from machine output"
 
+    # Roadmap credit: a planned control needs a verbatim quote from a git-tracked repo file.
+    with tempfile.TemporaryDirectory() as repo:
+        subprocess.run(["git", "-C", repo, "init", "-q"], check=True)
+        with open(os.path.join(repo, "ROADMAP.md"), "w", encoding="utf-8") as f:
+            f.write("Fase 4: DPIA en verwerkersregister opleveren voor Q4.\n")
+        with open(os.path.join(repo, "untracked.md"), "w", encoding="utf-8") as f:
+            f.write("Fase 9: DPIA.\n")
+        subprocess.run(["git", "-C", repo, "add", "ROADMAP.md"], check=True)
+        fw_rm = {
+            "framework": "RM",
+            "controls": [
+                {"id": "C", "severity": "critical", "weight": 5},
+                {"id": "H", "severity": "high", "weight": 3},
+                {"id": "M", "severity": "medium", "weight": 2},
+            ],
+        }
+        good = {"status": "planned", "gap": "absent",
+                "roadmap_ref": {"path": "ROADMAP.md", "quote": "DPIA en verwerkersregister"}}
+        base = {"H": {"status": "pass"}, "M": {"status": "pass"}}
+
+        # valid roadmap: raw = 100*(3+2+0.75*5)/10 = 87.5, planned critical caps at 79, strict stays 39
+        r = score_framework(fw_rm, {**base, "C": good}, True, repo)
+        assert r["score"] == PLANNED_CRITICAL_CAP, f"planned critical cap: got {r['score']}"
+        assert r["strict_score"] == CRITICAL_CAP, f"strict must ignore the roadmap: got {r['strict_score']}"
+        assert r["critical_fails"] == [] and len(r["planned_criticals"]) == 1
+
+        # planned without --roadmap-credit is a plain fail
+        r = score_framework(fw_rm, {**base, "C": good}, False, repo)
+        assert r["score"] == CRITICAL_CAP and r["counts"]["planned"] == 0
+
+        # every faked or weak claim is rejected and scored as fail
+        bad_claims = [
+            {**good, "roadmap_ref": {"path": "ROADMAP.md", "quote": "iets dat er niet staat"}},
+            {**good, "roadmap_ref": {"path": "untracked.md", "quote": "DPIA"}},
+            {**good, "roadmap_ref": {"path": "missing.md", "quote": "DPIA"}},
+            {**good, "gap": "violating"},
+            {"status": "planned", "gap": "absent"},
+        ]
+        for bad in bad_claims:
+            r = score_framework(fw_rm, {**base, "C": bad}, True, repo)
+            assert r["score"] == CRITICAL_CAP, f"bad claim must fail: {bad}"
+            assert r["rejected_planned"], f"bad claim must be reported: {bad}"
+
+    # fixed-unmerged: the fix lives on another branch, read from that ref
+    with tempfile.TemporaryDirectory() as repo:
+        def git(*a):
+            subprocess.run(["git", "-C", repo, "-c", "user.email=t@t", "-c", "user.name=t", *a], check=True, capture_output=True)
+        git("init", "-q", "-b", "main")
+        with open(os.path.join(repo, "a.txt"), "w", encoding="utf-8") as f:
+            f.write("main\n")
+        git("add", "a.txt")
+        git("commit", "-q", "-m", "init")
+        git("checkout", "-q", "-b", "fix/redactie")
+        with open(os.path.join(repo, "redactie.md"), "w", encoding="utf-8") as f:
+            f.write("Namen worden geredigeerd voor elke LLM-call.\n")
+        git("add", "redactie.md")
+        git("commit", "-q", "-m", "fix")
+        git("checkout", "-q", "main")
+        fw_fx = {"framework": "FX", "controls": [
+            {"id": "C", "severity": "critical", "weight": 5},
+            {"id": "H", "severity": "high", "weight": 3},
+        ]}
+        fixed = {"status": "planned", "gap": "fixed-unmerged",
+                 "roadmap_ref": {"path": "redactie.md", "quote": "Namen worden geredigeerd", "ref": "fix/redactie"}}
+        r = score_framework(fw_fx, {"H": {"status": "pass"}, "C": fixed}, True, repo)
+        assert r["score"] == PLANNED_CRITICAL_CAP and not r["rejected_planned"], f"fixed-unmerged must earn credit: {r}"
+        assert r["strict_score"] == 37.5, "strict must ignore an unmerged fix (3/8, below the cap)"
+        for bad in (
+            {**fixed, "roadmap_ref": {**fixed["roadmap_ref"], "ref": "no-such-branch"}},
+            {**fixed, "roadmap_ref": {**fixed["roadmap_ref"], "quote": "niet aanwezig"}},
+            {**fixed, "roadmap_ref": {"path": "redactie.md", "quote": "Namen worden geredigeerd"}},
+        ):
+            r = score_framework(fw_fx, {"H": {"status": "pass"}, "C": bad}, True, repo)
+            assert r["score"] == 37.5 and r["rejected_planned"] and r["critical_fails"], f"bad fixed-unmerged claim: {bad}"
+
+    assert _parse_args(["f.json", "--roadmap-credit", "--repo", "r"])["roadmap_credit"] is True
+    try:
+        _parse_args(["f.json", "--roadmap-credit"])
+        raise AssertionError("--roadmap-credit without --repo must be rejected")
+    except ValueError:
+        pass
+
     # Flag parser
     assert _parse_args(["f.json"])["findings"] == "f.json"
     assert _parse_args(["--findings", "f.json", "--report", "r.md"])["report"] == "r.md"
@@ -539,4 +751,12 @@ if __name__ == "__main__":
         print(f"error: no findings file given\n\n{USAGE}", file=sys.stderr)
         sys.exit(2)
 
-    sys.exit(main(opts["findings"], opts["frameworks"], opts["report"]))
+    sys.exit(
+        main(
+            opts["findings"],
+            opts["frameworks"],
+            opts["report"],
+            opts["roadmap_credit"],
+            opts["repo"],
+        )
+    )

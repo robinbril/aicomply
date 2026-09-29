@@ -23,6 +23,7 @@ Either way, fill the **Run brief** first. The brief is the only thing you edit p
 TARGET: <repo path or product name, e.g. ./ or "AcmeChat assistant">
 SYSTEM SUMMARY: <2-4 sentences: what the AI system does, who the users are, what data it touches, which models/providers it calls, deployment region>
 ROLE: <provider | deployer | importer | distributor, and controller | processor for GDPR>
+ROADMAP: off             # or "on": a not-yet-built control the repo documents as future work becomes `planned` (partial credit)
 EVIDENCE ROOTS: <where to look: source dirs, /docs, /infra, README, DPA folder, model config, .env.example, IaC>
 FRAMEWORKS: all          # or a subset: eu-ai-act, gdpr-avg, iso-42001, iso-23894, iso-27001-27701
 OUT: ./findings.json     # machine verdicts, consumed by scripts/score.py
@@ -37,6 +38,16 @@ If `SYSTEM SUMMARY` or `ROLE` is blank, **stop and ask** before gathering. Scope
 
 A workflow here is a named pipeline of stages. Each stage names the agents it spawns, the model, the inputs, and a strict output schema. Stages run in order; agents inside a stage run in parallel.
 
+### Stage 0: Ground truth (whole-repo scan, before any gathering)
+
+The audit judges the whole repository, not the one branch that happens to be checked out. Fixes often live on a branch that is not merged yet, and an audit of the wrong tree produces confident, wrong findings. Do this once, write it to `ground-truth.md`, and hand it to every gather agent:
+
+1. Pick the audited ref (default: the default branch HEAD) and record its sha and date. Run `git fetch --all` first; a stale or shallow clone is the most common source of false `fail`s.
+2. Inventory everything else that can hold evidence: `git branch -a --sort=-committerdate`, `git worktree list`, `git status --short` (uncommitted changes), `git stash list`, and sibling checkouts of the same remote.
+3. Give every gather agent this rule: search all refs, not only the checked-out tree (`git grep -n <pattern> <ref>` per candidate ref, or `git log --all -S<pattern>`). A control is `fail` or `violating` only after that whole-repo search came up empty.
+4. Evidence on the audited ref is a normal `pass`. Evidence only on another ref is `planned` with `gap: "fixed-unmerged"` and `roadmap_ref.ref` set to that branch or sha. Evidence only in uncommitted changes stays `fail` and is listed as a finding ("fix exists locally, commit it").
+5. The report states the audited sha, how many other refs were scanned, and every control that was rescued or left open by the whole-repo scan.
+
 ### Stage 1: Gather (parallel fan-out, one agent per framework)
 
 Spawn N agents, one per in-scope framework yaml. Each agent is **scoped to its own framework only** so contexts stay small and parallel.
@@ -48,10 +59,11 @@ Each gather agent does exactly this:
 2. For each control, decide scope first: does `applies_when` hold for this TARGET given ROLE and SYSTEM SUMMARY? If not, verdict is `na` with a one-line reason. Do not hunt for evidence on out-of-scope controls.
 3. For in-scope controls, search EVIDENCE ROOTS for the artifact named in `check`/`evidence`. Use grep/glob and read only the relevant lines. **Never dump whole files.** Cite `path:line` or a config key, not a paragraph.
 4. Emit `pass` only with a concrete citation. No citation, no pass: it is a `fail`. `pass` on assumption is the cardinal sin here.
+5. Only when the brief says `ROADMAP: on`, and only for a control that would otherwise be `fail`: search the repo docs (roadmap, phase files, architecture and handoff docs, ADRs, issue exports) for a concrete commitment to build it. If one exists and the control does not exist in the system today, emit `planned` with `gap: "absent"` and a `roadmap_ref` of `{path, quote}` (quote copied verbatim, one sentence). If the control is built but wrong, or violated today, emit `fail` with `gap: "violating"`. Never `planned` for a leak that is happening now.
 
 **Token discipline (enforced):** each agent returns only the JSON array below, max ~25 words of evidence per control. No prose preamble, no restating the requirement, no summary. The yaml already holds the requirement text; do not echo it.
 
-Gather output schema (per agent, JSON only):
+Search all refs per Stage 0 before concluding `fail`. Gather output schema (per agent, JSON only):
 
 ```json
 [
@@ -67,14 +79,14 @@ Gather output schema (per agent, JSON only):
 ]
 ```
 
-Allowed `status`: `pass` | `fail` | `na`. Nothing else.
+Allowed `status`: `pass` | `fail` | `na`, plus `planned` when `ROADMAP: on`. Nothing else. A `planned` verdict adds `"gap": "absent"` (or `"fixed-unmerged"` with `"ref": "<branch or sha>"` inside `roadmap_ref`) and `"roadmap_ref": {"path": "...", "quote": "..."}`.
 
 ### Stage 2: Adversarial verify (skeptic, fresh context)
 
 Spawn one verifier agent. It does **not** see Stage 1's reasoning, only the merged findings array and the same EVIDENCE ROOTS. Its job is to break the verdicts:
 
 - For every `pass`: re-open the cited `path:line`. Does the evidence actually satisfy the control's `check`, or is it adjacent/aspirational (a TODO, a comment, a policy that says "we should")? Downgrade unsupported passes to `fail`.
-- For every `fail`: spend one honest search for evidence the gatherer missed (a differently-named DPA, a config flag, a policy doc). Upgrade only with a real citation.
+- For every `fail`: spend one honest search for evidence the gatherer missed (a differently-named DPA, a config flag, a policy doc), across all refs from Stage 0 and not only the checked-out tree. Upgrade only with a real citation; a fix on an unmerged ref upgrades to `planned` + `fixed-unmerged`, never to `pass`.
 - For every `na`: re-test `applies_when` against ROLE and SYSTEM SUMMARY. A wrongly-scoped-out critical (e.g. marking AIA-PROHIB `na` without screening) flips back to in-scope.
 
 Verifier output: the **same schema** as Stage 1 plus a `verify` field per changed control:
@@ -82,6 +94,8 @@ Verifier output: the **same schema** as Stage 1 plus a `verify` field per change
 ```json
 { "id": "...", "status": "fail", "verify": "downgraded: src/llm/client.ts:42 comment is a TODO, not an implemented redaction", "...": "..." }
 ```
+
+- For every `planned` (ROADMAP on): open `roadmap_ref.path` and read the quote in context. It must be a concrete commitment (a named deliverable in a phase, task or ADR), not "we should", a wish list line or a heading. It must cover this control, not an adjacent one. Confirm the control truly does not exist today (`gap: absent`); a control that is present but broken is `fail` + `gap: violating`. Downgrade anything weaker to `fail`.
 
 The verifier's array is authoritative. Write it to `OUT` (findings.json).
 
@@ -92,6 +106,8 @@ The verifier's array is authoritative. Write it to `OUT` (findings.json).
    ```
    python scripts/score.py --findings ./findings.json --frameworks ./frameworks --report ./audit-report.md
    ```
+
+   With `ROADMAP: on`, add `--roadmap-credit --repo <TARGET repo root>`. The scorer then verifies every `planned` claim on disk and prints an adjusted **Score** and a **Strict** score side by side; report both.
 
    The model from `frameworks/scoring.md`: weighted mean per framework (critical=5, high=3, medium=2, low=1), `na` dropped from the denominator, any failed in-scope **critical** caps that framework at 39, overall = unweighted mean of non-null frameworks.
 
