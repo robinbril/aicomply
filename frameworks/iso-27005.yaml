@@ -1,0 +1,201 @@
+framework: "ISO/IEC 27005 Information security risk management"
+reference: "ISO/IEC 27005:2022"
+short: "ISO 27005"
+kind: "iso"
+source: "iso-27005"
+scope: "Managing information security risk for an AI product, covering context and criteria, identification, analysis, evaluation, treatment, and monitoring and communication"
+controls:
+  - id: "RM27005-PROCESS"
+    title: "Information security risk management process"
+    part: "Context and criteria"
+    clause: "Clause 6"
+    requirement: "Define and document an information security risk management process covering context establishment, assessment, treatment, communication and monitoring, aligned with the management system and applied repeatedly."
+    applies_when: "any organisation managing information security risk"
+    severity: critical
+    weight: 5
+    check: "A written risk management procedure exists, is approved by management and is the process actually used to produce the risk register."
+    evidence: "Risk management procedure, approved methodology, risk register produced under it."
+    advice: "Adopt a documented method and run it on a schedule rather than ad hoc."
+    owner: "CISO"
+
+  - id: "RM27005-CONTEXT"
+    title: "Establishing the external and internal context"
+    part: "Context and criteria"
+    clause: "Clause 7.2"
+    requirement: "Establish the internal and external context for risk management, including assets in scope, legal and contractual obligations, dependencies and stakeholder expectations."
+    applies_when: "starting or refreshing a risk assessment cycle"
+    severity: high
+    weight: 3
+    check: "The context statement names the scope, applicable legal and contractual obligations, key dependencies such as cloud and model providers, and stakeholders."
+    evidence: "Context and scope statement, obligations register, dependency list."
+    advice: "Write a short context statement for each assessment cycle and update it when the product, providers or regulations change."
+    owner: "CISO"
+
+  - id: "RM27005-CRITERIA"
+    title: "Risk criteria: impact, likelihood, risk acceptance"
+    part: "Context and criteria"
+    clause: "Clause 7.2, 7.3"
+    requirement: "Set criteria for consequence, likelihood and risk acceptance, and agree who has authority to accept risk."
+    applies_when: "performing any risk assessment"
+    severity: high
+    weight: 3
+    check: "Scales for impact and likelihood are defined, acceptance thresholds exist, and risk acceptance authority is assigned in writing."
+    evidence: "Risk criteria document, risk matrix, acceptance authority record."
+    advice: "Define scales and thresholds before scoring, and name who may accept which level of risk."
+    owner: "Top management"
+
+  - id: "RM27005-ASSET-INV"
+    title: "Identification of assets and their owners"
+    part: "Risk identification"
+    clause: "Clause 8.2"
+    requirement: "Identify the assets in scope, including information, applications, services and AI components such as models, training data and prompts, and assign an owner to each."
+    applies_when: "performing the risk identification step"
+    severity: high
+    weight: 3
+    check: "An asset inventory exists with owners and classification and covers data stores, services, models and third-party providers."
+    evidence: "Asset inventory, data classification, owner assignment."
+    advice: "Maintain the inventory from the real infrastructure and include AI assets such as model endpoints and prompt stores."
+    owner: "CISO"
+
+  - id: "RM27005-THREATS-VULN"
+    title: "Identification of threats, vulnerabilities and existing controls"
+    part: "Risk identification"
+    clause: "Clause 8.2"
+    requirement: "Identify threats and vulnerabilities relevant to the assets and the controls already in place, using sources such as incident history, threat intelligence and testing results."
+    applies_when: "performing the risk identification step"
+    severity: high
+    weight: 3
+    check: "Threat and vulnerability sources are documented and feed the risk list, including AI-specific threats such as prompt injection and data exfiltration through model APIs."
+    evidence: "Threat catalogue, vulnerability scan and pen test reports, incident history, existing controls list."
+    advice: "Use a standard threat catalogue plus your own incident history and extend it with AI-specific threats."
+    owner: "CISO"
+
+  - id: "RM27005-SCENARIOS"
+    title: "Risk scenarios and consequences"
+    part: "Risk identification"
+    clause: "Clause 8.2"
+    requirement: "Describe risk scenarios that link a threat, a vulnerability and an asset to a consequence for confidentiality, integrity or availability, and for the organisation or other parties."
+    applies_when: "performing the risk identification step"
+    severity: medium
+    weight: 2
+    check: "The register contains concrete scenarios with their consequence, not only generic risk titles."
+    evidence: "Risk register scenario entries."
+    advice: "Write each risk as a scenario with a cause, an event and an effect so that it can be scored and tested."
+    owner: "CISO"
+
+  - id: "RM27005-ANALYSIS"
+    title: "Risk analysis: likelihood and consequence estimation"
+    part: "Risk analysis"
+    clause: "Clause 8.3"
+    requirement: "Estimate the likelihood and consequence of each risk scenario using the agreed criteria, qualitatively or quantitatively, and record the resulting level of risk."
+    applies_when: "scenarios have been identified"
+    severity: high
+    weight: 3
+    check: "Every register entry has a likelihood, a consequence and a resulting risk level scored with the documented scales, with a note on the basis for the score."
+    evidence: "Scored risk register, scoring rationale."
+    advice: "Score with the documented scales, write down the reasoning, and have a second person review the top risks."
+    owner: "Risk manager"
+
+  - id: "RM27005-EVALUATION"
+    title: "Risk evaluation and prioritisation"
+    part: "Risk evaluation"
+    clause: "Clause 8.4"
+    requirement: "Compare the risk levels with the acceptance criteria, decide which risks need treatment and rank them by priority."
+    applies_when: "scored risks are available"
+    severity: high
+    weight: 3
+    check: "Each risk is marked as accept or treat against the criteria, and treatment priorities are recorded."
+    evidence: "Risk evaluation output, prioritised treatment list."
+    advice: "Decide per risk whether it is above the threshold and rank the ones to treat by level and effort."
+    owner: "Risk manager"
+
+  - id: "RM27005-TREATMENT-OPT"
+    title: "Selection of risk treatment options"
+    part: "Risk treatment"
+    clause: "Clause 9.2"
+    requirement: "Choose treatment options for each risk to be treated: modify through controls, retain, avoid or share, with a rationale."
+    applies_when: "risks above acceptance threshold"
+    severity: critical
+    weight: 5
+    check: "Every treated risk shows the chosen option, rationale and selected controls, including transfer through contracts or insurance where used."
+    evidence: "Risk treatment decisions, selected control list."
+    advice: "Record the option per risk and justify any choice to retain a risk above the threshold."
+    owner: "CISO"
+
+  - id: "RM27005-CONTROLS"
+    title: "Determining necessary controls and comparison with the reference set"
+    part: "Risk treatment"
+    clause: "Clause 9.3"
+    requirement: "Determine all controls needed to implement the treatment options and compare them with a reference control set, such as ISO/IEC 27001 Annex A, to check that no necessary control was missed."
+    applies_when: "treatment options chosen"
+    severity: high
+    weight: 3
+    check: "The control list is checked against Annex A or an equivalent set and a Statement of Applicability reflects the result."
+    evidence: "Control mapping, Statement of Applicability."
+    advice: "Cross-check the selected controls with Annex A and note any control you excluded and why."
+    owner: "CISO"
+
+  - id: "RM27005-TREATMENT-PLAN"
+    title: "Risk treatment plan and residual risk acceptance"
+    part: "Risk treatment"
+    clause: "Clause 9.4, 9.5"
+    requirement: "Produce a treatment plan with owners, dates and resources, and have the risk owners approve the plan and the residual risk."
+    applies_when: "risks selected for treatment"
+    severity: high
+    weight: 3
+    check: "A dated treatment plan exists with named owners, residual risk is calculated, and risk owners have signed off."
+    evidence: "Risk treatment plan, residual risk register, risk owner approvals."
+    advice: "Give each action an owner and date, and get the risk owner to sign the residual risk."
+    owner: "Risk manager"
+
+  - id: "RM27005-COMMUNICATE"
+    title: "Risk communication and consultation"
+    part: "Monitoring and communication"
+    clause: "Clause 10"
+    requirement: "Communicate risk information to decision makers, risk owners and relevant stakeholders in a timely way, and consult them during the process."
+    applies_when: "any ongoing risk management programme"
+    severity: medium
+    weight: 2
+    check: "Risk reports reach management and risk owners on a schedule, and stakeholder input is recorded."
+    evidence: "Risk reports, management briefings, consultation records."
+    advice: "Send a risk summary to management each quarter and record who was consulted on major risks."
+    owner: "Risk manager"
+
+  - id: "RM27005-RECORD"
+    title: "Documentation of the risk management process and results"
+    part: "Monitoring and communication"
+    clause: "Clause 10, 11"
+    requirement: "Keep documented records of the process, assessment results and decisions, in a form that supports review, audit and repeat assessments."
+    applies_when: "any risk management programme"
+    severity: medium
+    weight: 2
+    check: "Records are version controlled and show who decided what and when, and previous assessment cycles remain available."
+    evidence: "Versioned risk register, decision log, archive of past cycles."
+    advice: "Store the register and decisions under version control with dated approvals."
+    owner: "CISO"
+
+  - id: "RM27005-MONITOR-REVIEW"
+    title: "Monitoring and review of risks and factors"
+    part: "Monitoring and communication"
+    clause: "Clause 11"
+    requirement: "Monitor and review risks, their drivers and the effectiveness of controls continually, and reassess when changes, incidents or new information require it."
+    applies_when: "operating a risk management programme"
+    severity: high
+    weight: 3
+    check: "Reviews take place on a schedule and on triggers such as incidents, new providers or product changes, and the register shows updated dates."
+    evidence: "Review calendar, trigger list, updated register entries, control effectiveness results."
+    advice: "Define review triggers such as new model provider, major release or incident, and reassess affected risks when they fire."
+    owner: "CISO"
+
+  - id: "RM27005-IMPROVE"
+    title: "Improvement of the risk management process"
+    part: "Monitoring and communication"
+    clause: "Clause 11"
+    requirement: "Review the risk management process itself, using audit findings, incidents and feedback, and improve its method and criteria."
+    applies_when: "operating a risk management programme"
+    severity: low
+    weight: 1
+    check: "Process reviews are recorded and result in changes to method, criteria or tooling when needed."
+    evidence: "Process review notes, change log for the methodology, internal audit findings."
+    advice: "Review the method once a year and adjust criteria that no longer match the business."
+    owner: "Risk manager"

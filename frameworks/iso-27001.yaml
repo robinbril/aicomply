@@ -1,0 +1,448 @@
+framework: "ISO/IEC 27001 Information security management (ISMS)"
+reference: "ISO/IEC 27001:2022 + Amd 1:2024"
+short: "ISO 27001"
+kind: "iso"
+source: "iso-27001"
+scope: "Information security management for software that builds, integrates or operates AI/LLM systems: ISMS clauses 4 to 10 and the Annex A controls most relevant to an AI/SaaS product (model vendors, secrets, prompt and response data, cloud hosting)."
+controls:
+  - id: "A.5.15-ACCESS"
+    title: "Access control"
+    part: "A.5 Organizational"
+    clause: "A.5.15"
+    requirement: "Restrict access to information, AI systems and admin interfaces on a need-to-know, least-privilege basis (Annex A 5.15)."
+    applies_when: "any system with more than one user or privilege level"
+    severity: high
+    weight: 3
+    check: "Access policy exists; roles map to least privilege; no shared admin accounts; access reviewed periodically."
+    evidence: "Access control policy, RBAC/role matrix, periodic access review log."
+    advice: "Define roles, remove standing admin, enforce least privilege, schedule quarterly access reviews."
+    owner: "CISO"
+
+  - id: "A.5.16-IDENTITY"
+    title: "Identity and authentication"
+    part: "A.5 Organizational"
+    clause: "A.5.16-A.5.17, A.8.5"
+    requirement: "Manage the full identity lifecycle and enforce strong authentication (MFA) for users and services (Annex A 5.16, 5.17, 8.5)."
+    applies_when: "any system with authenticated users or service accounts"
+    severity: high
+    weight: 3
+    check: "Unique identities per user/service; MFA on privileged and remote access; joiner/mover/leaver process deprovisions promptly."
+    evidence: "IdP config, MFA enforcement policy, offboarding checklist with timestamps."
+    advice: "Enforce MFA on all admin and remote access; automate deprovisioning on offboarding."
+    owner: "CISO"
+
+  - id: "A.8.24-SECRETS"
+    title: "Secrets and key management"
+    part: "A.8 Technological"
+    clause: "A.8.24"
+    requirement: "Protect cryptographic keys and credentials (LLM API keys, tokens) across their lifecycle (Annex A 8.24); never store secrets in source or logs (8.9)."
+    applies_when: "system uses API keys, tokens or other credentials"
+    severity: critical
+    weight: 5
+    check: "Secrets held in a vault/secret manager, not in code, env files in VCS, or logs; rotation policy exists; scoped least-privilege keys."
+    evidence: "Secret manager config, secret-scanning CI output (clean), rotation schedule."
+    advice: "Move keys to a secret manager, add secret-scanning to CI, rotate exposed keys, scope keys per service."
+    owner: "CISO"
+
+  - id: "A.8.15-LOGGING"
+    title: "Logging"
+    part: "A.8 Technological"
+    clause: "A.8.15"
+    requirement: "Produce, protect and retain logs of user activity, exceptions and security events (Annex A 8.15)."
+    applies_when: "any production system handling data or auth"
+    severity: high
+    weight: 3
+    check: "Auth, admin and security events logged with timestamp and actor; logs tamper-protected; retention defined; no secrets/PII leaked into logs."
+    evidence: "Logging config, sample sanitized log, retention policy."
+    advice: "Log auth and admin events centrally, protect against tampering, scrub secrets and PII from log output."
+    owner: "Engineering lead"
+
+  - id: "A.8.16-MONITORING"
+    title: "Monitoring"
+    part: "A.8 Technological"
+    clause: "A.8.16"
+    requirement: "Monitor systems for anomalous behaviour and potential security incidents (Annex A 8.16)."
+    applies_when: "production system with external exposure or sensitive data"
+    severity: medium
+    weight: 2
+    check: "Alerting on anomalies (auth failures, rate spikes, error bursts); someone owns alert response."
+    evidence: "Monitoring dashboards, alert rules, on-call/owner assignment."
+    advice: "Add alerting on auth failures and traffic anomalies; assign an owner for alert triage."
+    owner: "Engineering lead"
+
+  - id: "A.8.25-SECURE-DEV"
+    title: "Secure development lifecycle"
+    part: "A.8 Technological"
+    clause: "A.8.25, A.8.28"
+    requirement: "Establish and apply secure development rules across the lifecycle (Annex A 8.25, 8.28 secure coding)."
+    applies_when: "team develops or modifies software"
+    severity: high
+    weight: 3
+    check: "Secure coding standard exists; code review required; dependency and SAST scanning in CI; input validation at boundaries."
+    evidence: "SDLC policy, PR review records, CI scan results."
+    advice: "Mandate code review, add SAST/dependency scanning to CI, document a secure coding standard."
+    owner: "Engineering lead"
+
+  - id: "A.8.28-LLM-INPUT"
+    title: "Prompt and output handling"
+    part: "A.8 Technological"
+    clause: "A.8.26, A.8.28"
+    requirement: "Validate and sanitize untrusted input and treat LLM output as untrusted to mitigate prompt injection and unsafe execution (Annex A 8.28, 8.26)."
+    applies_when: "system passes user or external data into an LLM, or executes/renders LLM output"
+    severity: high
+    weight: 3
+    check: "Untrusted input is bounded/sanitized; LLM output is not blindly executed, rendered as HTML, or used in privileged actions without checks."
+    evidence: "Input handling code, output guardrails, injection test cases."
+    advice: "Treat model output as untrusted: validate, escape on render, gate privileged tool calls behind explicit checks."
+    owner: "Engineering lead"
+
+  - id: "A.5.19-SUPPLIER"
+    title: "Supplier and LLM vendor security"
+    part: "A.5 Organizational"
+    clause: "A.5.19, A.5.21-A.5.22"
+    requirement: "Manage information security risks in supplier relationships, including LLM/model providers (Annex A 5.19, 5.21, 5.22)."
+    applies_when: "system depends on external LLM APIs, model hosts or subprocessors"
+    severity: high
+    weight: 3
+    check: "Vendor inventory exists; data-use and retention terms reviewed; vendor certifications (SOC 2 / ISO 27001) verified; service monitored."
+    evidence: "Supplier register, signed terms/DPA, vendor security attestations."
+    advice: "Inventory LLM vendors, confirm data is not used for training without consent, verify their certifications and retention terms."
+    owner: "CISO"
+
+  - id: "A.5.12-CLASSIFY"
+    title: "Data classification"
+    part: "A.5 Organizational"
+    clause: "A.5.12-A.5.13"
+    requirement: "Classify information by sensitivity and label it so handling rules apply consistently (Annex A 5.12, 5.13)."
+    applies_when: "system handles data of mixed sensitivity (PII, secrets, public)"
+    severity: medium
+    weight: 2
+    check: "Classification scheme exists; data flows (incl. data sent to LLM APIs) mapped to classification; handling rules per level."
+    evidence: "Classification policy, data flow/inventory mapping."
+    advice: "Define classes (public/internal/confidential/PII), map what is sent to external models, block sensitive classes from leaving."
+    owner: "CISO"
+
+  - id: "A.8.24-ENCRYPT-DATA"
+    title: "Encryption in transit and at rest"
+    part: "A.8 Technological"
+    clause: "A.8.24"
+    requirement: "Use cryptography to protect data in transit and at rest per a defined policy (Annex A 8.24). This control covers data-protection use of cryptography; key and secret lifecycle is A.8.24-SECRETS."
+    applies_when: "system stores or transmits sensitive data or PII"
+    severity: critical
+    weight: 5
+    check: "TLS enforced on all external/internal traffic; data and backups encrypted at rest; strong algorithms; no plaintext sensitive storage."
+    evidence: "TLS config, storage/backup encryption settings, crypto policy."
+    advice: "Enforce TLS everywhere, enable at-rest encryption on databases and backups, retire weak ciphers."
+    owner: "Engineering lead"
+
+  - id: "A.8.13-BACKUP"
+    title: "Backup and recovery"
+    part: "A.8 Technological"
+    clause: "A.8.13"
+    requirement: "Maintain and test backups to support recovery from loss or ransomware (Annex A 8.13)."
+    applies_when: "system holds data whose loss would be material"
+    severity: medium
+    weight: 2
+    check: "Backups run on schedule, are encrypted, stored separately, and restore is tested."
+    evidence: "Backup schedule, encryption config, restore-test record."
+    advice: "Automate encrypted backups to separate storage and test a restore at least annually."
+    owner: "Engineering lead"
+
+  - id: "A.5.24-INCIDENT"
+    title: "Incident management"
+    part: "A.5 Organizational"
+    clause: "A.5.24-A.5.28"
+    requirement: "Plan, respond to and learn from information security incidents (Annex A 5.24 to 5.28)."
+    applies_when: "any production system"
+    severity: high
+    weight: 3
+    check: "Incident response plan with roles and contacts; breach notification path defined; incidents logged and reviewed post-mortem."
+    evidence: "IR plan, incident log, post-incident review records."
+    advice: "Write an IR plan with named roles and a breach-notification timeline, run a tabletop exercise, log every incident."
+    owner: "CISO"
+
+  - id: "A.8.8-VULN"
+    title: "Vulnerability and patch management"
+    part: "A.8 Technological"
+    clause: "A.8.8"
+    requirement: "Identify and remediate technical vulnerabilities in a timely, risk-based way (Annex A 8.8)."
+    applies_when: "system runs code, dependencies or infrastructure"
+    severity: high
+    weight: 3
+    check: "Dependency and infra vulnerabilities scanned; SLAs for patching by severity; critical fixes applied promptly."
+    evidence: "Vulnerability scan reports, patch SLA policy, remediation tickets."
+    advice: "Scan dependencies and hosts continuously, set patch SLAs by severity, prioritise critical CVEs."
+    owner: "Engineering lead"
+
+  - id: "ISMS-4-CONTEXT"
+    title: "ISMS context and scope"
+    part: "Clauses 4-10 ISMS"
+    clause: "4.1-4.4"
+    requirement: "Determine the internal and external issues and interested parties relevant to information security, and define the documented ISMS scope including interfaces and dependencies on suppliers."
+    applies_when: "any organization operating an ISMS"
+    severity: high
+    weight: 3
+    check: "Written ISMS scope names the products, locations and systems in scope (including model providers and cloud platforms); interested parties and their requirements are listed."
+    evidence: "ISMS scope statement, interested-parties register."
+    advice: "Write a scope statement that names every in-scope product and third-party dependency and review it yearly."
+    owner: "CISO"
+
+  - id: "ISMS-5-LEADERSHIP"
+    title: "Leadership and information security policy"
+    part: "Clauses 4-10 ISMS"
+    clause: "5.1-5.3"
+    requirement: "Top management shows commitment, approves an information security policy, and assigns and communicates ISMS roles and responsibilities."
+    applies_when: "any organization operating an ISMS"
+    severity: high
+    weight: 3
+    check: "Approved information security policy exists with management sign-off; ISMS roles are assigned to named people; resources are allocated."
+    evidence: "Signed policy, role assignment record, management meeting minutes."
+    advice: "Have top management approve the policy, name an ISMS owner and record the resourcing decision."
+    owner: "Top management"
+
+  - id: "ISMS-6.1.2-RISK"
+    title: "Information security risk assessment"
+    part: "Clauses 4-10 ISMS"
+    clause: "6.1.2"
+    requirement: "Define and apply a repeatable information security risk assessment process with risk criteria, producing comparable results and identified risk owners."
+    applies_when: "any organization operating an ISMS"
+    severity: critical
+    weight: 5
+    check: "Risk criteria and a method are documented; assessments are dated and cover AI/LLM assets and data flows; every risk has an owner."
+    evidence: "Risk assessment method, risk register with owners and dates."
+    advice: "Adopt a documented method, run it on all in-scope assets including model pipelines, and assign an owner per risk."
+    owner: "CISO"
+
+  - id: "ISMS-6.1.3-SOA"
+    title: "Risk treatment and Statement of Applicability"
+    part: "Clauses 4-10 ISMS"
+    clause: "6.1.3"
+    requirement: "Select risk treatment options, determine necessary controls, compare them with Annex A and keep a Statement of Applicability that justifies each inclusion and exclusion; get risk owner approval of the treatment plan and residual risk."
+    applies_when: "any organization operating an ISMS"
+    severity: high
+    weight: 3
+    check: "A SoA lists every Annex A control with applicability, justification and implementation status; the treatment plan and residual risk are approved by risk owners."
+    evidence: "Statement of Applicability, risk treatment plan, residual risk sign-off."
+    advice: "Produce a SoA from the risk register, justify exclusions and get the treatment plan signed off."
+    owner: "CISO"
+
+  - id: "ISMS-9.2-AUDIT"
+    title: "ISMS internal audit"
+    part: "Clauses 4-10 ISMS"
+    clause: "9.2"
+    requirement: "Run internal audits at planned intervals against the ISMS requirements and the organization own rules, with objective auditors and reported results."
+    applies_when: "any organization operating an ISMS"
+    severity: high
+    weight: 3
+    check: "An audit programme exists; audits were performed within the last 12 months by people independent of the audited area; findings are reported to management."
+    evidence: "Audit programme, audit reports, findings log."
+    advice: "Plan an annual audit programme, use independent auditors and track findings to closure."
+    owner: "CISO"
+
+  - id: "ISMS-9.3-REVIEW"
+    title: "ISMS management review"
+    part: "Clauses 4-10 ISMS"
+    clause: "9.3"
+    requirement: "Top management reviews the ISMS at planned intervals, covering audit results, incidents, risk status, objectives and improvement needs, with recorded decisions."
+    applies_when: "any organization operating an ISMS"
+    severity: medium
+    weight: 2
+    check: "Management review took place in the last 12 months with the required inputs and recorded outputs and actions."
+    evidence: "Management review minutes, action list."
+    advice: "Schedule an annual review with a fixed agenda and track resulting actions."
+    owner: "Top management"
+
+  - id: "ISMS-10-CORRECTIVE"
+    title: "Nonconformity and corrective action"
+    part: "Clauses 4-10 ISMS"
+    clause: "10.1-10.2"
+    requirement: "React to nonconformities, correct them, eliminate the root cause and keep evidence; continually improve the ISMS."
+    applies_when: "any organization operating an ISMS"
+    severity: high
+    weight: 3
+    check: "Nonconformities and incidents have a recorded root cause, corrective action, owner and verified closure."
+    evidence: "Corrective action register, closed-action verification."
+    advice: "Log every nonconformity with root cause and owner and verify effectiveness before closing."
+    owner: "CISO"
+
+  - id: "A.5.1-POLICY"
+    title: "Information security policies"
+    part: "A.5 Organizational"
+    clause: "A.5.1"
+    requirement: "Define, approve, publish and periodically review information security policy and topic-specific policies (access, acceptable AI use, cryptography, supplier)."
+    applies_when: "any organization"
+    severity: high
+    weight: 3
+    check: "Policy set is approved, current (reviewed within the planned interval) and acknowledged by staff; it covers use of AI tools and external LLMs."
+    evidence: "Policy documents with approval and review dates, staff acknowledgement log."
+    advice: "Publish a policy set including an acceptable-AI-use policy and review it on a fixed cycle."
+    owner: "CISO"
+
+  - id: "A.5.7-THREAT-INTEL"
+    title: "Threat intelligence"
+    part: "A.5 Organizational"
+    clause: "A.5.7"
+    requirement: "Collect and analyse information about threats, including attacks specific to AI systems, so that controls can be adjusted."
+    applies_when: "system exposed to the internet or processing sensitive data"
+    severity: low
+    weight: 1
+    check: "Relevant threat sources (CVE feeds, vendor advisories, AI attack catalogues) are subscribed to and findings reach engineering."
+    evidence: "Threat feed subscriptions, triage notes, resulting tickets."
+    advice: "Subscribe to advisories for your stack and model providers and triage them weekly."
+    owner: "CISO"
+
+  - id: "A.5.23-CLOUD"
+    title: "Use of cloud services"
+    part: "A.5 Organizational"
+    clause: "A.5.23"
+    requirement: "Specify requirements for acquiring, using, managing and exiting cloud services, including shared-responsibility split and data location."
+    applies_when: "system hosted on or depending on cloud or SaaS services including LLM APIs"
+    severity: high
+    weight: 3
+    check: "Cloud usage is registered; each service has security requirements, a shared-responsibility split, data location and an exit plan."
+    evidence: "Cloud service register, vendor security reviews, exit plans."
+    advice: "Register every cloud and LLM API in use, document who secures what, and define exit steps."
+    owner: "CISO"
+
+  - id: "A.5.30-CONTINUITY"
+    title: "ICT readiness for business continuity"
+    part: "A.5 Organizational"
+    clause: "A.5.30"
+    requirement: "Plan, implement and test ICT readiness so that availability objectives are met during disruption, including dependence on external model providers."
+    applies_when: "production service with availability commitments"
+    severity: medium
+    weight: 2
+    check: "Recovery objectives are defined; failover or degraded-mode behaviour for provider outages is designed and was tested."
+    evidence: "BCP/DR plan, test report, RTO/RPO definitions."
+    advice: "Define RTO/RPO, add a fallback for LLM provider outages and test recovery yearly."
+    owner: "Engineering lead"
+
+  - id: "A.5.31-LEGAL"
+    title: "Legal, statutory, regulatory and contractual requirements"
+    part: "A.5 Organizational"
+    clause: "A.5.31"
+    requirement: "Identify, document and keep current the legal, regulatory and contractual requirements relevant to information security and how they are met."
+    applies_when: "any organization"
+    severity: high
+    weight: 3
+    check: "A register lists applicable laws and customer contractual security obligations (for example GDPR, EU AI Act, customer DPAs) with owner and review date."
+    evidence: "Legal and contractual requirements register."
+    advice: "Build a register of obligations with an owner each and review it at least yearly."
+    owner: "Legal"
+
+  - id: "A.5.34-PRIVACY"
+    title: "Privacy and protection of PII"
+    part: "A.5 Organizational"
+    clause: "A.5.34"
+    requirement: "Identify and meet requirements on preserving privacy and protecting personal data under law and contract."
+    applies_when: "system that processes personal data"
+    severity: high
+    weight: 3
+    check: "Privacy roles are assigned; PII processing is identified and protected per applicable law; link to the privacy controls in the 27701 framework is traceable."
+    evidence: "Privacy policy, data protection role assignment, RoPA reference."
+    advice: "Assign a privacy owner, map PII flows and confirm the 27701 controls are implemented."
+    owner: "DPO"
+
+  - id: "A.6.3-AWARENESS"
+    title: "Security awareness, education and training"
+    part: "A.6 People"
+    clause: "A.6.3"
+    requirement: "Give personnel appropriate security awareness and role-based training and refresh it regularly."
+    applies_when: "organization with employees or contractors"
+    severity: medium
+    weight: 2
+    check: "Training is completed by all staff at onboarding and at the defined interval; developers have secure-coding and AI-risk content."
+    evidence: "Training records and completion rates, curriculum."
+    advice: "Run onboarding and annual training, add secure-coding and AI-misuse modules for engineers."
+    owner: "CISO"
+
+  - id: "A.8.9-CONFIG"
+    title: "Configuration management"
+    part: "A.8 Technological"
+    clause: "A.8.9"
+    requirement: "Define, document, implement, monitor and review secure configurations for hardware, software, services and networks."
+    applies_when: "system with infrastructure or services under own control"
+    severity: medium
+    weight: 2
+    check: "Baseline configurations exist, are versioned as code and drift is detected; defaults are hardened."
+    evidence: "Infrastructure-as-code, hardening baselines, drift reports."
+    advice: "Keep configuration in version control with hardened baselines and alert on drift."
+    owner: "Engineering lead"
+
+  - id: "A.8.10-DELETION"
+    title: "Information deletion"
+    part: "A.8 Technological"
+    clause: "A.8.10"
+    requirement: "Delete information in systems, devices and storage when no longer required, including copies and backups where feasible."
+    applies_when: "system storing data with a defined retention period"
+    severity: high
+    weight: 3
+    check: "Deletion is implemented per data type and verified; customer data is deleted at contract end including logs, caches and vector stores."
+    evidence: "Deletion jobs and logs, offboarding deletion confirmations."
+    advice: "Implement scheduled and on-demand deletion across stores including embeddings and logs, and keep proof."
+    owner: "Engineering lead"
+
+  - id: "A.8.11-MASKING"
+    title: "Data masking"
+    part: "A.8 Technological"
+    clause: "A.8.11"
+    requirement: "Use masking, pseudonymisation or anonymisation in line with access policy and legal requirements."
+    applies_when: "system that uses production or personal data outside its primary purpose, including prompts, test and analytics"
+    severity: medium
+    weight: 2
+    check: "Non-production and analytics data is masked; PII is redacted or pseudonymised before it is sent to external models or written to logs where not needed."
+    evidence: "Masking configuration, redaction code, test data policy."
+    advice: "Mask PII in test data and prompts by default and document exceptions."
+    owner: "Engineering lead"
+
+  - id: "A.8.12-DLP"
+    title: "Data leakage prevention"
+    part: "A.8 Technological"
+    clause: "A.8.12"
+    requirement: "Apply data leakage prevention measures to systems, networks and endpoints that process, store or transmit sensitive information."
+    applies_when: "system handling sensitive data or sending data to third parties"
+    severity: high
+    weight: 3
+    check: "Egress of sensitive data is controlled (allow-listed endpoints, DLP rules); outputs of LLMs cannot expose other tenants or secrets."
+    evidence: "Egress rules, DLP configuration, tenant-isolation tests."
+    advice: "Restrict outbound destinations, add leak detection on outputs and test cross-tenant isolation."
+    owner: "CISO"
+
+  - id: "A.8.29-SEC-TEST"
+    title: "Security testing in development and acceptance"
+    part: "A.8 Technological"
+    clause: "A.8.29"
+    requirement: "Define and perform security testing in the development life cycle and before acceptance into production."
+    applies_when: "team develops or modifies software"
+    severity: high
+    weight: 3
+    check: "Security tests (SAST, DAST, dependency scan, prompt-injection and abuse tests) run in CI and gate release; findings are tracked."
+    evidence: "CI pipeline config and results, pentest report, injection test suite."
+    advice: "Add security tests to CI as a release gate and run a penetration test at least yearly."
+    owner: "Engineering lead"
+
+  - id: "A.8.31-ENV-SEPARATION"
+    title: "Separation of development, test and production"
+    part: "A.8 Technological"
+    clause: "A.8.31"
+    requirement: "Separate development, testing and production environments and protect them with equivalent care."
+    applies_when: "team develops software with a production system"
+    severity: medium
+    weight: 2
+    check: "Environments are separated with distinct credentials and data; production data is not used in test without masking."
+    evidence: "Environment diagram, access matrix, data handling rules."
+    advice: "Use separate accounts and secrets per environment and forbid raw production data in test."
+    owner: "Engineering lead"
+
+  - id: "A.8.32-CHANGE"
+    title: "Change management"
+    part: "A.8 Technological"
+    clause: "A.8.32"
+    requirement: "Subject changes to information processing facilities and systems to change management, including review, testing and rollback."
+    applies_when: "production system"
+    severity: medium
+    weight: 2
+    check: "Changes (including model, prompt and configuration changes) go through review, testing and approval with a rollback path and a record."
+    evidence: "Pull request history, change tickets, deployment logs."
+    advice: "Require reviewed, traceable changes for code, prompts and model versions with a documented rollback."
+    owner: "Engineering lead"

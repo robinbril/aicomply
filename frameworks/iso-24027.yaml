@@ -1,0 +1,188 @@
+framework: "ISO/IEC TR 24027 Bias in AI Systems"
+reference: "ISO/IEC TR 24027:2021"
+short: "ISO 24027"
+kind: "iso"
+source: "iso-24027"
+scope: "Bias in AI systems and AI-aided decision making: sources, assessment metrics and treatment across the life cycle. This is a technical report (guidance, not certifiable), so controls here are good-practice checks rather than requirements for certification."
+controls:
+  - id: "BIAS24027-HUMAN"
+    title: "Human and cognitive bias in design and labelling"
+    part: "Sources of bias"
+    clause: "Clause 6 (sources of unwanted bias: human cognitive bias)"
+    requirement: "Recognise that developers, labellers and users bring cognitive biases into problem framing, labelling and interpretation of results."
+    applies_when: "people frame the problem, label data or interpret outputs"
+    severity: medium
+    weight: 2
+    check: "Labelling guidelines, reviewer diversity and annotation quality checks address annotator bias."
+    evidence: "Labelling guidelines, inter-annotator agreement results, review notes."
+    advice: "Write labelling guidelines, measure annotator agreement and review disagreements for bias."
+    owner: "ML lead"
+
+  - id: "BIAS24027-DATA"
+    title: "Data bias: representation, measurement and historical"
+    part: "Sources of bias"
+    clause: "Clause 6 (sources of unwanted bias: data bias)"
+    requirement: "Examine training and evaluation data for under-representation, skewed sampling, flawed measurement, proxy variables and embedded historical bias."
+    applies_when: "model is trained, tuned or evaluated on data about people"
+    severity: critical
+    weight: 5
+    check: "Datasets were profiled for group representation, label quality and proxy variables, and findings are documented."
+    evidence: "Dataset profile, data documentation, proxy variable analysis."
+    advice: "Profile each dataset by relevant group and document gaps before training."
+    owner: "ML lead"
+
+  - id: "BIAS24027-ENGINEER"
+    title: "Bias from engineering and modelling decisions"
+    part: "Sources of bias"
+    clause: "Clause 6 (sources of unwanted bias: engineering decisions)"
+    requirement: "Check that choices such as feature selection, objective function, thresholds, model type and aggregation do not introduce unwanted bias."
+    applies_when: "engineering decisions shape model behaviour for different groups"
+    severity: high
+    weight: 3
+    check: "Design records justify features, objectives and thresholds, and show group-wise effects of those choices."
+    evidence: "Design decision log, feature rationale, ablation or threshold analysis."
+    advice: "Record the rationale for features and thresholds and check their group-wise effect."
+    owner: "ML lead"
+
+  - id: "BIAS24027-DEPLOY"
+    title: "Bias from deployment context and feedback loops"
+    part: "Sources of bias"
+    clause: "Clause 6 (sources of unwanted bias: deployment and feedback)"
+    requirement: "Consider bias arising when the system is used outside its intended context, by different populations, or when outputs feed back into future data."
+    applies_when: "system is deployed to populations or uses different from those in testing"
+    severity: high
+    weight: 3
+    check: "Deployment context was compared to training context, and feedback loops that reinforce bias were identified."
+    evidence: "Context comparison, feedback loop analysis, usage monitoring plan."
+    advice: "Compare deployment population to training data and cut feedback loops that amplify bias."
+    owner: "Product owner"
+
+  - id: "BIAS24027-GROUPS"
+    title: "Define protected groups and fairness goals"
+    part: "Measurement and metrics"
+    clause: "Clause 7 (assessment of bias and fairness)"
+    requirement: "Decide which groups and attributes matter, which notion of fairness applies to the use case, and document why."
+    applies_when: "system makes or supports decisions about people"
+    severity: critical
+    weight: 5
+    check: "Documented list of relevant groups and the chosen fairness notion with rationale exists before testing."
+    evidence: "Fairness requirements document, stakeholder and legal review."
+    advice: "Choose groups and fairness definitions up front with legal and product input."
+    owner: "AI governance lead"
+
+  - id: "BIAS24027-METRICS"
+    title: "Apply group fairness metrics"
+    part: "Measurement and metrics"
+    clause: "Clause 7 (assessment: metrics such as demographic parity, equal opportunity, equalized odds)"
+    requirement: "Measure outcomes by group using suitable metrics, such as selection rates or error rates per group, and set acceptable gaps."
+    applies_when: "model outputs differ in effect between groups"
+    severity: high
+    weight: 3
+    check: "Reports show metrics per group with thresholds and results, and note where metrics conflict with each other."
+    evidence: "Fairness evaluation report, metric thresholds, group-wise results."
+    advice: "Compute chosen metrics per group on every release candidate and set pass thresholds."
+    owner: "ML lead"
+
+  - id: "BIAS24027-ERRORS"
+    title: "Error analysis across groups and subgroups"
+    part: "Measurement and metrics"
+    clause: "Clause 7 (assessment of bias and fairness)"
+    requirement: "Analyse error types, false positives and false negatives by group and by intersecting subgroups where data allows."
+    applies_when: "model errors have different costs for different people"
+    severity: medium
+    weight: 2
+    check: "Error breakdowns by group and key intersections are included in evaluation, with sample size caveats."
+    evidence: "Error analysis report, confusion matrices by group."
+    advice: "Add per-group confusion matrices and flag groups with too little data to judge."
+    owner: "ML lead"
+
+  - id: "BIAS24027-PROXY"
+    title: "Proxy and sensitive attribute testing"
+    part: "Measurement and metrics"
+    clause: "Clause 7 (assessment of bias and fairness)"
+    requirement: "Test whether sensitive attributes can be inferred from inputs and whether proxies drive outcomes, including for generative and ranking systems."
+    applies_when: "inputs correlate with sensitive attributes"
+    severity: high
+    weight: 3
+    check: "Tests show whether proxies influence outputs, using methods such as counterfactual or paired inputs."
+    evidence: "Counterfactual test results, feature importance analysis."
+    advice: "Run counterfactual tests that vary sensitive attributes and remove or control strong proxies."
+    owner: "ML lead"
+
+  - id: "BIAS24027-PRE"
+    title: "Pre-processing treatment of data"
+    part: "Treatment"
+    clause: "Clause 8 (treatment of unwanted bias: data stage)"
+    requirement: "Reduce data-driven bias before training by rebalancing, reweighting, collecting more data or correcting labels, and record the effects."
+    applies_when: "data analysis shows unwanted bias"
+    severity: medium
+    weight: 2
+    check: "Any data treatment is documented with before and after measurements and side effects."
+    evidence: "Data treatment log, before and after metrics."
+    advice: "Document each data treatment with measured effect on both bias and accuracy."
+    owner: "ML lead"
+
+  - id: "BIAS24027-IN"
+    title: "In-training and model-level treatment"
+    part: "Treatment"
+    clause: "Clause 8 (treatment of unwanted bias: training stage)"
+    requirement: "Use model-level techniques such as constrained objectives, regularisation or adversarial debiasing where data treatment is not enough, and evaluate trade-offs."
+    applies_when: "model shows unwanted bias after data treatment"
+    severity: medium
+    weight: 2
+    check: "Chosen technique, parameters and measured trade-offs between fairness and performance are documented."
+    evidence: "Experiment records, trade-off analysis, model selection rationale."
+    advice: "Compare techniques on fairness and accuracy and record the choice and trade-off."
+    owner: "ML lead"
+
+  - id: "BIAS24027-POST"
+    title: "Post-processing and human review safeguards"
+    part: "Treatment"
+    clause: "Clause 8 (treatment of unwanted bias: output stage)"
+    requirement: "Apply output-level adjustments or human review for decisions affecting people, and give users a way to contest results."
+    applies_when: "decisions about people rely on model outputs"
+    severity: high
+    weight: 3
+    check: "Decision outputs affecting people pass through review or adjustment rules and there is a contest or appeal route."
+    evidence: "Review procedure, adjustment rules, appeal process and statistics."
+    advice: "Add human review and an appeal path for consequential decisions."
+    owner: "Operations lead"
+
+  - id: "BIAS24027-DESIGN"
+    title: "Bias considerations in requirements and design"
+    part: "Lifecycle checks"
+    clause: "Bias across the AI life cycle"
+    requirement: "Include bias and fairness requirements in inception and design, with involvement of affected stakeholders and domain experts."
+    applies_when: "starting or redesigning an AI system affecting people"
+    severity: medium
+    weight: 2
+    check: "Requirements and design reviews contain fairness criteria and record stakeholder or expert input."
+    evidence: "Requirements specification, design review minutes."
+    advice: "Add fairness criteria to requirements and review them at design review."
+    owner: "Product owner"
+
+  - id: "BIAS24027-MONITOR"
+    title: "Ongoing bias monitoring in operation"
+    part: "Lifecycle checks"
+    clause: "Bias across the AI life cycle"
+    requirement: "Monitor group-wise outcomes and drift in production, with triggers for investigation, retraining and rollback."
+    applies_when: "AI system is in production and affects people"
+    severity: high
+    weight: 3
+    check: "Production metrics are tracked by group where lawful, with alert thresholds and a documented response."
+    evidence: "Monitoring dashboard, alert rules, review records."
+    advice: "Track outcome metrics by group in production and define what triggers action."
+    owner: "ML lead"
+
+  - id: "BIAS24027-DOCS"
+    title: "Documentation and transparency about bias"
+    part: "Lifecycle checks"
+    clause: "Bias across the AI life cycle"
+    requirement: "Document known biases, tests run, limits and treatments so users, auditors and affected people can understand them."
+    applies_when: "system is handed over, audited or disclosed"
+    severity: medium
+    weight: 2
+    check: "System documentation states known bias findings, test coverage, treatments and remaining limits."
+    evidence: "Model card, bias test report, user-facing limitations."
+    advice: "Publish a model card with bias findings and remaining limits, updated per release."
+    owner: "AI governance lead"

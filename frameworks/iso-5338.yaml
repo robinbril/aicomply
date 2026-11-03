@@ -1,0 +1,188 @@
+framework: "ISO/IEC 5338 AI System Life Cycle Processes"
+reference: "ISO/IEC 5338:2023"
+short: "ISO 5338"
+kind: "iso"
+source: "iso-5338"
+scope: "Life cycle processes for AI systems, extending ISO/IEC/IEEE 15288 and 12207 with AI-specific processes for data, models and continuous validation; a guidance standard applied to the full life cycle from inception to retirement."
+controls:
+  - id: "LC5338-INCEPTION"
+    title: "Business case and stakeholder needs"
+    part: "Inception"
+    clause: "Clause 6.4 (business analysis, stakeholder needs)"
+    requirement: "Analyse the business or mission need, confirm that AI is an appropriate solution, and capture stakeholder needs including ethical and legal expectations."
+    applies_when: "starting a new AI system or a new AI feature"
+    severity: high
+    weight: 3
+    check: "Documented business case shows why AI is used, who is affected and what needs and constraints apply."
+    evidence: "Business case, stakeholder needs register, feasibility notes."
+    advice: "Write a short inception record before building and have a named owner approve it."
+    owner: "Product owner"
+
+  - id: "LC5338-REQUIREMENTS"
+    title: "AI system requirements"
+    part: "Inception"
+    clause: "Clause 6.4 (system requirements definition)"
+    requirement: "Define testable requirements that include AI-specific qualities such as accuracy targets, robustness, fairness, transparency, data needs and acceptable failure behaviour."
+    applies_when: "any AI system under development"
+    severity: high
+    weight: 3
+    check: "Requirements contain measurable AI-specific criteria and trace to stakeholder needs."
+    evidence: "Requirements specification with acceptance thresholds and traceability."
+    advice: "Add measurable accuracy, robustness and fairness thresholds to the requirements."
+    owner: "Product owner"
+
+  - id: "LC5338-ARCH"
+    title: "Architecture and design of AI components"
+    part: "Design and development"
+    clause: "Clause 6.4 (architecture and design definition)"
+    requirement: "Define architecture and design covering data flows, models, human oversight points, fallback behaviour and integration with non-AI components."
+    applies_when: "designing an AI system"
+    severity: high
+    weight: 3
+    check: "Architecture documents show model components, data flows, oversight points and failure fallbacks."
+    evidence: "Architecture diagrams, design decisions record, interface definitions."
+    advice: "Document the model, data flow and fallback path in one architecture record."
+    owner: "Engineering lead"
+
+  - id: "LC5338-DATA"
+    title: "Data engineering and data quality"
+    part: "Data and model processes"
+    clause: "Clause 6 (AI-specific data processes)"
+    requirement: "Manage the data used for training, validation and testing: sourcing, rights, labelling, quality checks, representativeness and documented lineage."
+    applies_when: "system trains, fine-tunes, evaluates or grounds a model on data"
+    severity: critical
+    weight: 5
+    check: "Datasets have documented source, lawful use, labelling method, quality checks and lineage to model versions."
+    evidence: "Dataset documentation, lineage records, data quality reports."
+    advice: "Create a datasheet and lineage record for every dataset and block use of undocumented data."
+    owner: "ML lead"
+
+  - id: "LC5338-MODEL"
+    title: "Model development and selection"
+    part: "Data and model processes"
+    clause: "Clause 6 (AI-specific model processes)"
+    requirement: "Develop or select models with documented choices, reproducible training, tracked experiments and versioning of model, code and configuration."
+    applies_when: "system builds, fine-tunes or selects a model"
+    severity: high
+    weight: 3
+    check: "Training runs and chosen models are reproducible from versioned code, data and configuration."
+    evidence: "Experiment tracking, model registry, model cards."
+    advice: "Register every model version with its code, data and configuration identifiers."
+    owner: "ML lead"
+
+  - id: "LC5338-IMPL"
+    title: "Implementation and integration"
+    part: "Design and development"
+    clause: "Clause 6.4 (implementation, integration)"
+    requirement: "Implement and integrate AI components under controlled engineering practice, including configuration management and security of the build pipeline."
+    applies_when: "building or integrating AI components"
+    severity: medium
+    weight: 2
+    check: "Source, prompts, model artefacts and dependencies are version controlled and built through a controlled pipeline."
+    evidence: "Repository history, CI pipeline definitions, dependency manifests."
+    advice: "Put prompts, model references and configuration under version control with review."
+    owner: "Engineering lead"
+
+  - id: "LC5338-VERIFY"
+    title: "Verification against requirements"
+    part: "Verification and validation"
+    clause: "Clause 6.4 (verification)"
+    requirement: "Verify that the built system meets its specified requirements using tests of model quality, robustness and component behaviour."
+    applies_when: "before release and after each material change"
+    severity: high
+    weight: 3
+    check: "Test results show the system meets each AI-specific requirement, with failures tracked to closure."
+    evidence: "Test plans and results, evaluation reports, defect log."
+    advice: "Run an evaluation suite tied to the requirements on every release candidate."
+    owner: "ML lead"
+
+  - id: "LC5338-VALIDATE"
+    title: "Validation in intended context"
+    part: "Verification and validation"
+    clause: "Clause 6.4 (validation)"
+    requirement: "Validate that the system satisfies stakeholder needs in realistic conditions with representative data and users, not only in lab tests."
+    applies_when: "before first deployment and after context changes"
+    severity: high
+    weight: 3
+    check: "Validation was run on representative data or pilot users, with results compared to stakeholder needs."
+    evidence: "Validation report, pilot results, user acceptance record."
+    advice: "Run a pilot or realistic test set and record acceptance by the system owner."
+    owner: "Product owner"
+
+  - id: "LC5338-DEPLOY"
+    title: "Transition into operation"
+    part: "Deployment"
+    clause: "Clause 6.4 (transition)"
+    requirement: "Control release into production with go/no-go criteria, rollback, user documentation and handover to operations."
+    applies_when: "releasing an AI system or a new model version"
+    severity: high
+    weight: 3
+    check: "Release has documented approval, a rollback path and updated user and operator documentation."
+    evidence: "Release checklist, rollback procedure, deployment approval."
+    advice: "Require go/no-go approval and a tested rollback before each model release."
+    owner: "Engineering lead"
+
+  - id: "LC5338-OPERATE"
+    title: "Operation and human oversight"
+    part: "Operation and monitoring"
+    clause: "Clause 6.4 (operation)"
+    requirement: "Operate the system within its intended use, with defined human oversight, access control and handling of abnormal outputs."
+    applies_when: "AI system in production"
+    severity: high
+    weight: 3
+    check: "Operating procedures define oversight roles, escalation for abnormal outputs and limits on use."
+    evidence: "Runbooks, oversight procedures, access records."
+    advice: "Write runbooks naming who reviews outputs and when to disable the system."
+    owner: "Operations lead"
+
+  - id: "LC5338-MONITOR"
+    title: "Continuous validation and drift monitoring"
+    part: "Operation and monitoring"
+    clause: "Clause 6 (AI-specific continuous validation)"
+    requirement: "Continuously monitor performance, data drift, concept drift and incidents in production, with thresholds that trigger retraining or review."
+    applies_when: "AI system in production"
+    severity: critical
+    weight: 5
+    check: "Production monitoring tracks quality and drift metrics with alert thresholds and a documented response."
+    evidence: "Monitoring dashboards, alert rules, incident and retraining records."
+    advice: "Define metrics and thresholds, wire alerts, and document what happens when they trip."
+    owner: "ML lead"
+
+  - id: "LC5338-MAINTAIN"
+    title: "Maintenance and retraining"
+    part: "Operation and monitoring"
+    clause: "Clause 6.4 (maintenance)"
+    requirement: "Maintain the system through controlled updates, retraining and patching, with re-verification and impact review before each change goes live."
+    applies_when: "system is updated, retrained or its dependencies change"
+    severity: medium
+    weight: 2
+    check: "Each update goes through change control with regression evaluation and approval before release."
+    evidence: "Change records, regression test results, retraining log."
+    advice: "Treat every retrain as a release with regression evaluation and approval."
+    owner: "Engineering lead"
+
+  - id: "LC5338-RETIRE"
+    title: "Retirement and disposal"
+    part: "Retirement"
+    clause: "Clause 6.4 (disposal)"
+    requirement: "Plan retirement of the system, including data and model disposal, user notice, archival of records and handling of dependent systems."
+    applies_when: "AI system or model version is decommissioned"
+    severity: medium
+    weight: 2
+    check: "A retirement plan covers data deletion or archival, model artefact disposal and notification of users."
+    evidence: "Decommission plan, deletion confirmations, archive index."
+    advice: "Add a decommission checklist covering data, models, keys and user notices."
+    owner: "Engineering lead"
+
+  - id: "LC5338-ORG"
+    title: "Organisational life cycle enablers"
+    part: "Organisation and technical management"
+    clause: "Clause 6.2 and 6.3 (organizational project-enabling, technical management)"
+    requirement: "Provide the enabling processes around the life cycle: policy, roles, competence, risk and configuration management, quality assurance, and supplier management for AI components."
+    applies_when: "organisation develops or procures AI systems"
+    severity: high
+    weight: 3
+    check: "Policy, role assignments, risk management and supplier controls exist and are applied to AI projects."
+    evidence: "AI policy, RACI, supplier agreements, quality plan."
+    advice: "Extend existing engineering management processes to cover AI data, models and suppliers."
+    owner: "AI governance lead"

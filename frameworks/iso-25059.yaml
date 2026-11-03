@@ -1,0 +1,201 @@
+framework: "ISO/IEC 25059 Quality Model for AI Systems"
+reference: "ISO/IEC 25059:2023"
+short: "ISO 25059"
+kind: "iso"
+source: "iso-25059"
+scope: "Quality model for AI systems that extends the ISO/IEC 25010 product quality and quality-in-use models with AI-specific sub-characteristics; guidance for specifying and evaluating quality, not certifiable."
+controls:
+  - id: "Q25059-MODEL"
+    title: "Quality requirements from the quality model"
+    part: "Functional suitability"
+    clause: "Clause 5 (quality model)"
+    requirement: "Specify quality requirements per quality characteristic of the model, including the AI-specific sub-characteristics, and record which are relevant to the system."
+    applies_when: "specifying or evaluating any AI system"
+    severity: high
+    weight: 3
+    check: "A quality requirements document selects relevant characteristics and states a measurable target for each."
+    evidence: "Quality requirements specification, characteristic relevance matrix."
+    advice: "Walk the characteristic list once per system and write a target for each one that applies."
+    owner: "Product owner"
+
+  - id: "Q25059-CORRECT"
+    title: "Functional correctness"
+    part: "Functional suitability"
+    clause: "Clause 5 (functional suitability: functional correctness)"
+    requirement: "The system gives correct results to the required degree of precision, and correctness targets are stated for the actual task and data distribution."
+    applies_when: "AI system produces predictions, classifications or generated content"
+    severity: critical
+    weight: 5
+    check: "Accuracy or task-quality metrics with targets exist and results on representative data meet them."
+    evidence: "Evaluation reports on representative test sets, metric targets."
+    advice: "Define task-specific correctness metrics and run them on representative data before release."
+    owner: "ML lead"
+
+  - id: "Q25059-ADAPT"
+    title: "Functional adaptability"
+    part: "Functional suitability"
+    clause: "Clause 5 (functional suitability: functional adaptability)"
+    requirement: "The system can adapt to changed conditions or new data when needed, within controlled limits, and adaptation does not break existing quality."
+    applies_when: "system learns after deployment, is retrained or faces changing data"
+    severity: high
+    weight: 3
+    check: "Adaptation such as retraining or online learning is controlled, tested for regression and bounded by approval rules."
+    evidence: "Retraining procedure, regression test results, adaptation limits."
+    advice: "Put adaptation behind change control with regression checks."
+    owner: "ML lead"
+
+  - id: "Q25059-PERF"
+    title: "Performance efficiency"
+    part: "Functional suitability"
+    clause: "Clause 5 (performance efficiency)"
+    requirement: "Meet response time, throughput and resource-use needs of the AI workload, including cost of inference and training."
+    applies_when: "AI system serves interactive or high-volume workloads"
+    severity: medium
+    weight: 2
+    check: "Load and latency tests show targets are met under expected volumes, with resource use recorded."
+    evidence: "Load test reports, latency and cost dashboards."
+    advice: "Test latency and cost at expected peak load and set budgets."
+    owner: "Engineering lead"
+
+  - id: "Q25059-ROBUST"
+    title: "Robustness"
+    part: "Reliability and robustness"
+    clause: "Clause 5 (reliability: robustness)"
+    requirement: "The system keeps acceptable performance under invalid, noisy, out-of-distribution or adversarial input and under degraded conditions."
+    applies_when: "system receives input outside curated test conditions"
+    severity: critical
+    weight: 5
+    check: "Robustness tests with noisy, edge-case and adversarial inputs exist and define acceptable degradation."
+    evidence: "Robustness and stress test results, adversarial test suite."
+    advice: "Add edge-case and adversarial inputs to the regression suite and set pass thresholds."
+    owner: "ML lead"
+
+  - id: "Q25059-RELIAB"
+    title: "Availability, fault tolerance and recoverability"
+    part: "Reliability and robustness"
+    clause: "Clause 5 (reliability)"
+    requirement: "The system stays available, handles faults, and recovers, including safe fallback when the model or a model provider fails."
+    applies_when: "AI system is depended on in operation"
+    severity: high
+    weight: 3
+    check: "Failure of the model or provider triggers a defined fallback, and recovery was tested."
+    evidence: "Failover design, chaos or recovery test results, incident reports."
+    advice: "Define and test a fallback for model and provider outages."
+    owner: "Engineering lead"
+
+  - id: "Q25059-CONTROL"
+    title: "User controllability"
+    part: "Usability and control"
+    clause: "Clause 5 (usability: user controllability)"
+    requirement: "Users or operators can control the system's behaviour, correct it, and stop it where appropriate, in line with the level of autonomy."
+    applies_when: "users or operators rely on AI outputs or actions"
+    severity: high
+    weight: 3
+    check: "The interface provides ways to correct, reject, undo or stop AI actions, and these work in tests."
+    evidence: "UI review, override and undo test results, operator documentation."
+    advice: "Add confirm, undo and stop controls for consequential AI actions."
+    owner: "Product owner"
+
+  - id: "Q25059-TRANSP"
+    title: "Transparency"
+    part: "Usability and control"
+    clause: "Clause 5 (usability: transparency)"
+    requirement: "Provide appropriate information about the system's purpose, capability, limits, data use and basis for outputs to those who need it."
+    applies_when: "users or affected persons interact with AI outputs"
+    severity: high
+    weight: 3
+    check: "Users are told they interact with AI, and documentation states purpose, limits and how outputs arise at a suitable level."
+    evidence: "User-facing disclosures, model or system cards, explanation features."
+    advice: "Disclose AI use and limits in the product and keep a system card current."
+    owner: "Product owner"
+
+  - id: "Q25059-USABLE"
+    title: "Usability and quality in use"
+    part: "Usability and control"
+    clause: "Clause 5 (usability, quality in use)"
+    requirement: "Users can achieve their goals effectively and safely with the system, which is checked through quality-in-use measures such as effectiveness and satisfaction."
+    applies_when: "AI system is used by people to complete tasks"
+    severity: medium
+    weight: 2
+    check: "User testing or telemetry shows task success and satisfaction against targets, including failure handling."
+    evidence: "Usability test reports, task success metrics, feedback analysis."
+    advice: "Run user tests on realistic tasks and track task success after release."
+    owner: "Product owner"
+
+  - id: "Q25059-INTERVEN"
+    title: "Intervenability"
+    part: "Security and intervenability"
+    clause: "Clause 5 (security: intervenability)"
+    requirement: "Authorised parties can intervene in the system to stop, correct or constrain its behaviour, with access restricted and interventions logged."
+    applies_when: "AI system can act or decide with consequences"
+    severity: high
+    weight: 3
+    check: "Intervention mechanisms such as kill switch, rollback or output blocking exist, are access-controlled and tested."
+    evidence: "Intervention procedures, access control lists, test records, intervention log."
+    advice: "Provide and rehearse a kill switch or rollback restricted to authorised roles."
+    owner: "Engineering lead"
+
+  - id: "Q25059-SECURITY"
+    title: "Security of data, model and pipeline"
+    part: "Security and intervenability"
+    clause: "Clause 5 (security)"
+    requirement: "Protect confidentiality, integrity and accountability of data, models and pipelines, including against poisoning, extraction and prompt-based attacks."
+    applies_when: "AI system processes sensitive data or is exposed to external input"
+    severity: critical
+    weight: 5
+    check: "Security measures cover training data, model artefacts and inference interfaces, with threat testing for AI-specific attacks."
+    evidence: "Threat model, pentest or red-team reports, access controls."
+    advice: "Threat-model the AI pipeline and test against poisoning, extraction and injection."
+    owner: "CISO"
+
+  - id: "Q25059-SOCIETAL"
+    title: "Societal and ethical risk mitigation"
+    part: "Freedom from risk"
+    clause: "Clause 5 (freedom from risk: societal and ethical risk mitigation)"
+    requirement: "Identify and reduce risks to people, society and rights, such as discrimination, manipulation or loss of autonomy, as a quality target."
+    applies_when: "AI system affects people or groups"
+    severity: critical
+    weight: 5
+    check: "Societal and ethical risks are assessed and mitigations are tracked, with results tied to release decisions."
+    evidence: "Impact assessment, ethical review record, mitigation tracker."
+    advice: "Run an impact assessment and make unresolved high risks a release blocker."
+    owner: "AI governance lead"
+
+  - id: "Q25059-SAFETY"
+    title: "Safety and economic risk mitigation"
+    part: "Freedom from risk"
+    clause: "Clause 5 (freedom from risk)"
+    requirement: "Limit the risk of harm to health, safety, property, environment and finances arising from system behaviour."
+    applies_when: "failures could cause physical, financial or environmental harm"
+    severity: high
+    weight: 3
+    check: "Hazard analysis identifies failure harms and controls limit them, with residual risk accepted by a named person."
+    evidence: "Hazard analysis, safety requirements, risk acceptance record."
+    advice: "Run a hazard analysis on failure modes and add controls for the severe ones."
+    owner: "Engineering lead"
+
+  - id: "Q25059-MEASURE"
+    title: "Quality measures and acceptance criteria"
+    part: "Measurement of quality"
+    clause: "Clause 5 and related measurement standards (ISO/IEC 25023 and 25024)"
+    requirement: "Define measures for each chosen characteristic with thresholds, data to use and evaluation method, and record results as acceptance evidence."
+    applies_when: "evaluating AI system quality before or after release"
+    severity: high
+    weight: 3
+    check: "Each quality target has a defined metric, test data and threshold, and results are recorded per version."
+    evidence: "Metric definitions, evaluation datasets, results per release."
+    advice: "Define metric, dataset and pass threshold per target, and store results per version."
+    owner: "ML lead"
+
+  - id: "Q25059-DATAQ"
+    title: "Quality of data and evaluation sets"
+    part: "Measurement of quality"
+    clause: "Clause 5 (data quality dependence; see ISO/IEC 5259 series)"
+    requirement: "Check that data used to train and evaluate the system is accurate, complete, representative and current enough to support the quality claims."
+    applies_when: "quality claims depend on training or evaluation data"
+    severity: high
+    weight: 3
+    check: "Data quality checks cover accuracy, completeness and representativeness, and evaluation sets reflect real usage."
+    evidence: "Data quality reports, evaluation set documentation."
+    advice: "Add data quality checks and keep evaluation sets representative of production."
+    owner: "ML lead"

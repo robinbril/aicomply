@@ -1,0 +1,227 @@
+framework: "ISO 22301 Business continuity management"
+reference: "ISO 22301:2019 + Amd 1:2024"
+short: "ISO 22301"
+kind: "iso"
+source: "iso-22301"
+scope: "Establishing and operating a business continuity management system so that an AI service that depends on third-party model APIs and cloud providers keeps delivering through disruption, provider outage and model deprecation"
+controls:
+  - id: "BC22301-CONTEXT"
+    title: "Context, interested parties and BCMS scope"
+    part: "Clause 4 Context"
+    clause: "4.1-4.4"
+    requirement: "Understand the organisation's context, the requirements of interested parties including customers and regulators, and set a documented scope for the business continuity management system covering the AI service and its dependencies."
+    applies_when: "operating a service customers rely on"
+    severity: high
+    weight: 3
+    check: "A BCMS scope document lists the services in scope, their dependencies on third-party model APIs and cloud, and the continuity obligations in customer contracts."
+    evidence: "BCMS scope, interested parties register, dependency map, contractual availability commitments."
+    advice: "Write the scope around the customer-facing service and list every critical dependency, including each model provider."
+    owner: "Top management"
+
+  - id: "BC22301-POLICY"
+    title: "Leadership commitment and continuity policy"
+    part: "Clause 5 Leadership"
+    clause: "5.1, 5.2"
+    requirement: "Top management commits to the BCMS, approves a business continuity policy and ensures resources for it."
+    applies_when: "any organisation operating a BCMS"
+    severity: high
+    weight: 3
+    check: "An approved continuity policy exists, is communicated, and management resources the programme."
+    evidence: "Approved BC policy, management review minutes, budget or resource allocation record."
+    advice: "Have management approve and sign the policy and review it on a fixed cycle."
+    owner: "Top management"
+
+  - id: "BC22301-ROLES"
+    title: "Roles, responsibilities and authorities"
+    part: "Clause 5 Leadership"
+    clause: "5.3"
+    requirement: "Assign and communicate responsibilities for the BCMS, including who declares an incident and who owns recovery of each service."
+    applies_when: "any organisation operating a BCMS"
+    severity: medium
+    weight: 2
+    check: "Named owners exist for the BCMS, incident declaration and recovery of each critical service, with deputies."
+    evidence: "Role assignment, on-call rota, incident declaration authority record."
+    advice: "Name an accountable owner and a deputy for every critical service and publish the call tree."
+    owner: "Top management"
+
+  - id: "BC22301-RISK-OPP"
+    title: "Risks and opportunities for the BCMS"
+    part: "Clause 6 Planning"
+    clause: "6.1"
+    requirement: "Determine risks and opportunities that affect the BCMS achieving its intended outcomes and plan actions to address them."
+    applies_when: "any organisation operating a BCMS"
+    severity: medium
+    weight: 2
+    check: "A documented list of BCMS risks and opportunities exists with actions and owners."
+    evidence: "BCMS risk and opportunity register, action plan."
+    advice: "Keep a short register covering BCMS-level risks such as missing owners, untested plans and single points of failure."
+    owner: "Risk manager"
+
+  - id: "BC22301-OBJECTIVES"
+    title: "Continuity objectives and change planning"
+    part: "Clause 6 Planning"
+    clause: "6.2, 6.3"
+    requirement: "Set measurable business continuity objectives and plan changes to the BCMS in a controlled way."
+    applies_when: "any organisation operating a BCMS"
+    severity: medium
+    weight: 2
+    check: "Objectives with metrics exist, such as recovery time targets and exercise frequency, and changes to the BCMS go through a recorded process."
+    evidence: "Continuity objectives, metric reports, BCMS change log."
+    advice: "Define recovery time and recovery point targets for each service and review them after every material change."
+    owner: "Top management"
+
+  - id: "BC22301-SUPPORT"
+    title: "Resources, competence, awareness and documented information"
+    part: "Clause 7 Support"
+    clause: "7.1-7.5"
+    requirement: "Provide resources and competent, aware staff for the BCMS and control the documented information, including keeping continuity plans available during a disruption."
+    applies_when: "any organisation operating a BCMS"
+    severity: medium
+    weight: 2
+    check: "Staff with continuity roles are trained, plans are stored where they remain accessible during an outage, and documents are version controlled."
+    evidence: "Training records, offline or independent copy of plans, document control records."
+    advice: "Keep a copy of continuity plans outside the systems they protect and train responders yearly."
+    owner: "Risk manager"
+
+  - id: "BC22301-BIA"
+    title: "Business impact analysis"
+    part: "Clause 8 BIA and risk"
+    clause: "8.2.2"
+    requirement: "Analyse the impact of disruption on each product and service over time, set maximum tolerable disruption, recovery time objectives and the resources needed, including the model providers and cloud services the service depends on."
+    applies_when: "operating a service with dependencies on third parties"
+    severity: critical
+    weight: 5
+    check: "A current BIA lists each critical service, impact over time, recovery objectives and dependencies, and is approved by service owners."
+    evidence: "BIA document, recovery objectives per service, dependency list, approval record."
+    advice: "Run a BIA per customer-facing service, state what is tolerable if the model provider is unavailable, and refresh it yearly or on major change."
+    owner: "Risk manager"
+
+  - id: "BC22301-RISK-ASSESS"
+    title: "Continuity risk assessment"
+    part: "Clause 8 BIA and risk"
+    clause: "8.2.3"
+    requirement: "Assess the risk of disruption to prioritised activities and their resources, including provider outage, model deprecation, loss of a region, key staff loss and cyber incidents, and decide which risks to treat."
+    applies_when: "operating a service with critical dependencies"
+    severity: high
+    weight: 3
+    check: "A disruption risk assessment covers provider outage, model withdrawal or change, data loss and cyber attack with likelihood, impact and treatment decisions."
+    evidence: "Disruption risk assessment, treatment decisions, residual risk acceptance."
+    advice: "Add model deprecation, silent model change and rate limit exhaustion as named scenarios and decide treatments for each."
+    owner: "Risk manager"
+
+  - id: "BC22301-STRATEGY"
+    title: "Business continuity strategies and solutions"
+    part: "Clause 8 Strategies"
+    clause: "8.3.1, 8.3.2"
+    requirement: "Select continuity strategies that meet the recovery objectives, such as redundancy, failover, alternative suppliers and manual workarounds, and identify the resources required."
+    applies_when: "critical services whose recovery objectives exceed natural recovery capability"
+    severity: critical
+    weight: 5
+    check: "Strategies exist per critical service, and for model dependencies include a secondary provider or model, fallback behaviour and graceful degradation."
+    evidence: "Strategy document, architecture showing redundancy, secondary provider configuration, degraded-mode design."
+    advice: "Design the product to switch to a second model or provider and to degrade gracefully with a clear user message when the model is unavailable."
+    owner: "Engineering lead"
+
+  - id: "BC22301-RESOURCES"
+    title: "Resource requirements and supplier arrangements"
+    part: "Clause 8 Strategies"
+    clause: "8.3.3, 8.3.4"
+    requirement: "Secure the people, technology, data, facilities and supplier arrangements needed to carry out the strategies, including contractual continuity commitments from providers."
+    applies_when: "strategies depend on suppliers or reserve capacity"
+    severity: high
+    weight: 3
+    check: "Contracts or service terms with critical suppliers state availability, notice of deprecation and support commitments, and reserve capacity is arranged."
+    evidence: "Supplier contracts and SLAs, deprecation notice terms, capacity reservations."
+    advice: "Negotiate or record notice periods for model changes and retirement, and keep tested credentials and quota at the fallback provider."
+    owner: "Procurement lead"
+
+  - id: "BC22301-PLANS"
+    title: "Business continuity plans and procedures"
+    part: "Clause 8 Plans"
+    clause: "8.4.1-8.4.4"
+    requirement: "Document incident response structure, warning and communication, and recovery procedures that tell responders what to do, with criteria for activation and for returning to normal."
+    applies_when: "a disruption of a critical service"
+    severity: critical
+    weight: 5
+    check: "Plans define activation criteria, roles, communication to customers, recovery steps per scenario including provider outage, and return to normal operations."
+    evidence: "Business continuity plan, incident communication templates, scenario runbooks, activation criteria."
+    advice: "Write short scenario runbooks that a responder can follow under stress, including a customer status communication step."
+    owner: "Engineering lead"
+
+  - id: "BC22301-COMMS"
+    title: "Communication and warning arrangements"
+    part: "Clause 8 Plans"
+    clause: "8.4.2, 8.4.3"
+    requirement: "Establish arrangements to detect disruption, warn interested parties and communicate with customers and authorities during an incident."
+    applies_when: "a disruption affecting customers"
+    severity: high
+    weight: 3
+    check: "Monitoring detects provider outages, a status page or customer notification route exists, and templates are approved ahead of time."
+    evidence: "Monitoring alerts on provider health, status page, approved communication templates, contact lists."
+    advice: "Monitor provider health directly and publish a status page, with pre-approved customer messages for common scenarios."
+    owner: "Communications lead"
+
+  - id: "BC22301-RECOVERY"
+    title: "Recovery of data and systems"
+    part: "Clause 8 Plans"
+    clause: "8.4.5"
+    requirement: "Plan and prove the recovery of systems and data to the objectives set, including backups, restore procedures and the ability to rebuild the environment."
+    applies_when: "operating production data or infrastructure"
+    severity: high
+    weight: 3
+    check: "Backups exist for critical data, restore has been tested within recovery objectives, and infrastructure can be rebuilt from code."
+    evidence: "Backup configuration, restore test report, infrastructure as code repository."
+    advice: "Test a full restore at least yearly and record the time achieved against the recovery objective."
+    owner: "Engineering lead"
+
+  - id: "BC22301-EXERCISE"
+    title: "Exercising and testing"
+    part: "Clause 8 Exercising"
+    clause: "8.5"
+    requirement: "Exercise and test continuity plans at planned intervals and after significant change, record the results and act on lessons learned."
+    applies_when: "any organisation operating a BCMS"
+    severity: high
+    weight: 3
+    check: "An exercise schedule exists, exercises cover provider outage and model withdrawal scenarios, and reports list findings with owners."
+    evidence: "Exercise plan, exercise reports, action tracker."
+    advice: "Run at least one exercise a year with a model-provider-down scenario and track fixes to completion."
+    owner: "Risk manager"
+
+  - id: "BC22301-MONITOR"
+    title: "Monitoring, measurement, analysis and evaluation"
+    part: "Clause 9 Performance evaluation"
+    clause: "9.1"
+    requirement: "Monitor and measure BCMS performance, including recovery times achieved and incidents handled, and evaluate how well the BCMS works."
+    applies_when: "any organisation operating a BCMS"
+    severity: medium
+    weight: 2
+    check: "Defined BCMS metrics are collected and reviewed, and actual recovery times from incidents and tests are compared with objectives."
+    evidence: "Metric reports, incident recovery time records, evaluation notes."
+    advice: "Track achieved recovery time against objective for every incident and test, and report it to management."
+    owner: "Risk manager"
+
+  - id: "BC22301-AUDIT-REVIEW"
+    title: "Internal audit and management review"
+    part: "Clause 9 Performance evaluation"
+    clause: "9.2, 9.3"
+    requirement: "Audit the BCMS at planned intervals and have top management review it for suitability, adequacy and effectiveness."
+    applies_when: "any organisation operating a BCMS"
+    severity: medium
+    weight: 2
+    check: "Internal audit and management review take place on schedule and their outputs include decisions and actions."
+    evidence: "Internal audit reports, management review minutes, action list."
+    advice: "Schedule the audit and review on the calendar and record decisions with owners and dates."
+    owner: "Top management"
+
+  - id: "BC22301-IMPROVE"
+    title: "Nonconformity, corrective action and continual improvement"
+    part: "Clause 10 Improvement"
+    clause: "10.1, 10.2"
+    requirement: "Handle nonconformities and incidents with corrective action and continually improve the BCMS based on audits, exercises and real disruptions."
+    applies_when: "any organisation operating a BCMS"
+    severity: medium
+    weight: 2
+    check: "Corrective actions from incidents, tests and audits are logged, tracked to closure and checked for effectiveness."
+    evidence: "Corrective action log, post-incident review reports, improvement tracker."
+    advice: "Hold a post-incident review after every disruption and put resulting changes into the plans."
+    owner: "Risk manager"

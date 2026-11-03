@@ -1,0 +1,899 @@
+{
+  "vendors": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api.openai.com"
+      ],
+      "packages": [
+        "openai",
+        "@ai-sdk/openai",
+        "langchain_openai",
+        "langchain-openai"
+      ],
+      "note": ""
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api.anthropic.com"
+      ],
+      "packages": [
+        "anthropic",
+        "@anthropic-ai/sdk",
+        "@ai-sdk/anthropic",
+        "langchain_anthropic"
+      ],
+      "note": ""
+    },
+    {
+      "id": "google-ai",
+      "name": "Google Gemini / Vertex AI",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "generativelanguage.googleapis.com",
+        "aiplatform.googleapis.com"
+      ],
+      "packages": [
+        "@google/generative-ai",
+        "@google/genai",
+        "google-generativeai",
+        "google-genai",
+        "vertexai",
+        "@google-cloud/vertexai"
+      ],
+      "note": ""
+    },
+    {
+      "id": "azure-openai",
+      "name": "Azure OpenAI",
+      "category": "llm",
+      "region": "configurable",
+      "hosts": [
+        "openai.azure.com",
+        "cognitiveservices.azure.com"
+      ],
+      "packages": [
+        "@azure/openai"
+      ],
+      "note": "Region follows the Azure resource; check the deployment region."
+    },
+    {
+      "id": "aws-bedrock",
+      "name": "AWS Bedrock",
+      "category": "llm",
+      "region": "configurable",
+      "hosts": [
+        "bedrock-runtime"
+      ],
+      "packages": [
+        "@aws-sdk/client-bedrock-runtime"
+      ],
+      "note": "Region follows the AWS client config."
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral AI",
+      "category": "llm",
+      "region": "EU",
+      "hosts": [
+        "api.mistral.ai"
+      ],
+      "packages": [
+        "mistralai",
+        "@mistralai/mistralai"
+      ],
+      "note": ""
+    },
+    {
+      "id": "cohere",
+      "name": "Cohere",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api.cohere.ai",
+        "api.cohere.com"
+      ],
+      "packages": [
+        "cohere",
+        "cohere-ai"
+      ],
+      "note": ""
+    },
+    {
+      "id": "groq",
+      "name": "Groq",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api.groq.com"
+      ],
+      "packages": [
+        "groq",
+        "groq-sdk"
+      ],
+      "note": ""
+    },
+    {
+      "id": "together",
+      "name": "Together AI",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api.together.xyz"
+      ],
+      "packages": [
+        "together"
+      ],
+      "note": ""
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api.replicate.com"
+      ],
+      "packages": [
+        "replicate"
+      ],
+      "note": ""
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face Inference",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api-inference.huggingface.co",
+        "huggingface.co"
+      ],
+      "packages": [
+        "@huggingface/inference",
+        "huggingface_hub"
+      ],
+      "note": ""
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "openrouter.ai"
+      ],
+      "packages": [],
+      "note": ""
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "category": "llm",
+      "region": "CN",
+      "hosts": [
+        "api.deepseek.com"
+      ],
+      "packages": [],
+      "note": ""
+    },
+    {
+      "id": "xai",
+      "name": "xAI",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api.x.ai"
+      ],
+      "packages": [
+        "@ai-sdk/xai"
+      ],
+      "note": ""
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "category": "llm",
+      "region": "US",
+      "hosts": [
+        "api.elevenlabs.io"
+      ],
+      "packages": [
+        "elevenlabs"
+      ],
+      "note": ""
+    },
+    {
+      "id": "pinecone",
+      "name": "Pinecone",
+      "category": "vector-db",
+      "region": "US",
+      "hosts": [
+        "pinecone.io"
+      ],
+      "packages": [
+        "@pinecone-database/pinecone",
+        "pinecone",
+        "pinecone-client"
+      ],
+      "note": ""
+    },
+    {
+      "id": "google-analytics",
+      "name": "Google Analytics / Tag Manager",
+      "category": "analytics",
+      "region": "US",
+      "hosts": [
+        "google-analytics.com",
+        "googletagmanager.com",
+        "analytics.google.com"
+      ],
+      "packages": [
+        "react-ga4",
+        "ga-4-react"
+      ],
+      "note": ""
+    },
+    {
+      "id": "posthog",
+      "name": "PostHog",
+      "category": "analytics",
+      "region": "configurable",
+      "hosts": [
+        "posthog.com",
+        "i.posthog.com"
+      ],
+      "packages": [
+        "posthog-js",
+        "posthog-node",
+        "posthog"
+      ],
+      "note": "EU cloud exists (eu.i.posthog.com); check the host."
+    },
+    {
+      "id": "segment",
+      "name": "Segment",
+      "category": "analytics",
+      "region": "US",
+      "hosts": [
+        "api.segment.io",
+        "cdn.segment.com"
+      ],
+      "packages": [
+        "analytics-node",
+        "@segment/analytics-next",
+        "@segment/analytics-node",
+        "analytics-python"
+      ],
+      "note": ""
+    },
+    {
+      "id": "mixpanel",
+      "name": "Mixpanel",
+      "category": "analytics",
+      "region": "configurable",
+      "hosts": [
+        "api.mixpanel.com",
+        "api-eu.mixpanel.com"
+      ],
+      "packages": [
+        "mixpanel",
+        "mixpanel-browser"
+      ],
+      "note": ""
+    },
+    {
+      "id": "amplitude",
+      "name": "Amplitude",
+      "category": "analytics",
+      "region": "US",
+      "hosts": [
+        "api2.amplitude.com",
+        "api.amplitude.com"
+      ],
+      "packages": [
+        "@amplitude/analytics-browser",
+        "amplitude-js"
+      ],
+      "note": ""
+    },
+    {
+      "id": "hotjar",
+      "name": "Hotjar",
+      "category": "session-recording",
+      "region": "EU",
+      "hosts": [
+        "hotjar.com",
+        "static.hotjar.com"
+      ],
+      "packages": [
+        "@hotjar/browser"
+      ],
+      "note": ""
+    },
+    {
+      "id": "fullstory",
+      "name": "FullStory",
+      "category": "session-recording",
+      "region": "US",
+      "hosts": [
+        "fullstory.com"
+      ],
+      "packages": [
+        "@fullstory/browser"
+      ],
+      "note": ""
+    },
+    {
+      "id": "logrocket",
+      "name": "LogRocket",
+      "category": "session-recording",
+      "region": "US",
+      "hosts": [
+        "logrocket.com",
+        "cdn.logrocket.io"
+      ],
+      "packages": [
+        "logrocket"
+      ],
+      "note": ""
+    },
+    {
+      "id": "clarity",
+      "name": "Microsoft Clarity",
+      "category": "session-recording",
+      "region": "US",
+      "hosts": [
+        "clarity.ms"
+      ],
+      "packages": [
+        "@microsoft/clarity"
+      ],
+      "note": ""
+    },
+    {
+      "id": "vercel-analytics",
+      "name": "Vercel Analytics",
+      "category": "analytics",
+      "region": "US",
+      "hosts": [
+        "vitals.vercel-insights.com"
+      ],
+      "packages": [
+        "@vercel/analytics",
+        "@vercel/speed-insights"
+      ],
+      "note": ""
+    },
+    {
+      "id": "plausible",
+      "name": "Plausible",
+      "category": "analytics",
+      "region": "EU",
+      "hosts": [
+        "plausible.io"
+      ],
+      "packages": [],
+      "note": ""
+    },
+    {
+      "id": "meta-pixel",
+      "name": "Meta Pixel",
+      "category": "analytics",
+      "region": "US",
+      "hosts": [
+        "connect.facebook.net",
+        "facebook.com/tr"
+      ],
+      "packages": [],
+      "note": ""
+    },
+    {
+      "id": "linkedin-insight",
+      "name": "LinkedIn Insight Tag",
+      "category": "analytics",
+      "region": "US",
+      "hosts": [
+        "snap.licdn.com",
+        "px.ads.linkedin.com"
+      ],
+      "packages": [],
+      "note": ""
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "category": "error-tracking",
+      "region": "configurable",
+      "hosts": [
+        "sentry.io",
+        "ingest.sentry.io",
+        "ingest.de.sentry.io"
+      ],
+      "packages": [
+        "@sentry/node",
+        "@sentry/browser",
+        "@sentry/react",
+        "@sentry/vue",
+        "@sentry/nextjs",
+        "sentry_sdk",
+        "sentry-sdk"
+      ],
+      "note": "EU data residency exists (de.sentry.io)."
+    },
+    {
+      "id": "datadog",
+      "name": "Datadog",
+      "category": "error-tracking",
+      "region": "configurable",
+      "hosts": [
+        "datadoghq.com",
+        "datadoghq.eu",
+        "browser-intake-datadoghq.com"
+      ],
+      "packages": [
+        "dd-trace",
+        "@datadog/browser-rum",
+        "ddtrace",
+        "datadog"
+      ],
+      "note": ""
+    },
+    {
+      "id": "newrelic",
+      "name": "New Relic",
+      "category": "error-tracking",
+      "region": "US",
+      "hosts": [
+        "newrelic.com",
+        "nr-data.net"
+      ],
+      "packages": [
+        "newrelic"
+      ],
+      "note": ""
+    },
+    {
+      "id": "bugsnag",
+      "name": "Bugsnag",
+      "category": "error-tracking",
+      "region": "US",
+      "hosts": [
+        "bugsnag.com"
+      ],
+      "packages": [
+        "@bugsnag/js",
+        "bugsnag"
+      ],
+      "note": ""
+    },
+    {
+      "id": "rollbar",
+      "name": "Rollbar",
+      "category": "error-tracking",
+      "region": "US",
+      "hosts": [
+        "rollbar.com"
+      ],
+      "packages": [
+        "rollbar"
+      ],
+      "note": ""
+    },
+    {
+      "id": "langsmith",
+      "name": "LangSmith",
+      "category": "llm-observability",
+      "region": "US",
+      "hosts": [
+        "api.smith.langchain.com"
+      ],
+      "packages": [
+        "langsmith"
+      ],
+      "note": ""
+    },
+    {
+      "id": "langfuse",
+      "name": "Langfuse",
+      "category": "llm-observability",
+      "region": "configurable",
+      "hosts": [
+        "cloud.langfuse.com",
+        "us.cloud.langfuse.com"
+      ],
+      "packages": [
+        "langfuse"
+      ],
+      "note": ""
+    },
+    {
+      "id": "helicone",
+      "name": "Helicone",
+      "category": "llm-observability",
+      "region": "US",
+      "hosts": [
+        "helicone.ai",
+        "oai.helicone.ai"
+      ],
+      "packages": [
+        "@helicone/helicone"
+      ],
+      "note": ""
+    },
+    {
+      "id": "sendgrid",
+      "name": "SendGrid",
+      "category": "email",
+      "region": "US",
+      "hosts": [
+        "api.sendgrid.com"
+      ],
+      "packages": [
+        "@sendgrid/mail",
+        "sendgrid"
+      ],
+      "note": ""
+    },
+    {
+      "id": "mailgun",
+      "name": "Mailgun",
+      "category": "email",
+      "region": "configurable",
+      "hosts": [
+        "api.mailgun.net",
+        "api.eu.mailgun.net"
+      ],
+      "packages": [
+        "mailgun.js",
+        "mailgun"
+      ],
+      "note": ""
+    },
+    {
+      "id": "postmark",
+      "name": "Postmark",
+      "category": "email",
+      "region": "US",
+      "hosts": [
+        "api.postmarkapp.com"
+      ],
+      "packages": [
+        "postmark",
+        "postmarker"
+      ],
+      "note": ""
+    },
+    {
+      "id": "resend",
+      "name": "Resend",
+      "category": "email",
+      "region": "US",
+      "hosts": [
+        "api.resend.com"
+      ],
+      "packages": [
+        "resend"
+      ],
+      "note": ""
+    },
+    {
+      "id": "twilio",
+      "name": "Twilio",
+      "category": "messaging",
+      "region": "US",
+      "hosts": [
+        "api.twilio.com"
+      ],
+      "packages": [
+        "twilio"
+      ],
+      "note": ""
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "category": "messaging",
+      "region": "US",
+      "hosts": [
+        "slack.com",
+        "hooks.slack.com"
+      ],
+      "packages": [
+        "@slack/web-api",
+        "slack_sdk",
+        "slack-sdk"
+      ],
+      "note": ""
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "category": "payments",
+      "region": "US",
+      "hosts": [
+        "api.stripe.com",
+        "js.stripe.com"
+      ],
+      "packages": [
+        "stripe",
+        "@stripe/stripe-js"
+      ],
+      "note": ""
+    },
+    {
+      "id": "mollie",
+      "name": "Mollie",
+      "category": "payments",
+      "region": "EU",
+      "hosts": [
+        "api.mollie.com"
+      ],
+      "packages": [
+        "@mollie/api-client",
+        "mollie-api-python"
+      ],
+      "note": ""
+    },
+    {
+      "id": "aws-s3",
+      "name": "AWS S3",
+      "category": "storage",
+      "region": "configurable",
+      "hosts": [
+        "s3.amazonaws.com",
+        "amazonaws.com"
+      ],
+      "packages": [
+        "@aws-sdk/client-s3",
+        "aws-sdk",
+        "boto3"
+      ],
+      "note": "Region follows the bucket."
+    },
+    {
+      "id": "gcs",
+      "name": "Google Cloud Storage",
+      "category": "storage",
+      "region": "configurable",
+      "hosts": [
+        "storage.googleapis.com"
+      ],
+      "packages": [
+        "@google-cloud/storage",
+        "google-cloud-storage"
+      ],
+      "note": ""
+    },
+    {
+      "id": "azure-blob",
+      "name": "Azure Blob Storage",
+      "category": "storage",
+      "region": "configurable",
+      "hosts": [
+        "blob.core.windows.net"
+      ],
+      "packages": [
+        "@azure/storage-blob",
+        "azure-storage-blob"
+      ],
+      "note": ""
+    },
+    {
+      "id": "cloudinary",
+      "name": "Cloudinary",
+      "category": "storage",
+      "region": "US",
+      "hosts": [
+        "api.cloudinary.com",
+        "res.cloudinary.com"
+      ],
+      "packages": [
+        "cloudinary"
+      ],
+      "note": ""
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "category": "database",
+      "region": "configurable",
+      "hosts": [
+        "supabase.co"
+      ],
+      "packages": [
+        "@supabase/supabase-js",
+        "supabase"
+      ],
+      "note": "Region follows the project."
+    },
+    {
+      "id": "firebase",
+      "name": "Firebase",
+      "category": "database",
+      "region": "US",
+      "hosts": [
+        "firebaseio.com",
+        "firestore.googleapis.com",
+        "firebase.googleapis.com"
+      ],
+      "packages": [
+        "firebase",
+        "firebase-admin"
+      ],
+      "note": ""
+    },
+    {
+      "id": "auth0",
+      "name": "Auth0",
+      "category": "identity",
+      "region": "configurable",
+      "hosts": [
+        "auth0.com"
+      ],
+      "packages": [
+        "auth0",
+        "@auth0/auth0-react",
+        "@auth0/nextjs-auth0"
+      ],
+      "note": ""
+    },
+    {
+      "id": "clerk",
+      "name": "Clerk",
+      "category": "identity",
+      "region": "US",
+      "hosts": [
+        "clerk.com",
+        "clerk.accounts.dev"
+      ],
+      "packages": [
+        "@clerk/nextjs",
+        "@clerk/clerk-react",
+        "@clerk/clerk-sdk-node"
+      ],
+      "note": ""
+    },
+    {
+      "id": "google-fonts",
+      "name": "Google Fonts",
+      "category": "cdn",
+      "region": "US",
+      "hosts": [
+        "fonts.googleapis.com",
+        "fonts.gstatic.com"
+      ],
+      "packages": [],
+      "note": "Loading fonts from Google sends the visitor IP to Google (LG M\u00fcnchen, 3 O 17493/20)."
+    },
+    {
+      "id": "public-cdn",
+      "name": "Public JS CDN",
+      "category": "cdn",
+      "region": "US",
+      "hosts": [
+        "cdn.jsdelivr.net",
+        "unpkg.com",
+        "cdnjs.cloudflare.com"
+      ],
+      "packages": [],
+      "note": ""
+    }
+  ],
+  "ignore_hosts": [
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0",
+    "example.com",
+    "example.org",
+    "example.net",
+    "www.w3.org",
+    "w3.org",
+    "schema.org",
+    "json-schema.org",
+    "purl.org",
+    "xmlns.com",
+    "ns.adobe.com",
+    "schemas.openxmlformats.org",
+    "schemas.microsoft.com",
+    "www.apache.org",
+    "opensource.org",
+    "creativecommons.org",
+    "github.com",
+    "raw.githubusercontent.com",
+    "npmjs.com",
+    "www.npmjs.com",
+    "pypi.org",
+    "docs.python.org",
+    "developer.mozilla.org",
+    "reactjs.org",
+    "react.dev",
+    "vuejs.org",
+    "semver.org",
+    "spdx.org",
+    "mozilla.org",
+    "fb.me",
+    "goo.gl",
+    "bit.ly",
+    "tools.ietf.org",
+    "datatracker.ietf.org",
+    "www.ietf.org",
+    "eur-lex.europa.eu",
+    "wetten.overheid.nl"
+  ],
+  "category_controls": {
+    "llm": [
+      "GDPR-PII-TO-EXTERNAL-LLM",
+      "GDPR-PROCESSOR-DPA",
+      "A.5.19-SUPPLIER",
+      "A.8.12-DLP",
+      "PII27018-CONSENT"
+    ],
+    "vector-db": [
+      "GDPR-PROCESSOR-DPA",
+      "A.5.19-SUPPLIER",
+      "A.5.23-CLOUD"
+    ],
+    "llm-observability": [
+      "GDPR-PII-TO-EXTERNAL-LLM",
+      "GDPR-PROCESSOR-DPA",
+      "A.8.15-LOGGING",
+      "A.8.11-MASKING"
+    ],
+    "analytics": [
+      "GDPR-LAWFUL-BASIS",
+      "GDPR-PROCESSOR-DPA",
+      "A.5.19-SUPPLIER"
+    ],
+    "session-recording": [
+      "GDPR-LAWFUL-BASIS",
+      "GDPR-PROCESSOR-DPA",
+      "A.8.11-MASKING"
+    ],
+    "error-tracking": [
+      "A.8.15-LOGGING",
+      "A.8.11-MASKING",
+      "GDPR-PROCESSOR-DPA"
+    ],
+    "email": [
+      "GDPR-PROCESSOR-DPA",
+      "A.5.19-SUPPLIER"
+    ],
+    "messaging": [
+      "GDPR-PROCESSOR-DPA",
+      "A.5.19-SUPPLIER"
+    ],
+    "payments": [
+      "GDPR-PROCESSOR-DPA",
+      "A.5.19-SUPPLIER"
+    ],
+    "storage": [
+      "A.5.23-CLOUD",
+      "A.8.24-ENCRYPT-DATA",
+      "GDPR-PROCESSOR-DPA"
+    ],
+    "database": [
+      "A.5.23-CLOUD",
+      "A.8.24-ENCRYPT-DATA",
+      "GDPR-PROCESSOR-DPA"
+    ],
+    "identity": [
+      "A.5.16-IDENTITY",
+      "GDPR-PROCESSOR-DPA"
+    ],
+    "cdn": [
+      "GDPR-LAWFUL-BASIS",
+      "A.5.19-SUPPLIER"
+    ],
+    "unknown": [
+      "A.5.19-SUPPLIER"
+    ]
+  }
+}

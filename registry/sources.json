@@ -1,0 +1,214 @@
+{
+  "sources": [
+    {
+      "id": "eu-ai-act",
+      "name": "EU AI Act, Regulation (EU) 2024/1689",
+      "strategy": "cellar",
+      "celex": "32024R1689",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+      "frameworks": [
+        "eu-ai-act"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "gdpr",
+      "name": "GDPR, Regulation (EU) 2016/679",
+      "strategy": "cellar",
+      "celex": "32016R0679",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "frameworks": [
+        "gdpr"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "uavg",
+      "name": "Uitvoeringswet AVG (NL)",
+      "strategy": "sru",
+      "bwb_id": "BWBR0040940",
+      "url": "https://wetten.overheid.nl/BWBR0040940/",
+      "frameworks": [
+        "gdpr"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "ec-ai-act-page",
+      "name": "European Commission: AI Act policy page",
+      "strategy": "html",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+      "anchor": "Regulation (EU) 2024/1689",
+      "frameworks": [
+        "eu-ai-act"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "ec-gpai-code",
+      "name": "European Commission: General-Purpose AI Code of Practice",
+      "strategy": "html",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai",
+      "anchor": "General-Purpose AI Code of Practice",
+      "frameworks": [
+        "eu-ai-act"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "ap-algoritmes-ai",
+      "name": "Autoriteit Persoonsgegevens: Algoritmes & AI",
+      "strategy": "html",
+      "url": "https://www.autoriteitpersoonsgegevens.nl/themas/algoritmes-ai",
+      "anchor": "Algoritmes & AI",
+      "frameworks": [
+        "gdpr",
+        "eu-ai-act"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-42001",
+      "name": "ISO/IEC 42001: AI management system",
+      "strategy": "iso",
+      "family": "ISO/IEC 42001",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+42001",
+      "frameworks": [
+        "iso-42001"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-42005",
+      "name": "ISO/IEC 42005: AI system impact assessment",
+      "strategy": "iso",
+      "family": "ISO/IEC 42005",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+42005",
+      "frameworks": [
+        "iso-42005"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-23894",
+      "name": "ISO/IEC 23894: AI risk management",
+      "strategy": "iso",
+      "family": "ISO/IEC 23894",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+23894",
+      "frameworks": [
+        "iso-23894"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-5338",
+      "name": "ISO/IEC 5338: AI system life cycle processes",
+      "strategy": "iso",
+      "family": "ISO/IEC 5338",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+5338",
+      "frameworks": [
+        "iso-5338"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-38507",
+      "name": "ISO/IEC 38507: Governance implications of AI",
+      "strategy": "iso",
+      "family": "ISO/IEC 38507",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+38507",
+      "frameworks": [
+        "iso-38507"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-25059",
+      "name": "ISO/IEC 25059: Quality model for AI systems",
+      "strategy": "iso",
+      "family": "ISO/IEC 25059",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+25059",
+      "frameworks": [
+        "iso-25059"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-24027",
+      "name": "ISO/IEC TR 24027: Bias in AI systems",
+      "strategy": "iso",
+      "family": "ISO/IEC TR 24027",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+TR+24027",
+      "frameworks": [
+        "iso-24027"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-27001",
+      "name": "ISO/IEC 27001: Information security management",
+      "strategy": "iso",
+      "family": "ISO/IEC 27001",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+27001",
+      "frameworks": [
+        "iso-27001"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-27701",
+      "name": "ISO/IEC 27701: Privacy information management",
+      "strategy": "iso",
+      "family": "ISO/IEC 27701",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+27701",
+      "frameworks": [
+        "iso-27701"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-27005",
+      "name": "ISO/IEC 27005: Information security risk management",
+      "strategy": "iso",
+      "family": "ISO/IEC 27005",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+27005",
+      "frameworks": [
+        "iso-27005"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-27017",
+      "name": "ISO/IEC 27017: Cloud services security controls",
+      "strategy": "iso",
+      "family": "ISO/IEC 27017",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+27017",
+      "frameworks": [
+        "iso-27017"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-27018",
+      "name": "ISO/IEC 27018: PII protection in public clouds",
+      "strategy": "iso",
+      "family": "ISO/IEC 27018",
+      "url": "https://www.iso.org/search.html?q=ISO%2FIEC+27018",
+      "frameworks": [
+        "iso-27018"
+      ],
+      "interval_days": 6
+    },
+    {
+      "id": "iso-22301",
+      "name": "ISO 22301: Business continuity management",
+      "strategy": "iso",
+      "family": "ISO 22301",
+      "url": "https://www.iso.org/search.html?q=ISO+22301",
+      "frameworks": [
+        "iso-22301"
+      ],
+      "interval_days": 6
+    }
+  ]
+}

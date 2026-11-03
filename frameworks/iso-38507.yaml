@@ -1,0 +1,188 @@
+framework: "ISO/IEC 38507 Governance of AI Use"
+reference: "ISO/IEC 38507:2022"
+short: "ISO 38507"
+kind: "iso"
+source: "iso-38507"
+scope: "Guidance for governing bodies and top management on the governance implications of using AI, building on ISO/IEC 38500; guidance only, not certifiable."
+controls:
+  - id: "GOV38507-ACCOUNT"
+    title: "Board accountability for AI use"
+    part: "Accountability"
+    clause: "Clause 5 (governance implications)"
+    requirement: "The governing body keeps ultimate accountability for the organisation's use of AI and cannot delegate that accountability away, even when AI is bought from suppliers."
+    applies_when: "organisation uses or provides AI systems"
+    severity: critical
+    weight: 5
+    check: "Governing body minutes or charter assign accountability for AI use to a named body or member."
+    evidence: "Board charter, committee terms of reference, minutes."
+    advice: "Record explicit board-level accountability for AI and name the responsible member."
+    owner: "Top management"
+
+  - id: "GOV38507-ROLES"
+    title: "Defined AI roles and responsibilities"
+    part: "Accountability"
+    clause: "Clause 5 (accountability)"
+    requirement: "Assign clear responsibilities for AI across management, so each AI system has an accountable owner from procurement to retirement."
+    applies_when: "organisation operates more than one AI system"
+    severity: high
+    weight: 3
+    check: "Each AI system has a named accountable owner and responsibilities are documented."
+    evidence: "AI system inventory with owners, RACI."
+    advice: "Add an owner field to the AI inventory and fill it for every system."
+    owner: "AI governance lead"
+
+  - id: "GOV38507-SUPPLY"
+    title: "Accountability across suppliers"
+    part: "Accountability"
+    clause: "Clause 5 (accountability, third parties)"
+    requirement: "Keep accountability for AI components supplied by third parties by setting expectations, contract terms and assurance over suppliers."
+    applies_when: "AI is procured, outsourced or built on third-party models"
+    severity: high
+    weight: 3
+    check: "Supplier contracts and reviews cover AI behaviour, data use, incident notice and audit rights."
+    evidence: "Supplier contracts, due-diligence records, assurance reports."
+    advice: "Add AI-specific clauses and a periodic review to supplier management."
+    owner: "Legal"
+
+  - id: "GOV38507-INVENTORY"
+    title: "Inventory of AI systems and uses"
+    part: "Oversight"
+    clause: "Clause 5 (oversight)"
+    requirement: "Maintain an overview of where AI is used, for what purpose and with what impact, so the governing body can oversee it."
+    applies_when: "organisation uses AI in more than one place"
+    severity: high
+    weight: 3
+    check: "A current inventory lists every AI system, its purpose, data, owner and risk level, and management can retrieve it."
+    evidence: "AI inventory register with last-reviewed dates."
+    advice: "Build and maintain a single AI inventory, including shadow use by staff."
+    owner: "AI governance lead"
+
+  - id: "GOV38507-REPORT"
+    title: "Management reporting to governing body"
+    part: "Oversight"
+    clause: "Clause 5 (oversight, monitoring)"
+    requirement: "Set regular reporting on AI performance, incidents, compliance and risk so the governing body can evaluate and direct."
+    applies_when: "organisation has a governing body or top management"
+    severity: medium
+    weight: 2
+    check: "Periodic reports with AI metrics, incidents and risk status reach the governing body and are discussed."
+    evidence: "Board reports, dashboards, meeting minutes."
+    advice: "Add a quarterly AI section to board reporting with fixed metrics."
+    owner: "AI governance lead"
+
+  - id: "GOV38507-ASSURANCE"
+    title: "Independent assurance over AI"
+    part: "Oversight"
+    clause: "Clause 5 (oversight, assurance)"
+    requirement: "Obtain assurance on AI controls through internal audit, external review or independent testing proportional to the risk."
+    applies_when: "AI systems carry material risk"
+    severity: medium
+    weight: 2
+    check: "Audit or independent review of AI controls was performed and findings were tracked to closure."
+    evidence: "Internal audit plan and reports, external assessment, finding tracker."
+    advice: "Include AI in the audit plan and track findings to completion."
+    owner: "Internal audit"
+
+  - id: "GOV38507-APPETITE"
+    title: "Risk appetite for AI"
+    part: "Risk appetite and policy"
+    clause: "Clause 6 (policies and risk)"
+    requirement: "Define the organisation's appetite and boundaries for AI risk and which uses are acceptable, restricted or prohibited."
+    applies_when: "organisation decides whether and how to use AI"
+    severity: high
+    weight: 3
+    check: "A documented risk appetite statement for AI exists and is used when approving AI uses."
+    evidence: "Risk appetite statement, approved-use list, prohibited-use list."
+    advice: "Write down which AI uses are allowed, restricted or banned and have leadership approve it."
+    owner: "Top management"
+
+  - id: "GOV38507-POLICY"
+    title: "AI policy aligned to strategy and law"
+    part: "Risk appetite and policy"
+    clause: "Clause 6 (policies)"
+    requirement: "Establish AI policies that align with strategy, ethical principles and legal duties, are communicated, and are reviewed regularly."
+    applies_when: "organisation uses or provides AI"
+    severity: critical
+    weight: 5
+    check: "An approved AI policy exists, maps to legal obligations, is communicated and has a review date."
+    evidence: "AI policy, communication record, review log."
+    advice: "Publish an AI policy, tie it to applicable laws and review it yearly."
+    owner: "Top management"
+
+  - id: "GOV38507-COMPLY"
+    title: "Legal and regulatory compliance oversight"
+    part: "Risk appetite and policy"
+    clause: "Clause 5 and 6 (compliance)"
+    requirement: "Make sure the organisation tracks laws and standards that apply to its AI use, and that compliance is monitored and reported."
+    applies_when: "AI use touches regulated domains, personal data or the EU market"
+    severity: high
+    weight: 3
+    check: "A register of applicable AI-related laws exists with owners and evidence of compliance checks."
+    evidence: "Legal obligations register, compliance review records."
+    advice: "Maintain a legal register for AI and review it on a schedule and on each new law."
+    owner: "Legal"
+
+  - id: "GOV38507-VALUES"
+    title: "Ethical principles and organisational values"
+    part: "Culture and values"
+    clause: "Clause 5 (culture and values)"
+    requirement: "Set ethical principles for AI that match organisational values and are turned into practices, not left as statements."
+    applies_when: "organisation develops or deploys AI"
+    severity: medium
+    weight: 2
+    check: "Ethical principles exist and map to concrete controls such as review steps, with evidence of use."
+    evidence: "Ethics principles document, mapping to controls, review records."
+    advice: "Map each principle to at least one control and test that it is used."
+    owner: "AI governance lead"
+
+  - id: "GOV38507-AWARENESS"
+    title: "Competence and awareness of AI"
+    part: "Culture and values"
+    clause: "Clause 5 (culture, skills)"
+    requirement: "Build AI literacy for the governing body, management and staff, and encourage raising concerns without penalty."
+    applies_when: "staff or management use or oversee AI"
+    severity: medium
+    weight: 2
+    check: "Training exists for management and staff, and a channel for raising AI concerns is available and used."
+    evidence: "Training records, speak-up channel, awareness materials."
+    advice: "Run AI training for leadership and staff and publish a concerns channel."
+    owner: "HR"
+
+  - id: "GOV38507-DECISION"
+    title: "Approval gates for AI-supported decisions"
+    part: "Decision-making with AI"
+    clause: "Clause 5 (decision-making)"
+    requirement: "Define which decisions may be made or supported by AI, who approves new AI uses, and when a human must decide."
+    applies_when: "AI outputs inform or make decisions about people or the business"
+    severity: critical
+    weight: 5
+    check: "A decision rights framework lists AI-supported decisions, approval requirements and the points where human decision is mandatory."
+    evidence: "Decision rights matrix, AI use approval records."
+    advice: "Create an approval step for each new AI use and mark decisions that need a human."
+    owner: "Top management"
+
+  - id: "GOV38507-HUMAN"
+    title: "Human oversight and ability to override"
+    part: "Decision-making with AI"
+    clause: "Clause 5 (decision-making, oversight)"
+    requirement: "Ensure people can understand, challenge and override AI outputs, and that reliance on AI does not remove responsibility from decision makers."
+    applies_when: "AI outputs affect decisions about people"
+    severity: high
+    weight: 3
+    check: "Procedures give reviewers the means and authority to override AI outputs, and overrides are logged."
+    evidence: "Override procedures, reviewer guidance, override log."
+    advice: "Give reviewers authority and time to override and log every override."
+    owner: "Operations lead"
+
+  - id: "GOV38507-OUTCOMES"
+    title: "Evaluation of AI-driven outcomes"
+    part: "Decision-making with AI"
+    clause: "Clause 5 (decision-making, evaluation)"
+    requirement: "Evaluate whether AI-supported decisions deliver the intended outcomes and fairness, and correct course when they do not."
+    applies_when: "AI-supported decisions are in production"
+    severity: medium
+    weight: 2
+    check: "Outcome reviews compare decisions against intended results and fairness, with corrective actions recorded."
+    evidence: "Outcome review reports, corrective action log."
+    advice: "Schedule outcome reviews of AI-supported decisions and act on the findings."
+    owner: "AI governance lead"

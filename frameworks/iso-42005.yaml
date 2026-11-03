@@ -1,0 +1,188 @@
+framework: "ISO/IEC 42005 AI System Impact Assessment"
+reference: "ISO/IEC 42005:2025"
+short: "ISO 42005"
+kind: "iso"
+source: "iso-42005"
+scope: "Guidance for assessing the impacts of AI systems on individuals, groups and society across the system life cycle; a guidance standard that supports the impact assessment required by ISO/IEC 42001, not certifiable on its own."
+controls:
+  - id: "IA42005-PROCESS"
+    title: "Documented impact assessment process"
+    part: "Process and timing"
+    clause: "Clause 6 (process)"
+    requirement: "Define a repeatable impact assessment process with roles, inputs, outputs and approval, so assessments are done consistently and not ad hoc."
+    applies_when: "developing, providing or deploying any AI system that can affect people"
+    severity: high
+    weight: 3
+    check: "A written procedure exists, names who performs and who approves assessments, and completed assessments follow it."
+    evidence: "Impact assessment procedure, template, approval records."
+    advice: "Write one procedure and a template; require sign-off before launch."
+    owner: "AI governance lead"
+
+  - id: "IA42005-TRIGGER"
+    title: "Triggers and timing of assessment"
+    part: "Process and timing"
+    clause: "Clause 6 (timing)"
+    requirement: "Set criteria that decide when an assessment is required: before first deployment, on material change to purpose, data, model or user group, and on incidents."
+    applies_when: "any AI system whose purpose, model, data or user base can change"
+    severity: high
+    weight: 3
+    check: "Release or change process contains a gate that checks whether an assessment is needed and records the outcome."
+    evidence: "Change-management checklist, release gate configuration, trigger criteria document."
+    advice: "Add an impact-assessment gate to the release and change workflow with explicit trigger criteria."
+    owner: "Engineering lead"
+
+  - id: "IA42005-INTEGRATE"
+    title: "Integration with risk and management processes"
+    part: "Process and timing"
+    clause: "Clause 5 and 6 (integration)"
+    requirement: "Connect impact assessment results to the organisation's risk management, AI management system and product decision-making so findings change decisions."
+    applies_when: "organisation runs a risk process or an AI management system"
+    severity: medium
+    weight: 2
+    check: "Findings from assessments appear in the risk register or backlog with owners and are traceable to decisions."
+    evidence: "Risk register entries linked to assessments, backlog items, decision log."
+    advice: "Link each assessment finding to a risk or ticket with an owner and due date."
+    owner: "AI governance lead"
+
+  - id: "IA42005-SCOPE"
+    title: "System description and assessment scope"
+    part: "Scope and stakeholders"
+    clause: "Clause 6 (scope)"
+    requirement: "Describe the AI system, its intended purpose, foreseeable misuse, deployment context and the boundary of what the assessment covers."
+    applies_when: "any AI system subject to impact assessment"
+    severity: high
+    weight: 3
+    check: "Assessment contains a system description with purpose, context of use, inputs, outputs, and stated scope boundary."
+    evidence: "System description, intended-use statement, scoping section of the assessment."
+    advice: "State intended use, known misuse and boundaries before analysing impacts."
+    owner: "Product owner"
+
+  - id: "IA42005-STAKEHOLDERS"
+    title: "Identify affected parties"
+    part: "Scope and stakeholders"
+    clause: "Clause 6 (stakeholders)"
+    requirement: "Identify individuals, groups and communities that the system may affect, including indirect and vulnerable groups, not only direct users."
+    applies_when: "AI system affects or processes data about people"
+    severity: critical
+    weight: 5
+    check: "Assessment lists affected parties beyond direct customers, including vulnerable groups, with rationale."
+    evidence: "Stakeholder map, affected-party register."
+    advice: "Map direct, indirect and vulnerable groups; add any missing group before approval."
+    owner: "AI governance lead"
+
+  - id: "IA42005-CONSULT"
+    title: "Stakeholder input and consultation"
+    part: "Scope and stakeholders"
+    clause: "Clause 6 (stakeholder engagement)"
+    requirement: "Collect input from affected parties or their representatives, or document why this was not feasible, and use it in the analysis."
+    applies_when: "impacts on people are non-trivial or the system is used in sensitive domains"
+    severity: medium
+    weight: 2
+    check: "Records show consultation, user research or a documented reason for not consulting, and show what changed as a result."
+    evidence: "Interview notes, survey results, consultation log."
+    advice: "Run a short consultation with representative users or proxies and record the changes made."
+    owner: "Product owner"
+
+  - id: "IA42005-IDENTIFY"
+    title: "Identify potential harms and benefits"
+    part: "Impact analysis"
+    clause: "Clause 6 (impact identification)"
+    requirement: "Identify potential benefits and harms for each affected party, covering fairness, safety, privacy, autonomy, rights and wider societal effects."
+    applies_when: "any AI system subject to impact assessment"
+    severity: critical
+    weight: 5
+    check: "Assessment enumerates concrete harms and benefits per affected party and per use scenario, including misuse and failure cases."
+    evidence: "Harm and benefit register, scenario analysis."
+    advice: "List harms per stakeholder and scenario using a fixed checklist of impact categories."
+    owner: "AI governance lead"
+
+  - id: "IA42005-EVALUATE"
+    title: "Analyse severity, likelihood and reversibility"
+    part: "Impact analysis"
+    clause: "Clause 6 (impact analysis)"
+    requirement: "Estimate the significance of each impact using stated criteria such as severity, scale, likelihood, reversibility and affected population size."
+    applies_when: "impacts have been identified"
+    severity: high
+    weight: 3
+    check: "Each identified impact has a rating with criteria used and the reasoning recorded."
+    evidence: "Impact rating matrix, scoring criteria, rated register."
+    advice: "Define rating scales once and apply them to every impact with a written rationale."
+    owner: "AI governance lead"
+
+  - id: "IA42005-CAPABILITY"
+    title: "Account for system characteristics and limitations"
+    part: "Impact analysis"
+    clause: "Clause 6 (system factors)"
+    requirement: "Take into account system properties that drive impact, such as accuracy limits, bias, data quality, autonomy level, explainability and dependency on third-party models."
+    applies_when: "AI system uses ML models, third-party models or autonomous decisions"
+    severity: high
+    weight: 3
+    check: "Analysis references measured performance, known limitations and data issues, and the role of any third-party model."
+    evidence: "Model cards, evaluation reports, supplier documentation."
+    advice: "Feed evaluation results and known limitations into the impact analysis, and update when they change."
+    owner: "ML lead"
+
+  - id: "IA42005-MITIGATE"
+    title: "Define mitigations and residual impact"
+    part: "Impact analysis"
+    clause: "Clause 6 (mitigation)"
+    requirement: "Decide measures to avoid or reduce negative impacts and record residual impact and who accepted it."
+    applies_when: "impacts above the acceptance threshold exist"
+    severity: high
+    weight: 3
+    check: "Each significant impact has a mitigation, an owner, a status and an accepted residual level approved by a named person."
+    evidence: "Mitigation plan, residual-impact acceptance record."
+    advice: "Assign each significant impact a mitigation and obtain explicit sign-off on what remains."
+    owner: "Top management"
+
+  - id: "IA42005-DOCUMENT"
+    title: "Documented assessment results"
+    part: "Documentation"
+    clause: "Clause 7 (documentation)"
+    requirement: "Document the assessment in a structured form: scope, method, findings, decisions, assumptions and approvals, kept as controlled records."
+    applies_when: "any completed impact assessment"
+    severity: high
+    weight: 3
+    check: "A complete, dated, versioned assessment report exists per system and is stored in a controlled location."
+    evidence: "Assessment report with version history and approver names."
+    advice: "Keep one versioned report per system in a controlled repository."
+    owner: "AI governance lead"
+
+  - id: "IA42005-COMMUNICATE"
+    title: "Communication of results"
+    part: "Documentation"
+    clause: "Clause 7 (reporting)"
+    requirement: "Share relevant results with decision makers, affected parties and, where required, regulators or customers, at a suitable level of detail."
+    applies_when: "results influence decisions or must be disclosed to others"
+    severity: medium
+    weight: 2
+    check: "Results reached decision makers and a defined disclosure path exists for users, customers or authorities."
+    evidence: "Briefing to management, customer-facing summary, regulator submission if applicable."
+    advice: "Define who receives the summary and publish a plain-language version where appropriate."
+    owner: "AI governance lead"
+
+  - id: "IA42005-REVIEW"
+    title: "Periodic and event-driven review"
+    part: "Review and monitoring"
+    clause: "Clause 8 (review)"
+    requirement: "Review and update assessments on a schedule and when the system, context or evidence changes, and keep the review history."
+    applies_when: "AI system in production or under change"
+    severity: high
+    weight: 3
+    check: "Assessments have a next-review date, and past reviews show updates after changes or incidents."
+    evidence: "Review calendar, review records, updated assessment versions."
+    advice: "Schedule reviews and trigger an extra one on each material change or incident."
+    owner: "AI governance lead"
+
+  - id: "IA42005-MONITOR"
+    title: "Monitor real-world impacts"
+    part: "Review and monitoring"
+    clause: "Clause 8 (monitoring)"
+    requirement: "Monitor deployed behaviour, complaints and incidents to check that predicted impacts match reality and to find new ones."
+    applies_when: "AI system in production"
+    severity: high
+    weight: 3
+    check: "Monitoring signals such as complaints, appeals, drift and incident data feed back into the assessment."
+    evidence: "Monitoring dashboards, complaint log, incident reports referencing the assessment."
+    advice: "Create a feedback route from complaints and monitoring into the next assessment review."
+    owner: "Engineering lead"

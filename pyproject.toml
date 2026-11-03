@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aicomply"
+version = "2.0.0"
+description = "Score AI systems against the EU AI Act, GDPR and 13 ISO standards; map data egress; build a risk matrix."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+keywords = ["ai-act", "gdpr", "iso-42001", "iso-27001", "compliance", "risk-matrix", "llm"]
+
+[project.scripts]
+aicomply = "aicomply.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["aicomply*"]
+
+[tool.setuptools.package-data]
+aicomply = ["egress/vendors.json", "render/matrix.css"]

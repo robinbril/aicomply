@@ -1,0 +1,58 @@
+name: regulation-sync
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"   # Mondays 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Check every due source
+        id: sync
+        run: |
+          set +e
+          python -m aicomply sync | tee sync.log
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Commit the moved baseline (unchanged sources still advance their check date)
+        run: |
+          git config user.name "regulation-sync"
+          git config user.email "regulation-sync@users.noreply.github.com"
+          if [ -z "$(git status --porcelain registry/state.json)" ]; then exit 0; fi
+          git add registry/state.json
+          git commit -m "chore(registry): baseline $(date -u +%Y-%m-%d)"
+          git push
+        if: steps.sync.outputs.code == '0'
+      - name: Open a pull request when a source changed or broke
+        if: steps.sync.outputs.code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="regulation-sync/$(date -u +%Y-%m-%dT%H%M)"
+          git config user.name "regulation-sync"
+          git config user.email "regulation-sync@users.noreply.github.com"
+          git switch -c "$branch"
+          git add registry
+          git commit -m "chore(registry): regulation sync $(date -u +%Y-%m-%d)"
+          git push -u origin "$branch"
+          {
+            echo "The weekly regulation sync detected changes or broken sources."
+            echo
+            echo '```'
+            cat sync.log
+            echo
+            python -m aicomply changes --diff
+            echo '```'
+            echo
+            echo "Review each change, update the affected controls if needed, then close it with \`python -m aicomply review\`."
+          } > body.md
+          gh pr create --title "Regulation sync $(date -u +%Y-%m-%d)" --body-file body.md

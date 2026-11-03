@@ -1,0 +1,188 @@
+framework: "ISO/IEC 27018 PII protection in public clouds"
+reference: "ISO/IEC 27018:2025"
+short: "ISO 27018"
+kind: "iso"
+source: "iso-27018"
+scope: "Protection of personally identifiable information by a public cloud service acting as PII processor, for a SaaS AI product that handles customer personal data and uses sub-processors including cloud LLM providers"
+controls:
+  - id: "PII27018-CONSENT"
+    title: "Customer consent and choice over PII processing"
+    part: "Consent and choice"
+    clause: "Consent and choice"
+    requirement: "The cloud provider processes PII only on documented customer instructions and gives customers the means to control how their PII is handled, including consent where the customer relies on it."
+    applies_when: "acting as a PII processor in a public cloud"
+    severity: critical
+    weight: 5
+    check: "Processing of PII follows the customer contract and instructions, and the product offers controls to manage consent-relevant choices."
+    evidence: "Data processing agreement, instruction log, product settings for customer control."
+    advice: "Process customer PII only per the DPA, and expose settings that let customers apply their own consent and opt-out decisions."
+    owner: "DPO"
+
+  - id: "PII27018-COMMERCIAL-USE"
+    title: "No use of PII for the provider's own purposes"
+    part: "Purpose and use"
+    clause: "Purpose and use, no secondary use"
+    requirement: "Do not use customer PII for marketing, advertising or the provider's own purposes, including model training, without express customer consent that is not a condition of service."
+    applies_when: "processor handling customer content, prompts or candidate data"
+    severity: critical
+    weight: 5
+    check: "Code and contracts show no secondary use of customer PII, and training or evaluation on customer data is opt-in and separately recorded."
+    evidence: "Data flow diagram, DPA clause on purpose limitation, training data inclusion rules, consent records."
+    advice: "Ban customer PII from training and analytics pipelines by default, and require explicit opt-in logged per customer for any exception."
+    owner: "DPO"
+
+  - id: "PII27018-PURPOSE-TEMP"
+    title: "Temporary files and derived copies of PII"
+    part: "Purpose and use"
+    clause: "Purpose and use, temporary files"
+    requirement: "Remove temporary files, caches and derived artefacts containing PII within a defined period, and keep copies and intermediate stores under the same controls as the original."
+    applies_when: "PII is copied into caches, queues, logs, embeddings or prompt stores"
+    severity: medium
+    weight: 2
+    check: "Temporary stores have defined expiry, and a data flow review lists every derived copy of PII."
+    evidence: "Cache and queue TTL configuration, data flow inventory, scheduled cleanup jobs."
+    advice: "Set expiry on all intermediate stores and include embeddings and prompt logs in the inventory of PII copies."
+    owner: "Engineering lead"
+
+  - id: "PII27018-DISCLOSURE-LEGAL"
+    title: "Handling of legally binding disclosure requests"
+    part: "Disclosure and sub-processors"
+    clause: "Disclosure of PII, legal requests"
+    requirement: "Notify the customer of legally binding requests for PII disclosure unless prohibited, reject or limit requests that are not legally binding, and record all disclosures."
+    applies_when: "receiving law enforcement or government data requests"
+    severity: high
+    weight: 3
+    check: "A procedure covers receiving, assessing, notifying the customer and logging disclosure requests, and the log is current."
+    evidence: "Disclosure request procedure, request register, legal review notes."
+    advice: "Route every request to Legal, notify the customer unless barred, and log what was disclosed and on what basis."
+    owner: "Legal"
+
+  - id: "PII27018-DISCLOSURE-LOG"
+    title: "Recording of PII disclosures to third parties"
+    part: "Disclosure and sub-processors"
+    clause: "Disclosure of PII, records"
+    requirement: "Keep a record of disclosures of PII to third parties, including what was disclosed, to whom and when, and make it available to the customer."
+    applies_when: "PII shared with third parties or sub-processors"
+    severity: medium
+    weight: 2
+    check: "A disclosure record exists and the recipient list matches actual data flows to model APIs and other vendors."
+    evidence: "Disclosure register, sub-processor list, data flow diagram."
+    advice: "Maintain the register from the actual integration list and review it when a vendor is added."
+    owner: "DPO"
+
+  - id: "PII27018-SUBPROCESSORS"
+    title: "Disclosure of sub-processors and subcontracting"
+    part: "Disclosure and sub-processors"
+    clause: "Disclosure of PII, sub-processors"
+    requirement: "Tell customers about sub-processors, including model and hosting providers, before use, flow down equivalent PII obligations in contracts and give customers a chance to object to changes."
+    applies_when: "using sub-processors, including external LLM or hosting providers, to process customer PII"
+    severity: critical
+    weight: 5
+    check: "A current sub-processor list is available to customers, contracts with each sub-processor carry equivalent PII obligations, and a change notice process exists."
+    evidence: "Public sub-processor list, sub-processor agreements, change notification log."
+    advice: "Publish the list, notify customers before changes, and verify that each sub-processor contract matches your own DPA terms."
+    owner: "Legal"
+
+  - id: "PII27018-RETURN-DELETE"
+    title: "Return, transfer and secure disposal of PII"
+    part: "Retention and deletion"
+    clause: "Retention and deletion, return and disposal"
+    requirement: "Provide for return, transfer or secure disposal of customer PII at contract end or on request, and ensure the disposal covers all copies including backups after a defined delay."
+    applies_when: "customer ends service or requests deletion"
+    severity: critical
+    weight: 5
+    check: "The deletion procedure reaches all stores holding PII, deletion is verified, and backup expiry is documented and communicated."
+    evidence: "Deletion runbook, verification output, backup retention policy, customer deletion confirmation."
+    advice: "Automate deletion across every store, verify with queries after the run, and state the backup expiry period in the DPA."
+    owner: "Engineering lead"
+
+  - id: "PII27018-RETENTION"
+    title: "Retention limits for PII"
+    part: "Retention and deletion"
+    clause: "Retention and deletion, retention limits"
+    requirement: "Retain PII only as long as needed for the customer purpose, with documented retention periods for prompts, outputs, logs and backups."
+    applies_when: "storing prompts, outputs or personal records"
+    severity: high
+    weight: 3
+    check: "Retention periods are defined per data type and enforced technically, and logs containing PII are included."
+    evidence: "Retention schedule, TTL or purge job configuration, log retention settings."
+    advice: "Define retention per data type, enforce with scheduled purges, and keep PII out of long-lived logs."
+    owner: "DPO"
+
+  - id: "PII27018-ENCRYPT"
+    title: "Encryption of PII on public networks and at rest"
+    part: "Security and breach"
+    clause: "Information security, encryption of PII"
+    requirement: "Encrypt PII transmitted over public networks and, where risk warrants, at rest, and protect access to the keys."
+    applies_when: "PII traverses public networks or is stored in the cloud"
+    severity: high
+    weight: 3
+    check: "TLS is enforced for all data in transit, including calls to model providers, and PII at rest is encrypted with managed keys."
+    evidence: "TLS configuration scans, storage encryption settings, key management records."
+    advice: "Enforce TLS everywhere and enable encryption at rest with managed keys; reject plain HTTP connections."
+    owner: "CISO"
+
+  - id: "PII27018-ACCESS-STAFF"
+    title: "Confidentiality and access limits for staff handling PII"
+    part: "Security and breach"
+    clause: "Information security, personnel and access"
+    requirement: "Bind personnel with access to PII to confidentiality obligations, limit access to those who need it, and review access regularly."
+    applies_when: "staff can reach customer PII"
+    severity: high
+    weight: 3
+    check: "Staff with PII access have confidentiality terms, access is role-based and least-privilege, and reviews are recorded."
+    evidence: "Confidentiality agreements, access lists, access review records."
+    advice: "Grant PII access by role with approval, review quarterly and remove at role change."
+    owner: "CISO"
+
+  - id: "PII27018-BREACH"
+    title: "Incident and breach notification to customers"
+    part: "Security and breach"
+    clause: "Information security, breach notification"
+    requirement: "Notify the customer of unauthorised access to PII without undue delay, provide details needed for their own legal notifications, and record the incident, its effects and the response."
+    applies_when: "a security event affecting customer PII"
+    severity: critical
+    weight: 5
+    check: "An incident procedure defines customer notification timing and content, and past incidents show it was followed."
+    evidence: "Breach notification procedure, customer notice template, incident register."
+    advice: "Commit to a notification period in the DPA shorter than the customer's legal deadline, and rehearse the notice template."
+    owner: "CISO"
+
+  - id: "PII27018-LOCATION"
+    title: "Disclosure of geographic location of PII"
+    part: "Transparency and location"
+    clause: "Transparency, geographic location"
+    requirement: "Tell customers the countries where their PII may be stored and processed, including those of sub-processors and model providers, and honour agreed location limits."
+    applies_when: "PII stored or processed in more than one country"
+    severity: high
+    weight: 3
+    check: "Documentation names storage and processing regions, and infrastructure configuration matches the commitments."
+    evidence: "Region list in customer documentation, infrastructure region configuration, provider region settings for model APIs."
+    advice: "Publish regions per service and pin infrastructure and model endpoints to the committed regions."
+    owner: "Engineering lead"
+
+  - id: "PII27018-TRANSPARENCY"
+    title: "Transparency about PII handling and measures"
+    part: "Transparency and location"
+    clause: "Transparency and openness"
+    requirement: "Give customers clear information about how the service processes PII, the security measures in place and the audit rights they have, including independent audit reports."
+    applies_when: "customers use the service to process PII"
+    severity: medium
+    weight: 2
+    check: "Customers can access privacy and security documentation and audit or certification reports, and it matches actual practice."
+    evidence: "Trust centre content, security whitepaper, audit report availability, customer audit clause."
+    advice: "Keep a trust centre page current and offer reports under NDA on request."
+    owner: "DPO"
+
+  - id: "PII27018-ACCOUNTABILITY"
+    title: "Accountability and privacy governance for the processor role"
+    part: "Transparency and location"
+    clause: "Accountability and governance"
+    requirement: "Assign accountability for PII protection in the processor role, keep policies and compliance evidence, and review them regularly."
+    applies_when: "operating as a PII processor"
+    severity: medium
+    weight: 2
+    check: "A named owner exists for PII processing compliance, policies are approved and reviewed, and internal audits cover the PII controls."
+    evidence: "Privacy policy set, role assignment, internal audit report, management review minutes."
+    advice: "Name an owner, schedule annual review of PII policies and add the PII controls to the internal audit plan."
+    owner: "Top management"

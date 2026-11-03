@@ -1,0 +1,1560 @@
+[
+ {
+  "id": "BC22301-CONTEXT",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-POLICY",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-ROLES",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-RISK-OPP",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-OBJECTIVES",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-SUPPORT",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-BIA",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-RISK-ASSESS",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-STRATEGY",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-RESOURCES",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-PLANS",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-COMMS",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-RECOVERY",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-EXERCISE",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-MONITOR",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-AUDIT-REVIEW",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "BC22301-IMPROVE",
+  "status": "na",
+  "evidence": "out of the run brief: Acme does not claim ISO 22301"
+ },
+ {
+  "id": "INT-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Enterprise risk register entries for AI; risk framework doc referencing AI scope"
+ },
+ {
+  "id": "OBJ-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: System purpose/context document; stakeholder map"
+ },
+ {
+  "id": "RID-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk identification log/workshop output tagged by AI risk source"
+ },
+ {
+  "id": "RID-BIAS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Bias/fairness assessment; subgroup test results"
+ },
+ {
+  "id": "RID-DATA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Data documentation/datasheet; provenance and licence records"
+ },
+ {
+  "id": "RID-ROBUST",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Robustness/red-team test results; adversarial scenario log"
+ },
+ {
+  "id": "RID-DRIFT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Drift monitoring plan; performance threshold definitions"
+ },
+ {
+  "id": "RID-EXPL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Explainability requirements; model/output documentation provided to users"
+ },
+ {
+  "id": "RID-MISUSE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Misuse analysis; user guidance/warnings on appropriate reliance"
+ },
+ {
+  "id": "RID-SEC",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: AI asset inventory; supply-chain/third-party model risk assessment"
+ },
+ {
+  "id": "ANL-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk analysis records with ratings and rationale"
+ },
+ {
+  "id": "EVAL-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk evaluation record; defined acceptance thresholds"
+ },
+ {
+  "id": "TRT-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk treatment plan; implemented control evidence; signed residual-risk acceptance"
+ },
+ {
+  "id": "TRT-HITL",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:3-6"
+ },
+ {
+  "id": "MON-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Monitoring logs/dashboards; review records tied to changes or incidents"
+ },
+ {
+  "id": "MON-INC",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: AI incident log; corrective actions linked to risk updates"
+ },
+ {
+  "id": "REC-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk register with history; stakeholder risk reports"
+ },
+ {
+  "id": "ACC-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: RACI or roles matrix for AI risk; risk acceptance sign-off records"
+ },
+ {
+  "id": "CRIT-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk criteria document, approved scales and acceptance thresholds"
+ },
+ {
+  "id": "COM-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Stakeholder map, consultation records, feedback log"
+ },
+ {
+  "id": "LIFE-1",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Lifecycle gate checklist, reassessment records after change, retirement plan"
+ },
+ {
+  "id": "BIAS24027-HUMAN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Labelling guidelines, inter-annotator agreement results, review notes"
+ },
+ {
+  "id": "BIAS24027-DATA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Dataset profile, data documentation, proxy variable analysis"
+ },
+ {
+  "id": "BIAS24027-ENGINEER",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Design decision log, feature rationale, ablation or threshold analysis"
+ },
+ {
+  "id": "BIAS24027-DEPLOY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Context comparison, feedback loop analysis, usage monitoring plan"
+ },
+ {
+  "id": "BIAS24027-GROUPS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Fairness requirements document, stakeholder and legal review"
+ },
+ {
+  "id": "BIAS24027-METRICS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Fairness evaluation report, metric thresholds, group-wise results"
+ },
+ {
+  "id": "BIAS24027-ERRORS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Error analysis report, confusion matrices by group"
+ },
+ {
+  "id": "BIAS24027-PROXY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Counterfactual test results, feature importance analysis"
+ },
+ {
+  "id": "BIAS24027-PRE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Data treatment log, before and after metrics"
+ },
+ {
+  "id": "BIAS24027-IN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Experiment records, trade-off analysis, model selection rationale"
+ },
+ {
+  "id": "BIAS24027-POST",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Review procedure, adjustment rules, appeal process and statistics"
+ },
+ {
+  "id": "BIAS24027-DESIGN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Requirements specification, design review minutes"
+ },
+ {
+  "id": "BIAS24027-MONITOR",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Monitoring dashboard, alert rules, review records"
+ },
+ {
+  "id": "BIAS24027-DOCS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Model card, bias test report, user-facing limitations"
+ },
+ {
+  "id": "Q25059-MODEL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Quality requirements specification, characteristic relevance matrix"
+ },
+ {
+  "id": "Q25059-CORRECT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Evaluation reports on representative test sets, metric targets"
+ },
+ {
+  "id": "Q25059-ADAPT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Retraining procedure, regression test results, adaptation limits"
+ },
+ {
+  "id": "Q25059-PERF",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Load test reports, latency and cost dashboards"
+ },
+ {
+  "id": "Q25059-ROBUST",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Robustness and stress test results, adversarial test suite"
+ },
+ {
+  "id": "Q25059-RELIAB",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Failover design, chaos or recovery test results, incident reports"
+ },
+ {
+  "id": "Q25059-CONTROL",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:5 override with logged reason"
+ },
+ {
+  "id": "Q25059-TRANSP",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: User-facing disclosures, model or system cards, explanation features"
+ },
+ {
+  "id": "Q25059-USABLE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Usability test reports, task success metrics, feedback analysis"
+ },
+ {
+  "id": "Q25059-INTERVEN",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:6 kill switch SCREENING_ENABLED"
+ },
+ {
+  "id": "Q25059-SECURITY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Threat model, pentest or red-team reports, access controls"
+ },
+ {
+  "id": "Q25059-SOCIETAL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Impact assessment, ethical review record, mitigation tracker"
+ },
+ {
+  "id": "Q25059-SAFETY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Hazard analysis, safety requirements, risk acceptance record"
+ },
+ {
+  "id": "Q25059-MEASURE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Metric definitions, evaluation datasets, results per release"
+ },
+ {
+  "id": "Q25059-DATAQ",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Data quality reports, evaluation set documentation"
+ },
+ {
+  "id": "A.5.15-ACCESS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Access control policy, RBAC/role matrix, periodic access review log"
+ },
+ {
+  "id": "A.5.16-IDENTITY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: IdP config, MFA enforcement policy, offboarding checklist with timestamps"
+ },
+ {
+  "id": "A.8.24-SECRETS",
+  "status": "pass",
+  "evidence": "src/screening.py:8-9 keys read from environment, none in the repo"
+ },
+ {
+  "id": "A.8.15-LOGGING",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Logging config, sample sanitized log, retention policy"
+ },
+ {
+  "id": "A.8.16-MONITORING",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Monitoring dashboards, alert rules, on-call/owner assignment"
+ },
+ {
+  "id": "A.8.25-SECURE-DEV",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: SDLC policy, PR review records, CI scan results"
+ },
+ {
+  "id": "A.8.28-LLM-INPUT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Input handling code, output guardrails, injection test cases"
+ },
+ {
+  "id": "A.5.19-SUPPLIER",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Supplier register, signed terms/DPA, vendor security attestations"
+ },
+ {
+  "id": "A.5.12-CLASSIFY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Classification policy, data flow/inventory mapping"
+ },
+ {
+  "id": "A.8.24-ENCRYPT-DATA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: TLS config, storage/backup encryption settings, crypto policy"
+ },
+ {
+  "id": "A.8.13-BACKUP",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Backup schedule, encryption config, restore-test record"
+ },
+ {
+  "id": "A.5.24-INCIDENT",
+  "status": "pass",
+  "evidence": "docs/incident-response.md:3-6 severities, owner, post-mortem"
+ },
+ {
+  "id": "A.8.8-VULN",
+  "status": "pass",
+  "evidence": ".github/dependabot.yml:1-6 weekly dependency updates"
+ },
+ {
+  "id": "ISMS-4-CONTEXT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: ISMS scope statement, interested-parties register"
+ },
+ {
+  "id": "ISMS-5-LEADERSHIP",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Signed policy, role assignment record, management meeting minutes"
+ },
+ {
+  "id": "ISMS-6.1.2-RISK",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk assessment method, risk register with owners and dates"
+ },
+ {
+  "id": "ISMS-6.1.3-SOA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Statement of Applicability, risk treatment plan, residual risk sign-off"
+ },
+ {
+  "id": "ISMS-9.2-AUDIT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Audit programme, audit reports, findings log"
+ },
+ {
+  "id": "ISMS-9.3-REVIEW",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Management review minutes, action list"
+ },
+ {
+  "id": "ISMS-10-CORRECTIVE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Corrective action register, closed-action verification"
+ },
+ {
+  "id": "A.5.1-POLICY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Policy documents with approval and review dates, staff acknowledgement log"
+ },
+ {
+  "id": "A.5.7-THREAT-INTEL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Threat feed subscriptions, triage notes, resulting tickets"
+ },
+ {
+  "id": "A.5.23-CLOUD",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Cloud service register, vendor security reviews, exit plans"
+ },
+ {
+  "id": "A.5.30-CONTINUITY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: BCP/DR plan, test report, RTO/RPO definitions"
+ },
+ {
+  "id": "A.5.31-LEGAL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Legal and contractual requirements register"
+ },
+ {
+  "id": "A.5.34-PRIVACY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Privacy policy, data protection role assignment, RoPA reference"
+ },
+ {
+  "id": "A.6.3-AWARENESS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Training records and completion rates, curriculum"
+ },
+ {
+  "id": "A.8.9-CONFIG",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Infrastructure-as-code, hardening baselines, drift reports"
+ },
+ {
+  "id": "A.8.10-DELETION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Deletion jobs and logs, offboarding deletion confirmations"
+ },
+ {
+  "id": "A.8.11-MASKING",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "src/screening.py:8 send_default_pii=True ships request PII to Sentry"
+ },
+ {
+  "id": "A.8.12-DLP",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "src/screening.py:13 and web/index.html:7 personal data leaves without a filter"
+ },
+ {
+  "id": "A.8.29-SEC-TEST",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: CI pipeline config and results, pentest report, injection test suite"
+ },
+ {
+  "id": "A.8.31-ENV-SEPARATION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Environment diagram, access matrix, data handling rules"
+ },
+ {
+  "id": "A.8.32-CHANGE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Pull request history, change tickets, deployment logs"
+ },
+ {
+  "id": "RM27005-PROCESS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk management procedure, approved methodology, risk register produced under it"
+ },
+ {
+  "id": "RM27005-CONTEXT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Context and scope statement, obligations register, dependency list"
+ },
+ {
+  "id": "RM27005-CRITERIA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk criteria document, risk matrix, acceptance authority record"
+ },
+ {
+  "id": "RM27005-ASSET-INV",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Asset inventory, data classification, owner assignment"
+ },
+ {
+  "id": "RM27005-THREATS-VULN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Threat catalogue, vulnerability scan and pen test reports, incident history, existing controls list"
+ },
+ {
+  "id": "RM27005-SCENARIOS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk register scenario entries"
+ },
+ {
+  "id": "RM27005-ANALYSIS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Scored risk register, scoring rationale"
+ },
+ {
+  "id": "RM27005-EVALUATION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk evaluation output, prioritised treatment list"
+ },
+ {
+  "id": "RM27005-TREATMENT-OPT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk treatment decisions, selected control list"
+ },
+ {
+  "id": "RM27005-CONTROLS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Control mapping, Statement of Applicability"
+ },
+ {
+  "id": "RM27005-TREATMENT-PLAN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk treatment plan, residual risk register, risk owner approvals"
+ },
+ {
+  "id": "RM27005-COMMUNICATE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk reports, management briefings, consultation records"
+ },
+ {
+  "id": "RM27005-RECORD",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Versioned risk register, decision log, archive of past cycles"
+ },
+ {
+  "id": "RM27005-MONITOR-REVIEW",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Review calendar, trigger list, updated register entries, control effectiveness results"
+ },
+ {
+  "id": "RM27005-IMPROVE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Process review notes, change log for the methodology, internal audit findings"
+ },
+ {
+  "id": "CLD27017-ROLES",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Shared responsibility matrix, terms of service or security addendum, supplier documentation from the hosting and LLM providers"
+ },
+ {
+  "id": "CLD27017-RELATIONSHIP",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Cloud security policy section, vendor assessments, exit or portability plan per provider"
+ },
+ {
+  "id": "CLD27017-CLOUD-RISK",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk register entries for cloud, provider risk review, treatment plan"
+ },
+ {
+  "id": "CLD27017-HARDEN-VM",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Hardening baseline, image scan reports, infrastructure as code with security settings, configuration benchmark results"
+ },
+ {
+  "id": "CLD27017-SEGREGATE",
+  "status": "na",
+  "evidence": "single-tenant internal tool"
+ },
+ {
+  "id": "CLD27017-NETWORK",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Network diagrams, security group and firewall rule export, egress allow-list"
+ },
+ {
+  "id": "CLD27017-ADMIN-OPS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Admin runbooks, privileged access policy, MFA configuration, privileged action logs and review records"
+ },
+ {
+  "id": "CLD27017-MONITOR",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Log pipeline configuration, alert rules, provider audit log subscriptions, customer-facing activity log or API"
+ },
+ {
+  "id": "CLD27017-CLOCK",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: NTP or provider time-sync configuration, log format specification"
+ },
+ {
+  "id": "CLD27017-ASSET-INV",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Cloud asset inventory, account and region list, reconciliation output"
+ },
+ {
+  "id": "CLD27017-CUSTOMER-DATA-RETURN",
+  "status": "na",
+  "evidence": "no external customers"
+ },
+ {
+  "id": "CLD27017-CRYPTO",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Encryption configuration, key management policy, key rotation records"
+ },
+ {
+  "id": "CLD27017-ACCESS-CUST",
+  "status": "na",
+  "evidence": "no external customers"
+ },
+ {
+  "id": "CLD27017-INCIDENT-CLOUD",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Incident response plan with cloud scenarios, provider contact list, customer notification template, past incident record"
+ },
+ {
+  "id": "PII27018-CONSENT",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-COMMERCIAL-USE",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-PURPOSE-TEMP",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-DISCLOSURE-LEGAL",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-DISCLOSURE-LOG",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-SUBPROCESSORS",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-RETURN-DELETE",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-RETENTION",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-ENCRYPT",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-ACCESS-STAFF",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-BREACH",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-LOCATION",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-TRANSPARENCY",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "PII27018-ACCOUNTABILITY",
+  "status": "na",
+  "evidence": "Acme is not a public-cloud PII processor"
+ },
+ {
+  "id": "P.7.2.1-LAWFUL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Record of processing activities (RoPA), lawful-basis register"
+ },
+ {
+  "id": "P.7.4.2-DPIA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: DPIA document with risk register and sign-off"
+ },
+ {
+  "id": "P.7.3-DSR",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: DSR procedure, request log, deletion confirmation records"
+ },
+ {
+  "id": "P.7.4.5-RETENTION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Retention schedule, deletion job logs"
+ },
+ {
+  "id": "P.8.5-PROCESSOR",
+  "status": "na",
+  "evidence": "Acme is controller only"
+ },
+ {
+  "id": "P.7.2.4-CONSENT",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "web/index.html:5-7 no consent gate before tracking"
+ },
+ {
+  "id": "P.7.2.8-ROPA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Record of processing activities, data inventory or data-flow map"
+ },
+ {
+  "id": "P.7.3.3-NOTICE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Privacy notice with version history, in-product notice placement"
+ },
+ {
+  "id": "P.7.3.10-ADM",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:3-4 human confirms every adverse outcome"
+ },
+ {
+  "id": "P.7.4.1-MINIMISE",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "src/screening.py:13 identifiers forwarded to the model provider"
+ },
+ {
+  "id": "P.7.5-TRANSFER",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "src/screening.py:13 transfer to a US processor without documented safeguards"
+ },
+ {
+  "id": "P.8.2.6-PROC-RECORDS",
+  "status": "na",
+  "evidence": "Acme is controller only"
+ },
+ {
+  "id": "P.8.4.2-RETURN",
+  "status": "na",
+  "evidence": "Acme is controller only"
+ },
+ {
+  "id": "P.8.5.7-SUBPROC-CHANGE",
+  "status": "na",
+  "evidence": "Acme is controller only"
+ },
+ {
+  "id": "P.6.13-BREACH-CONTROLLER",
+  "status": "na",
+  "evidence": "Acme is controller only"
+ },
+ {
+  "id": "GOV38507-ACCOUNT",
+  "status": "pass",
+  "evidence": "docs/ai-policy.md:3 management board approved the AI policy"
+ },
+ {
+  "id": "GOV38507-ROLES",
+  "status": "pass",
+  "evidence": "docs/ai-policy.md:10 owners per domain"
+ },
+ {
+  "id": "GOV38507-SUPPLY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Supplier contracts, due-diligence records, assurance reports"
+ },
+ {
+  "id": "GOV38507-INVENTORY",
+  "status": "pass",
+  "evidence": "docs/ai-inventory.md:3-5 inventory with purpose, model, provider, tier, owner"
+ },
+ {
+  "id": "GOV38507-REPORT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Board reports, dashboards, meeting minutes"
+ },
+ {
+  "id": "GOV38507-ASSURANCE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Internal audit plan and reports, external assessment, finding tracker"
+ },
+ {
+  "id": "GOV38507-APPETITE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk appetite statement, approved-use list, prohibited-use list"
+ },
+ {
+  "id": "GOV38507-POLICY",
+  "status": "pass",
+  "evidence": "docs/ai-policy.md:5-11 policy covers use, inventory, processors and roles"
+ },
+ {
+  "id": "GOV38507-COMPLY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Legal obligations register, compliance review records"
+ },
+ {
+  "id": "GOV38507-VALUES",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Ethics principles document, mapping to controls, review records"
+ },
+ {
+  "id": "GOV38507-AWARENESS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Training records, speak-up channel, awareness materials"
+ },
+ {
+  "id": "GOV38507-DECISION",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:4 named recruiter confirms each low-score decision"
+ },
+ {
+  "id": "GOV38507-HUMAN",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:5 recruiters can override any score"
+ },
+ {
+  "id": "GOV38507-OUTCOMES",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Outcome review reports, corrective action log"
+ },
+ {
+  "id": "AIMS-CONTEXT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: AIMS scope document, interested-parties / requirements register"
+ },
+ {
+  "id": "AI-POLICY",
+  "status": "pass",
+  "evidence": "docs/ai-policy.md:3 board approval 2026-09-15, yearly review"
+ },
+ {
+  "id": "AI-ROLES",
+  "status": "pass",
+  "evidence": "docs/ai-policy.md:10 CISO, DPO and Head of Talent named as owners"
+ },
+ {
+  "id": "AI-RISK-ASSESS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk assessment procedure, risk register with scored AI risks"
+ },
+ {
+  "id": "AI-RISK-TREAT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Statement of Applicability, risk treatment plan with owners and dates"
+ },
+ {
+  "id": "AI-IMPACT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: AI impact assessment procedure and completed assessment reports"
+ },
+ {
+  "id": "AI-OBJECTIVES",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: AI objectives register with metrics, owners and status"
+ },
+ {
+  "id": "AI-COMPETENCE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Competence matrix, training records, awareness materials"
+ },
+ {
+  "id": "AI-DATA-MGMT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Data governance procedure, dataset documentation / data sheets, lineage records"
+ },
+ {
+  "id": "AI-LIFECYCLE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Lifecycle procedure, design and V&V records, release approvals"
+ },
+ {
+  "id": "AI-DEPLOY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Deployment runbook, intended-use and limitations documentation provided to users"
+ },
+ {
+  "id": "AI-MONITOR",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Monitoring config, retained logs, incident records and post-incident actions"
+ },
+ {
+  "id": "AI-SUPPLIER",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Supplier contracts with AI clauses, vendor assessment records, responsibility matrix"
+ },
+ {
+  "id": "AI-TRANSPARENCY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: User-facing documentation, model/system cards, disclosure notices"
+ },
+ {
+  "id": "AI-DOCUMENTATION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Document register, version history, access and retention settings"
+ },
+ {
+  "id": "AI-PERF-EVAL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Measurement plan, metric reports, evaluation records"
+ },
+ {
+  "id": "AI-INTERNAL-AUDIT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Audit programme, audit reports, nonconformity and corrective-action records"
+ },
+ {
+  "id": "AI-MGMT-REVIEW",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Management review minutes with inputs, decisions and action items"
+ },
+ {
+  "id": "AI-IMPROVEMENT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Corrective action register, root-cause records, improvement log"
+ },
+ {
+  "id": "AI-DATA-PROVENANCE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Dataset register, data cards, quality check results, licence records"
+ },
+ {
+  "id": "AI-RESPONSIBLE-USE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Responsible-use procedure, intended-use statements, usage review records"
+ },
+ {
+  "id": "AI-INCIDENT-COMM",
+  "status": "pass",
+  "evidence": "docs/incident-response.md:3-6"
+ },
+ {
+  "id": "AI-CUSTOMER-REL",
+  "status": "na",
+  "evidence": "the assistant is not provided to customers"
+ },
+ {
+  "id": "IA42005-PROCESS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Impact assessment procedure, template, approval records"
+ },
+ {
+  "id": "IA42005-TRIGGER",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Change-management checklist, release gate configuration, trigger criteria document"
+ },
+ {
+  "id": "IA42005-INTEGRATE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk register entries linked to assessments, backlog items, decision log"
+ },
+ {
+  "id": "IA42005-SCOPE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: System description, intended-use statement, scoping section of the assessment"
+ },
+ {
+  "id": "IA42005-STAKEHOLDERS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Stakeholder map, affected-party register"
+ },
+ {
+  "id": "IA42005-CONSULT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Interview notes, survey results, consultation log"
+ },
+ {
+  "id": "IA42005-IDENTIFY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Harm and benefit register, scenario analysis"
+ },
+ {
+  "id": "IA42005-EVALUATE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Impact rating matrix, scoring criteria, rated register"
+ },
+ {
+  "id": "IA42005-CAPABILITY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Model cards, evaluation reports, supplier documentation"
+ },
+ {
+  "id": "IA42005-MITIGATE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Mitigation plan, residual-impact acceptance record"
+ },
+ {
+  "id": "IA42005-DOCUMENT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Assessment report with version history and approver names"
+ },
+ {
+  "id": "IA42005-COMMUNICATE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Briefing to management, customer-facing summary, regulator submission if applicable"
+ },
+ {
+  "id": "IA42005-REVIEW",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Review calendar, review records, updated assessment versions"
+ },
+ {
+  "id": "IA42005-MONITOR",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Monitoring dashboards, complaint log, incident reports referencing the assessment"
+ },
+ {
+  "id": "LC5338-INCEPTION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Business case, stakeholder needs register, feasibility notes"
+ },
+ {
+  "id": "LC5338-REQUIREMENTS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Requirements specification with acceptance thresholds and traceability"
+ },
+ {
+  "id": "LC5338-ARCH",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Architecture diagrams, design decisions record, interface definitions"
+ },
+ {
+  "id": "LC5338-DATA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Dataset documentation, lineage records, data quality reports"
+ },
+ {
+  "id": "LC5338-MODEL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Experiment tracking, model registry, model cards"
+ },
+ {
+  "id": "LC5338-IMPL",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Repository history, CI pipeline definitions, dependency manifests"
+ },
+ {
+  "id": "LC5338-VERIFY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Test plans and results, evaluation reports, defect log"
+ },
+ {
+  "id": "LC5338-VALIDATE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Validation report, pilot results, user acceptance record"
+ },
+ {
+  "id": "LC5338-DEPLOY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Release checklist, rollback procedure, deployment approval"
+ },
+ {
+  "id": "LC5338-OPERATE",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:3-6 oversight in operation"
+ },
+ {
+  "id": "LC5338-MONITOR",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Monitoring dashboards, alert rules, incident and retraining records"
+ },
+ {
+  "id": "LC5338-MAINTAIN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Change records, regression test results, retraining log"
+ },
+ {
+  "id": "LC5338-RETIRE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Decommission plan, deletion confirmations, archive index"
+ },
+ {
+  "id": "LC5338-ORG",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: AI policy, RACI, supplier agreements, quality plan"
+ },
+ {
+  "id": "AIA-CLASS",
+  "status": "pass",
+  "evidence": "docs/ai-inventory.md:5 classifies the assistant high-risk, Annex III 4(a)"
+ },
+ {
+  "id": "AIA-PROHIB",
+  "status": "pass",
+  "evidence": "docs/prohibited-practices-screening.md:3 dated Article 5 screening by Legal"
+ },
+ {
+  "id": "AIA-RISKMGMT",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Risk management file with risk register, mitigation measures and review cadence"
+ },
+ {
+  "id": "AIA-DATAGOV",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Data governance record / datasheets covering collection, preparation, bias analysis and gaps"
+ },
+ {
+  "id": "AIA-TECHDOC",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Annex IV technical documentation pack, version-controlled"
+ },
+ {
+  "id": "AIA-LOGGING",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Logging design spec plus sample retained logs with defined retention period"
+ },
+ {
+  "id": "AIA-TRANSP-HR",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Instructions-for-use document shipped with the system"
+ },
+ {
+  "id": "AIA-OVERSIGHT",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:3-6 recruiter confirms every low score, override and kill switch"
+ },
+ {
+  "id": "AIA-ACCURACY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Test reports for accuracy/robustness, declared metrics in instructions, security assessment"
+ },
+ {
+  "id": "AIA-QMS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: QMS documentation and procedures"
+ },
+ {
+  "id": "AIA-CONFORMITY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Signed EU declaration of conformity and conformity-assessment record"
+ },
+ {
+  "id": "AIA-REGISTER",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Annex III system with no EU database registration record"
+ },
+ {
+  "id": "AIA-DEPLOYER",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Deployer operating procedure, monitoring records, retained logs"
+ },
+ {
+  "id": "AIA-FRIA",
+  "status": "na",
+  "evidence": "private employer, not a public body or a public-service provider"
+ },
+ {
+  "id": "AIA-POSTMARKET",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Post-market monitoring plan and incident-reporting procedure / log"
+ },
+ {
+  "id": "AIA-GPAI",
+  "status": "na",
+  "evidence": "Acme does not provide a general-purpose AI model"
+ },
+ {
+  "id": "AIA-GPAI-SYSTEMIC",
+  "status": "na",
+  "evidence": "Acme does not provide a general-purpose AI model"
+ },
+ {
+  "id": "AIA-TRANSP-AI",
+  "status": "na",
+  "evidence": "candidates do not interact with the assistant directly"
+ },
+ {
+  "id": "AIA-SYNTH-LABEL",
+  "status": "na",
+  "evidence": "the assistant generates no synthetic media for publication"
+ },
+ {
+  "id": "AIA-DEEPFAKE",
+  "status": "na",
+  "evidence": "no deepfakes or public-interest text are published"
+ },
+ {
+  "id": "AIA-LITERACY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "docs/ai-policy.md:11 requires the module; no completion records"
+ },
+ {
+  "id": "AIA-TIMELINE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Dated compliance roadmap aligned to the AI Act application phases"
+ },
+ {
+  "id": "AIA-PROVIDER",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Provider duty checklist, conformity declaration, CE marking record, name and contact details on the system or its documentation"
+ },
+ {
+  "id": "AIA-VALUECHAIN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Role determination record per system, supplier agreements with Art 25(4) information and cooperation clauses"
+ },
+ {
+  "id": "AIA-CORRECTIVE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Corrective-action procedure, notification templates, record of past non-conformities and responses"
+ },
+ {
+  "id": "AIA-EXPLAIN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Explanation request procedure, sample explanation, logs that allow reconstruction of the decision"
+ },
+ {
+  "id": "GDPR-LAWFUL-BASIS",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "web/index.html:5-7 analytics and an e-mail capture fire before any consent"
+ },
+ {
+  "id": "GDPR-SPECIAL-CATEGORY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "CVs routinely carry health gaps, photos and religion; nothing filters them before the prompt"
+ },
+ {
+  "id": "GDPR-PURPOSE-LIMITATION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Compatibility assessment or fresh consent for the AI purpose"
+ },
+ {
+  "id": "GDPR-DATA-MINIMISATION",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "src/screening.py:13 whole CV plus identifiers in the prompt; scoring needs neither"
+ },
+ {
+  "id": "GDPR-PII-TO-EXTERNAL-LLM",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "src/screening.py:13 full name, e-mail and CV text sent to api.openai.com"
+ },
+ {
+  "id": "GDPR-PROCESSOR-DPA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "docs/ai-policy.md:9 requires a processor agreement; none exists for OpenAI, Sentry, PostHog or Slack"
+ },
+ {
+  "id": "GDPR-INTL-TRANSFER",
+  "status": "fail",
+  "gap": "violating",
+  "evidence": "OpenAI (US) receives CVs; no transfer impact assessment or SCCs in the repo"
+ },
+ {
+  "id": "GDPR-DPIA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "high-risk profiling of applicants with no DPIA in the repo"
+ },
+ {
+  "id": "GDPR-ADM-PROFILING",
+  "status": "pass",
+  "evidence": "docs/human-oversight.md:3-4 no solely automated rejection"
+ },
+ {
+  "id": "GDPR-TRANSPARENCY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Published privacy notice covering AI processing and Art 22 logic"
+ },
+ {
+  "id": "GDPR-DSR-ACCESS",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: DSAR procedure plus a search/export capability over AI data stores"
+ },
+ {
+  "id": "GDPR-DSR-ERASURE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Erasure workflow covering logs, vector stores, and dataset records"
+ },
+ {
+  "id": "GDPR-DSR-OBJECTION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Objection-handling procedure and suppression list"
+ },
+ {
+  "id": "GDPR-RETENTION",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Retention schedule plus deletion job logs for AI data stores"
+ },
+ {
+  "id": "GDPR-SECURITY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Encryption config, access-control matrix, and security review of the AI stack"
+ },
+ {
+  "id": "GDPR-BREACH",
+  "status": "pass",
+  "evidence": "docs/incident-response.md:4 DPO assesses AP notification within 72 hours"
+ },
+ {
+  "id": "GDPR-CONTROLLER-PROCESSOR-ROLE",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Role mapping per processing activity referenced in the DPA"
+ },
+ {
+  "id": "GDPR-ROPA",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Record of processing activities (controller and, where relevant, processor record)"
+ },
+ {
+  "id": "GDPR-DPO",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: DPO appointment letter, authority notification, published contact, or documented Art 37 assessment"
+ },
+ {
+  "id": "GDPR-BY-DESIGN",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Privacy requirements in design docs, default configuration review, pseudonymisation or redaction steps before model calls"
+ },
+ {
+  "id": "GDPR-RECTIFY",
+  "status": "fail",
+  "gap": "absent",
+  "evidence": "Not found in examples/demo-app: Rectification procedure, request log, evidence of correction propagating to downstream copies and derived data"
+ }
+]

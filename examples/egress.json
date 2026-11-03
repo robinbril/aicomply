@@ -1,0 +1,238 @@
+{
+  "target": "examples/demo-app",
+  "files_scanned": 3,
+  "skipped": [],
+  "destinations": [
+    {
+      "key": "openai",
+      "vendor": "OpenAI",
+      "category": "llm",
+      "region": "US",
+      "note": "",
+      "evidence": [
+        {
+          "where": "src/screening.py:6",
+          "kind": "import",
+          "snippet": "from openai import OpenAI"
+        },
+        {
+          "where": "src/screening.py:9",
+          "kind": "credential",
+          "snippet": "client = OpenAI(api_key=***\"OPENAI_API_KEY\"])"
+        }
+      ],
+      "hosts": [],
+      "data_hints": [
+        "cv / resume",
+        "email",
+        "name",
+        "prompt / messages"
+      ],
+      "special_category": false,
+      "personal_data": true,
+      "controls": [
+        "GDPR-PII-TO-EXTERNAL-LLM",
+        "GDPR-PROCESSOR-DPA",
+        "A.5.19-SUPPLIER",
+        "A.8.12-DLP",
+        "PII27018-CONSENT"
+      ],
+      "likelihood": 5,
+      "impact": 5,
+      "risk_score": 25
+    },
+    {
+      "key": "slack",
+      "vendor": "Slack",
+      "category": "messaging",
+      "region": "US",
+      "note": "",
+      "evidence": [
+        {
+          "where": "src/screening.py:23",
+          "kind": "credential",
+          "snippet": "requests.post(os.environ[\"SLACK_WEBHOOK\"], json={\"text\": candidate[\"email\"]})"
+        }
+      ],
+      "hosts": [],
+      "data_hints": [
+        "cv / resume",
+        "email",
+        "name",
+        "prompt / messages"
+      ],
+      "special_category": false,
+      "personal_data": true,
+      "controls": [
+        "GDPR-PROCESSOR-DPA",
+        "A.5.19-SUPPLIER"
+      ],
+      "likelihood": 5,
+      "impact": 5,
+      "risk_score": 25
+    },
+    {
+      "key": "posthog",
+      "vendor": "PostHog",
+      "category": "analytics",
+      "region": "EU",
+      "note": "EU cloud exists (eu.i.posthog.com); check the host.",
+      "evidence": [
+        {
+          "where": "web/index.html:7",
+          "kind": "call",
+          "snippet": "fetch(\"https://eu.i.posthog.com/capture/\", { method: \"POST\", body: JSON.stringify({ event: \"apply\", email: form.email }) });"
+        }
+      ],
+      "hosts": [
+        "eu.i.posthog.com"
+      ],
+      "data_hints": [
+        "email"
+      ],
+      "special_category": false,
+      "personal_data": true,
+      "controls": [
+        "GDPR-LAWFUL-BASIS",
+        "GDPR-PROCESSOR-DPA",
+        "A.5.19-SUPPLIER"
+      ],
+      "likelihood": 5,
+      "impact": 4,
+      "risk_score": 20
+    },
+    {
+      "key": "sentry",
+      "vendor": "Sentry",
+      "category": "error-tracking",
+      "region": "configurable",
+      "note": "EU data residency exists (de.sentry.io).",
+      "evidence": [
+        {
+          "where": "src/screening.py:5",
+          "kind": "import",
+          "snippet": "import sentry_sdk"
+        },
+        {
+          "where": "src/screening.py:8",
+          "kind": "credential",
+          "snippet": "sentry_sdk.init(dsn=***\"SENTRY_DSN\"], send_default_pii=True)"
+        }
+      ],
+      "hosts": [],
+      "data_hints": [
+        "cv / resume",
+        "email",
+        "name",
+        "prompt / messages"
+      ],
+      "special_category": false,
+      "personal_data": true,
+      "controls": [
+        "A.8.15-LOGGING",
+        "A.8.11-MASKING",
+        "GDPR-PROCESSOR-DPA"
+      ],
+      "likelihood": 5,
+      "impact": 4,
+      "risk_score": 20
+    },
+    {
+      "key": "google-analytics",
+      "vendor": "Google Analytics / Tag Manager",
+      "category": "analytics",
+      "region": "US",
+      "note": "",
+      "evidence": [
+        {
+          "where": "web/index.html:5",
+          "kind": "call",
+          "snippet": "<script src=\"https://www.googletagmanager.com/gtag/js?id=G-DEMO\"></script>"
+        }
+      ],
+      "hosts": [
+        "www.googletagmanager.com"
+      ],
+      "data_hints": [],
+      "special_category": false,
+      "personal_data": false,
+      "controls": [
+        "GDPR-LAWFUL-BASIS",
+        "GDPR-PROCESSOR-DPA",
+        "A.5.19-SUPPLIER"
+      ],
+      "likelihood": 5,
+      "impact": 3,
+      "risk_score": 15
+    },
+    {
+      "key": "google-fonts",
+      "vendor": "Google Fonts",
+      "category": "cdn",
+      "region": "US",
+      "note": "Loading fonts from Google sends the visitor IP to Google (LG M\u00fcnchen, 3 O 17493/20).",
+      "evidence": [
+        {
+          "where": "web/index.html:4",
+          "kind": "call",
+          "snippet": "<link href=\"https://fonts.googleapis.com/css2?family=Inter&display=swap\" rel=\"stylesheet\">"
+        }
+      ],
+      "hosts": [
+        "fonts.googleapis.com"
+      ],
+      "data_hints": [],
+      "special_category": false,
+      "personal_data": false,
+      "controls": [
+        "GDPR-LAWFUL-BASIS",
+        "A.5.19-SUPPLIER"
+      ],
+      "likelihood": 5,
+      "impact": 3,
+      "risk_score": 15
+    },
+    {
+      "key": "api.acme-demo.example-hr.io",
+      "vendor": "api.acme-demo.example-hr.io",
+      "category": "unknown",
+      "region": "unknown",
+      "note": "",
+      "evidence": [
+        {
+          "where": "web/index.html:8",
+          "kind": "call",
+          "snippet": "fetch(\"https://api.acme-demo.example-hr.io/v1/candidates\", { method: \"POST\" });"
+        }
+      ],
+      "hosts": [
+        "api.acme-demo.example-hr.io"
+      ],
+      "data_hints": [],
+      "special_category": false,
+      "personal_data": false,
+      "controls": [
+        "A.5.19-SUPPLIER"
+      ],
+      "likelihood": 5,
+      "impact": 2,
+      "risk_score": 10
+    }
+  ],
+  "risky_settings": [
+    {
+      "setting": "sendDefaultPii enabled",
+      "where": "src/screening.py:8"
+    }
+  ],
+  "summary": {
+    "destinations": 7,
+    "non_eu_with_personal_data": 2,
+    "llm_providers": [
+      "OpenAI"
+    ],
+    "unknown_destinations": [
+      "api.acme-demo.example-hr.io"
+    ]
+  }
+}

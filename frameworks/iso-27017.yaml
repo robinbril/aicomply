@@ -1,0 +1,188 @@
+framework: "ISO/IEC 27017 Cloud services security controls"
+reference: "ISO/IEC 27017:2026"
+short: "ISO 27017"
+kind: "iso"
+source: "iso-27017"
+scope: "Information security controls for the provision and use of cloud services, covering the shared responsibility between provider and customer for a SaaS AI product on cloud hosting and cloud LLM providers"
+controls:
+  - id: "CLD27017-ROLES"
+    title: "Shared roles and responsibilities between provider and customer"
+    part: "Shared responsibility"
+    clause: "Shared roles and responsibilities"
+    requirement: "Define and document which security responsibilities sit with the cloud service provider, which with the customer, and which are shared, and communicate this split to customers."
+    applies_when: "providing or consuming a cloud service"
+    severity: critical
+    weight: 5
+    check: "A responsibility matrix exists for each cloud service used and offered, naming who owns each security control, and customers can obtain it."
+    evidence: "Shared responsibility matrix, terms of service or security addendum, supplier documentation from the hosting and LLM providers."
+    advice: "Write a matrix per service for both directions (what you rely on from hosting and model vendors, and what customers must do in your product) and publish it."
+    owner: "CISO"
+
+  - id: "CLD27017-RELATIONSHIP"
+    title: "Relationship with cloud service providers and customers"
+    part: "Shared responsibility"
+    clause: "Relationship between cloud service customer and provider"
+    requirement: "Information security policy and supplier requirements address cloud-specific risks, including how the organisation selects, monitors and exits cloud providers."
+    applies_when: "using third-party cloud infrastructure or model APIs for the product"
+    severity: high
+    weight: 3
+    check: "Cloud-specific requirements appear in the security policy and vendor selection criteria, and each cloud provider has a recorded security review."
+    evidence: "Cloud security policy section, vendor assessments, exit or portability plan per provider."
+    advice: "Add a cloud section to the policy and require a documented security review and exit plan before adopting a new cloud or model provider."
+    owner: "CISO"
+
+  - id: "CLD27017-CLOUD-RISK"
+    title: "Cloud service risk assessment"
+    part: "Shared responsibility"
+    clause: "Information security policy and risk, cloud context"
+    requirement: "Include risks specific to multi-tenancy, provider access to data, shared infrastructure and provider lock-in in the information security risk assessment."
+    applies_when: "product runs on shared public cloud or calls external model APIs"
+    severity: high
+    weight: 3
+    check: "The risk register contains cloud-specific risks with owners and treatments, and is refreshed when providers or regions change."
+    evidence: "Risk register entries for cloud, provider risk review, treatment plan."
+    advice: "Add cloud scenarios (tenant data leak, provider outage, provider staff access, lock-in) to the register and review them each time a provider changes."
+    owner: "CISO"
+
+  - id: "CLD27017-HARDEN-VM"
+    title: "Hardening of virtual machines and containers"
+    part: "Virtualisation and segregation"
+    clause: "Virtual machine configuration"
+    requirement: "Configure virtual machines and container images to meet business needs and harden them by disabling unneeded ports, services and software and applying a controlled baseline."
+    applies_when: "operating virtual machines, containers or serverless runtimes"
+    severity: high
+    weight: 3
+    check: "Images and VMs are built from a hardened baseline, scanned, and compared against a benchmark; unneeded services and ports are closed."
+    evidence: "Hardening baseline, image scan reports, infrastructure as code with security settings, configuration benchmark results."
+    advice: "Build from minimal base images, scan in CI, enforce the baseline through infrastructure as code and block drift."
+    owner: "Engineering lead"
+
+  - id: "CLD27017-SEGREGATE"
+    title: "Segregation in virtual computing environments"
+    part: "Virtualisation and segregation"
+    clause: "Segregation in virtual computing environments"
+    requirement: "Protect each customer's virtual environment from other tenants and from the provider's own management plane, so one tenant cannot reach another tenant's data or workloads."
+    applies_when: "multi-tenant platform or customer data processed on shared infrastructure"
+    severity: critical
+    weight: 5
+    check: "Tenant isolation is enforced at the data and compute layers and tested, including attempts to read another tenant's records, vectors or prompts."
+    evidence: "Tenant isolation design, automated cross-tenant access tests, network policy and database separation configuration."
+    advice: "Enforce tenant scoping in every data store and retrieval index, and add negative tests that try cross-tenant reads before each release."
+    owner: "Engineering lead"
+
+  - id: "CLD27017-NETWORK"
+    title: "Alignment of virtual and physical network security"
+    part: "Virtualisation and segregation"
+    clause: "Alignment of security management for virtual and physical networks"
+    requirement: "Keep security configuration of the virtual network consistent with that of the physical network and with the stated policy, including firewall rules, segmentation and egress control."
+    applies_when: "operating own or leased network configuration in the cloud"
+    severity: medium
+    weight: 2
+    check: "Virtual network rules match the network security policy, default-deny applies, and outbound traffic to model providers is restricted to approved endpoints."
+    evidence: "Network diagrams, security group and firewall rule export, egress allow-list."
+    advice: "Review cloud network rules against policy each quarter and restrict egress to named provider endpoints."
+    owner: "Engineering lead"
+
+  - id: "CLD27017-ADMIN-OPS"
+    title: "Administrator operational security in the cloud"
+    part: "Operations"
+    clause: "Administrator operational security"
+    requirement: "Document operating procedures for administrators of cloud services and control privileged actions such as provisioning, key handling and access to customer data, with approval and logging."
+    applies_when: "staff administer cloud accounts, clusters or customer environments"
+    severity: high
+    weight: 3
+    check: "Admin actions follow written procedures, use separate privileged accounts with strong authentication, and are logged and reviewed."
+    evidence: "Admin runbooks, privileged access policy, MFA configuration, privileged action logs and review records."
+    advice: "Put admin work behind separate accounts with MFA and just-in-time elevation, and log every privileged action to a store admins cannot edit."
+    owner: "CISO"
+
+  - id: "CLD27017-MONITOR"
+    title: "Monitoring of cloud services"
+    part: "Operations"
+    clause: "Monitoring of cloud services"
+    requirement: "Monitor the cloud services you operate and consume for security-relevant events, and give customers the information they need to monitor their own use."
+    applies_when: "cloud-hosted production service"
+    severity: high
+    weight: 3
+    check: "Cloud service logs and provider audit trails are collected and alerted on, and customers can access activity logs for their tenant."
+    evidence: "Log pipeline configuration, alert rules, provider audit log subscriptions, customer-facing activity log or API."
+    advice: "Enable provider audit trails, route them to central monitoring with alerts, and expose a tenant-level activity log to customers."
+    owner: "Engineering lead"
+
+  - id: "CLD27017-CLOCK"
+    title: "Clock synchronisation across cloud services"
+    part: "Operations"
+    clause: "Clock synchronisation"
+    requirement: "Keep clocks of cloud systems synchronised to an agreed source and tell customers which time source applies, so logs from different services can be correlated."
+    applies_when: "correlating logs across several cloud services and providers"
+    severity: low
+    weight: 1
+    check: "All hosts and services use a documented time source and log timestamps share a consistent format and time zone."
+    evidence: "NTP or provider time-sync configuration, log format specification."
+    advice: "Standardise on one time source and UTC timestamps in all logs."
+    owner: "Engineering lead"
+
+  - id: "CLD27017-ASSET-INV"
+    title: "Inventory of cloud assets"
+    part: "Shared responsibility"
+    clause: "Inventory of assets and cloud service customer data"
+    requirement: "Maintain an inventory of cloud assets and customer data held in the cloud, identifying owners and where each asset runs, including model endpoints and data stores."
+    applies_when: "running workloads or storing data in the cloud"
+    severity: medium
+    weight: 2
+    check: "The inventory lists accounts, regions, services, data stores and model endpoints with owners, and matches what is deployed."
+    evidence: "Cloud asset inventory, account and region list, reconciliation output."
+    advice: "Generate the inventory from the cloud accounts rather than by hand and review unowned resources monthly."
+    owner: "Engineering lead"
+
+  - id: "CLD27017-CUSTOMER-DATA-RETURN"
+    title: "Return and removal of customer assets"
+    part: "Customer data lifecycle"
+    clause: "Removal of cloud service customer assets"
+    requirement: "When a contract ends, return customer assets and remove them from the service in a defined time, including copies in backups, logs, caches and embeddings, and tell the customer how this works."
+    applies_when: "customer data is stored in the service"
+    severity: critical
+    weight: 5
+    check: "A documented offboarding procedure exports and then deletes customer data across databases, object storage, vector indexes and backups within a stated period, and has been exercised."
+    evidence: "Offboarding runbook, deletion confirmation sample, retention schedule for backups, contract clause on return and deletion."
+    advice: "Implement an offboarding job covering every store of tenant data, define backup expiry, and give customers a deletion confirmation."
+    owner: "Engineering lead"
+
+  - id: "CLD27017-CRYPTO"
+    title: "Cryptographic controls for cloud services"
+    part: "Customer data lifecycle"
+    clause: "Use of cryptography"
+    requirement: "Apply encryption for customer data in transit and at rest in the cloud, document where keys live and who can use them, and offer customers key control options where feasible."
+    applies_when: "customer data stored or transmitted via cloud services"
+    severity: high
+    weight: 3
+    check: "Data is encrypted in transit and at rest, keys are managed in a key service with access control and rotation, and the policy is available to customers."
+    evidence: "Encryption configuration, key management policy, key rotation records."
+    advice: "Use managed key services with rotation and restricted access, and state clearly in customer documentation what is encrypted and who holds the keys."
+    owner: "CISO"
+
+  - id: "CLD27017-ACCESS-CUST"
+    title: "Access control for cloud service customers"
+    part: "Operations"
+    clause: "Access control for cloud service customers"
+    requirement: "Provide customers with identity and access management features, including strong authentication and role-based access, to administer their own users and data within the service."
+    applies_when: "customers of the service have their own user accounts"
+    severity: high
+    weight: 3
+    check: "The product offers role-based access, MFA or single sign-on, and customer admins can list and revoke their users."
+    evidence: "Product access control documentation, SSO and MFA settings, role matrix, test of revocation."
+    advice: "Offer SSO and MFA, scoped roles and an admin view of user access so customers can meet their own control needs."
+    owner: "Product owner"
+
+  - id: "CLD27017-INCIDENT-CLOUD"
+    title: "Incident management with cloud providers and customers"
+    part: "Shared responsibility"
+    clause: "Information security incident management, cloud context"
+    requirement: "Agree who reports and handles security incidents between provider and customer, set notification channels and time frames, and share the information needed to investigate."
+    applies_when: "cloud provider or customers affected by a security event"
+    severity: high
+    weight: 3
+    check: "Contracts and runbooks define incident roles, contacts and notification times towards customers and from each cloud and model provider."
+    evidence: "Incident response plan with cloud scenarios, provider contact list, customer notification template, past incident record."
+    advice: "Add cloud-provider scenarios to the incident plan, confirm notification timelines in contracts, and rehearse a provider-side breach."
+    owner: "CISO"
